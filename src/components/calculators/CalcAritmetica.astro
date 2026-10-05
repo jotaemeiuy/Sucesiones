@@ -1,0 +1,74 @@
+---
+import CalculatorShell from "../CalculatorShell.astro";
+---
+
+<CalculatorShell titulo="Sucesión aritmética: a₁, d, n, aₙ" id="calc-arit">
+  <form data-calc="arit">
+    <div class="inputs">
+      <label>a₁<input type="number" name="a1" value="3" /></label>
+      <label>d<input type="number" name="d" value="5" /></label>
+      <label>n<input type="number" name="n" /></label>
+      <label>aₙ<input type="number" name="an" value="58" /></label>
+      <button type="submit">Despejar</button>
+    </div>
+    <p class="nota"><b>CÓMO SE USA</b> Deja en blanco el valor que quieras hallar (uno solo).</p>
+    <output data-result aria-live="polite">Resultado = …</output>
+  </form>
+</CalculatorShell>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form[data-calc="arit"]');
+  const txt = (n: string) => (form?.elements.namedItem(n) as HTMLInputElement).value.trim();
+  const num = (n: string) => Number(txt(n));
+
+  const fmt = (x: number) => {
+    const r = Math.round(x * 10000) / 10000;
+    return Number.isFinite(r) ? String(r) : "no definido";
+  };
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const out = form.querySelector<HTMLOutputElement>("[data-result]");
+    const vacios = ["a1", "d", "n", "an"].filter((k) => txt(k) === "");
+    if (out && (vacios.length !== 1 || ["a1", "d", "n", "an"].some((k) => txt(k) !== "" && !Number.isFinite(num(k))))) {
+      out.textContent = "Deja en blanco exactamente un valor (y no dejes campos sin número).";
+      return;
+    }
+
+    let a1 = txt("a1") === "" ? NaN : num("a1");
+    let d = txt("d") === "" ? NaN : num("d");
+    let n = txt("n") === "" ? NaN : num("n");
+    let an = txt("an") === "" ? NaN : num("an");
+    const falta = vacios[0];
+    let msg = "";
+
+    switch (falta) {
+      case "a1":
+        if (n === 1) { msg = "Para n = 1 no se puede despejar a₁."; break; }
+        a1 = an - (n - 1) * d;
+        msg = `a₁ = aₙ − (n−1)d = ${fmt(an)} − (${fmt(n)}−1)·${fmt(d)} = ${fmt(a1)}`;
+        break;
+      case "d":
+        if (n === 1) { msg = "Para n = 1 no se puede despejar d."; break; }
+        d = (an - a1) / (n - 1);
+        msg = `d = (aₙ − a₁)/(n−1) = (${fmt(an)} − ${fmt(a1)})/(${fmt(n)}−1) = ${fmt(d)}`;
+        break;
+      case "n":
+        if (d === 0) { msg = "Con d = 0 no se puede despejar n."; break; }
+        n = (an - a1) / d + 1;
+        msg = `n = (aₙ − a₁)/d + 1 = (${fmt(an)} − ${fmt(a1)})/${fmt(d)} + 1 = ${fmt(n)}`;
+        break;
+      case "an":
+        an = a1 + (n - 1) * d;
+        msg = `aₙ = a₁ + (n−1)d = ${fmt(a1)} + (${fmt(n)}−1)·${fmt(d)} = ${fmt(an)}`;
+        break;
+    }
+
+    if (!msg) { if (out) out.textContent = "No se pudo resolver."; return; }
+    if (Number.isInteger(n) && n > 0) {
+      const S = (n * (a1 + an)) / 2;
+      msg += ` · Sₙ = n(a₁+aₙ)/2 = ${fmt(S)}`;
+    }
+    if (out) out.textContent = msg;
+  });
+</script>

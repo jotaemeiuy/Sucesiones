@@ -1,0 +1,25 @@
+---
+interface Props {
+  boton: string;
+  solucion: string;
+}
+
+const { boton, solucion } = Astro.props;
+---
+
+<div class="calc">
+  <strong>▸ {boton}</strong>
+  <div class="row">
+    <button type="button" data-reveal data-solucion={solucion}>Ver solución</button>
+  </div>
+  <output data-result aria-live="polite">…</output>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("button[data-reveal]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const out = btn.closest(".calc")?.querySelector<HTMLOutputElement>("[data-result]");
+      if (out) out.textContent = btn.dataset.solucion ?? "";
+    });
+  });
+</script>

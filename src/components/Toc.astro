@@ -1,0 +1,25 @@
+---
+interface Item {
+  href: string;
+  texto: string;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="toc" aria-label="Contenido del capítulo">
+  <strong>CONTENIDO</strong>
+  <ol>
+    {
+      items.map((i) => (
+        <li>
+          <a href={i.href}>{i.texto}</a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>

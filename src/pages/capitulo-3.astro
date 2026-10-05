@@ -1,0 +1,345 @@
+---
+import ChapterNav from "../components/ChapterNav.astro";
+import Figura from "../components/Figura.astro";
+import Hero from "../components/Hero.astro";
+import Math from "../components/Math.astro";
+import Nota from "../components/Nota.astro";
+import Seccion from "../components/Seccion.astro";
+import Split from "../components/Split.astro";
+import Toc from "../components/Toc.astro";
+import RevealSolucion from "../components/calculators/RevealSolucion.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/capitulo1.css";
+---
+
+<BaseLayout
+  title="Capítulo 3 — Sucesiones geométricas | Sucesiones"
+  description="Capítulo 3 de Sucesiones (Duffour): sucesiones geométricas, razón, término enésimo, producto de términos equidistantes, suma de n términos y suma infinita."
+>
+  <main id="contenido">
+    <Hero
+      kicker="TEORICO 3"
+      numero="3"
+      tituloHtml="SUCESIONES <span>GEOMÉTRICAS</span>"
+      subtitulo="Sucesiones · Capítulo 3"
+    />
+
+    <ChapterNav
+      posicion="top"
+      variante="mini"
+      prev={{ href: "/capitulo-2/", titulo: "Cap 2: Aritméticas" }}
+      actual="Cap 3: Geométricas"
+      next={{ href: "/capitulo-4/", titulo: "Cap 4: Límite y Fibonacci" }}
+    />
+
+    <Toc
+      items={[
+        { href: "#s1", texto: "6.1. Definición" },
+        { href: "#s2", texto: "6.2. Cálculo del término enésimo" },
+        { href: "#s3", texto: "6.3. Relación entre dos términos" },
+        { href: "#s4", texto: "6.4. Teorema de los equidistantes" },
+        { href: "#s5", texto: "6.5. Suma de los n primeros términos" },
+        { href: "#s6", texto: "6.6. Suma infinita" },
+        { href: "#s7", texto: "Sumatoria y sucesiones" },
+      ]}
+    />
+
+    <Seccion id="s1" tituloHtml="6.1 — <em>DEFINICIÓN</em>">
+      <p>
+        Una sucesión de números tales que a partir del segundo, cada uno es igual al anterior
+        multiplicado por un número dado (diferente de cero y de la unidad), se llama
+        <strong>sucesión geométrica</strong>.
+      </p>
+      <p>
+        Los números referidos son los <strong>términos</strong> de la sucesión geométrica y el número
+        dado a multiplicar se llama <strong>razón</strong> <Math tex="q" display={false} /> de la
+        sucesión geométrica. No serán estudiadas las sucesiones geométricas de razón negativa.
+      </p>
+      <Nota etiqueta="NOTA">
+        Como consecuencia de la definición anterior, la razón <Math tex="q" display={false} /> se
+        puede obtener dividiendo dos términos consecutivos cualesquiera de una sucesión geométrica:
+        <Math tex="q=\frac{a_{n+1}}{a_n}\qquad n\in\mathbb{N}^*" display={false} />
+      </Nota>
+
+      <div class="prob">
+        <strong>EJEMPLO:</strong> La sucesión de números <Math
+          tex="\{1,\ 2,\ 4,\ 8,\ 16,\ \ldots\}"
+          display={false}
+        /> ¿es una sucesión geométrica?
+        <p>
+          Sí, porque la división de dos términos sucesivos da siempre el mismo resultado:
+          <Math tex="\frac{16}{8}=2,\ \frac{8}{4}=2,\ \frac{4}{2}=2,\ \frac{2}{1}=2" display={false} />.
+          Los números dados forman una sucesión geométrica de <strong>primer término igual a 1</strong>
+          y <strong>razón igual a 2</strong>.
+        </p>
+      </div>
+
+      <div class="prob">
+        <strong>EJEMPLO:</strong> La sucesión de números <Math
+          tex="\{3,\ 9,\ 81,\ 243,\ \ldots\}"
+          display={false}
+        /> ¿es una sucesión geométrica?
+        <p>
+          Para ello se deben tomar dos términos sucesivos y dividirlos entre sí:
+          <Math tex="\frac{243}{81}=3,\ \frac{81}{9}=9,\ \frac{9}{3}=3" display={false} />. No es una
+          sucesión geométrica, ya que la división de dos términos sucesivos no siempre da lo mismo.
+        </p>
+      </div>
+
+      <Nota etiqueta="NOTA">
+        En una sucesión geométrica se tiene que:<br />
+        si <Math tex="q>1" display={false} />, es una sucesión geométrica estrictamente creciente.<br />
+        si <Math tex="0<q<1" display={false} />, es una sucesión geométrica estrictamente decreciente.<br />
+        si <Math tex="q=0" display={false} /> o <Math tex="q=1" display={false} />, es una sucesión
+        constante. · si <Math tex="q<0" display={false} />, es una sucesión oscilante.
+        <br /><em>(No se toman en cuenta en este curso.)</em>
+      </Nota>
+    </Seccion>
+
+    <Seccion id="s2" tituloHtml="6.2 — <em>CÁLCULO DEL TÉRMINO ENÉSIMO</em>">
+      <p>
+        En una sucesión geométrica se denominan <Math tex="a_1" display={false} /> primer término,
+        <Math tex="q" display={false} /> razón y <Math tex="a_n" display={false} /> término enésimo.
+        Por la definición de sucesión geométrica se cumple que:
+      </p>
+      <Math tex="\begin{aligned} a_1 &= a_1 & \text{Primer término} \\ a_2 &= a_1 q & \text{Segundo término} \\ a_3 &= a_1 q^2 & \text{Tercer término} \\ a_4 &= a_1 q^3 & \text{Cuarto término} \\ \ldots && \ldots \\ a_n &= a_1 q^{\,n-1} & \text{Enésimo término} \end{aligned}" />
+      <p>
+        Es posible observar que el exponente de <Math tex="q" display={false} /> es igual al número
+        de términos <Math tex="n" display={false} /> menos 1. Además es obvio que
+        <Math tex="a_1\ne 0" display={false} /> para tener una sucesión geométrica.
+      </p>
+      <Nota etiqueta="NOTA">
+        El enésimo término (término general) define la sucesión, pues si se conoce esta expresión es
+        posible hallar cualquier término de la sucesión geométrica.
+      </Nota>
+      <Math tex="\boxed{a_n=a_1 q^{\,n-1}}\qquad \text{Término general} \qquad n\in\mathbb{N}^*" />
+      <p>
+        Cada término de una sucesión geométrica, a partir del segundo, es igual al primer término
+        multiplicado por la razón elevada a un exponente igual al número de términos que lo precede.
+        A partir de esta fórmula, que relaciona <Math tex="a_1" display={false} />, <Math
+          tex="a_n"
+          display={false}
+        />, <Math tex="n" display={false} /> y <Math tex="q" display={false} />, conociendo tres
+        valores cualesquiera se puede hallar el cuarto, despejando convenientemente.
+      </p>
+
+      <div class="prob">
+        <strong>EJEMPLO:</strong> En una sucesión geométrica de 5 términos, cuyo último es
+        <Math tex="-1024" display={false} /> y la razón es 4, hallar el primer término.
+        <Math tex="-1024=a_1(4)^{5-1}=a_1(256)" />
+        <Math tex="\boxed{a_1=-4}" />
+      </div>
+
+      <div class="prob">
+        <strong>EJEMPLO:</strong> En una sucesión geométrica, el primer término vale 81 y razón
+        <Math tex="\frac{1}{3}" display={false} />. ¿Cuánto vale el quinto término?
+        <Math tex="a_5=81\left(\frac{1}{3}\right)^{5-1}=81\left(\frac{1}{81}\right)" />
+        <Math tex="\boxed{a_5=1}" />
+      </div>
+
+      <Nota etiqueta="ANTES DE CONTINUAR">
+        Es conveniente hacer los ejercicios 108 al 114, de la página 125.
+      </Nota>
+    </Seccion>
+
+    <Seccion id="s3" tituloHtml="6.3 — <em>RELACIÓN ENTRE DOS TÉRMINOS</em>">
+      <p>
+        Sean <Math tex="a_h" display={false} /> y <Math tex="a_k" display={false} /> dos términos
+        cualesquiera de una sucesión geométrica, se cumple que:
+      </p>
+      <Math tex="a_h=a_1\,q^{\,h-1} \qquad a_k=a_1\,q^{\,k-1}" />
+      <p>Dividiendo miembro a miembro ambas igualdades se obtiene que:</p>
+      <Math tex="\frac{a_k}{a_h}=\frac{a_1 q^{\,k-1}}{a_1 q^{\,h-1}}=q^{\,k-h}" />
+      <Math tex="\boxed{a_k=a_h\,q^{\,k-h}}" />
+    </Seccion>
+
+    <Seccion id="s4" tituloHtml="6.4 — <em>TEOREMA</em>">
+      <p>
+        En una sucesión geométrica finita, la <strong>multiplicación de dos términos equidistantes de
+        los extremos es igual al producto de estos</strong>:
+      </p>
+      <Math tex="\boxed{a_h\,a_k=a_1\,a_n}" />
+      <p>
+        Los términos <Math tex="a_h" display={false} /> y <Math tex="a_k" display={false} /> son
+        equidistantes de los extremos, es decir que el número de términos que hay entre <Math
+          tex="a_1"
+          display={false}
+        /> y <Math tex="a_h" display={false} /> es igual al existente entre <Math
+          tex="a_k"
+          display={false}
+        /> y <Math tex="a_n" display={false} />. Aplicando la expresión del último término a cada una
+        de las dos sucesiones de <Math tex="m" display={false} /> términos consideradas:
+      </p>
+      <Math tex="a_h=a_1 q^{\,m-1} \qquad a_n=a_k q^{\,m-1}" />
+      <p>Si se dividen miembro a miembro estas dos expresiones:</p>
+      <Math tex="\frac{a_h}{a_n}=\frac{a_1 q^{\,m-1}}{a_k q^{\,m-1}}=\frac{a_1}{a_k}" />
+      <p>
+        Al simplificar y reordenar resulta <Math tex="a_h a_k=a_1 a_n" display={false} />, como se
+        quería demostrar.
+      </p>
+    </Seccion>
+
+    <Seccion id="s5" tituloHtml="6.5 — <em>SUMA DE LOS n PRIMEROS TÉRMINOS</em>">
+      <p>
+        Sea una sucesión geométrica de la cual se quiere conocer la suma <Math
+          tex="S_n"
+          display={false}
+        /> de los <Math tex="n" display={false} /> primeros términos consecutivos:
+      </p>
+      <Math tex="S_n=a_1+a_1 q+a_1 q^2+\ldots+a_1 q^{\,n-1}" />
+      <p>
+        Si se multiplican ambos miembros de la igualdad por <Math tex="q" display={false} /> se
+        obtiene que (recuérdese que <Math tex="q\ne 0" display={false} /> por definición):
+      </p>
+      <Math tex="S_n q=a_1 q+a_1 q^2+a_1 q^3+\ldots+a_1 q^{\,n}" />
+      <p>Se efectúa la resta <Math tex="(S_n q-S_n)" display={false} />:</p>
+      <Math tex="\begin{aligned} S_n q &= \phantom{-}a_1 q + a_1 q^2 + a_1 q^3 + \ldots + a_1 q^{\,n} \\ -\,S_n &= -a_1 - a_1 q - a_1 q^2 - \ldots - a_1 q^{\,n-1} \\ \hline S_n q-S_n &= -a_1+a_1 q^{\,n} \end{aligned}" />
+      <p>
+        Se saca <Math tex="S_n" display={false} /> de factor común en el primer término y se reordena
+        el segundo:
+      </p>
+      <Math tex="S_n(q-1)=a_1 q^{\,n}-a_1" />
+      <Math tex="\boxed{S_n=\frac{a_1 q^{\,n}-a_1}{q-1}}" />
+      <Nota etiqueta="NOTA">
+        Fórmula que tiene significado pues, por definición, <Math tex="q\ne 1" display={false} />.
+      </Nota>
+
+      <div class="prob">
+        <strong>EJEMPLO:</strong> Hallar la suma de una sucesión geométrica de seis términos que
+        comienza en 3 y cuya razón es igual a 2.
+        <Math tex="S_6=\frac{3(2)^6-3}{2-1}=\frac{192-3}{1}=189" />
+        <Math tex="\boxed{S_6=189}" />
+      </div>
+
+      <div class="prob">
+        <strong>DESAFÍO OLÍMPICO — XVII Olimpíada Matemática del Uruguay, 2.ª instancia 2002:</strong>
+        Sean los números:
+        <Math tex="a=2001(1+2+3+\ldots+2002),\qquad b=2002(1+2+3+\ldots+2001)" display={false} />
+        <p>¿Cuál es el mayor?</p>
+        <RevealSolucion
+          boton="Resolver el desafío"
+          solucion="1+2+…+2002 = 2002·2003/2 y 1+2+…+2001 = 2001·2002/2. Por lo tanto a = 2001·2002·2003/2 y b = 2002·2001·2002/2. Como 2003 > 2002, resulta a > b: el mayor es a."
+        />
+      </div>
+    </Seccion>
+
+    <Seccion id="s6" tituloHtml="6.6 — <em>SUMA DE UNA SUCESIÓN GEOMÉTRICA DECRECIENTE INFINITA</em>">
+      <p>
+        En este caso se pregunta: ¿cuál es el límite de la suma de una sucesión geométrica
+        decreciente <Math tex="(0<q<1)" display={false} /> cuando el número de sus términos tiende a
+        infinito?
+      </p>
+      <p>Para ello se expresa la fórmula de suma como:</p>
+      <Math tex="S_n=\frac{a_1}{1-q}-\frac{a_1 q^{\,n}}{1-q}" />
+      <p>
+        Se observa que como <Math tex="q<1" display={false} /> (debido a que la sucesión es
+        decreciente), el factor <Math tex="q^{\,n}" display={false} /> tiende a cero a medida que
+        crece <Math tex="n" display={false} />, y el sumando también tiende a cero. Por consiguiente,
+        el límite de la suma cuando <Math tex="n\to+\infty" display={false} /> (el símbolo
+        <Math tex="\infty" display={false} /> significa infinito) es:
+      </p>
+      <Math tex="\boxed{\lim_{n\to+\infty} S_n=\frac{a_1}{1-q}}" />
+
+      <Split>
+        <Figura
+          simbolo="suc-cuadrados"
+          descripcion="Cuadrados anidados formados uniendo los puntos medios de los lados"
+          viewBox="0 0 300 265"
+          pie="Cuadrados sucesivos por puntos medios."
+        />
+        <div>
+          <p>
+            Se da un cuadrado de 10 cm de lado. Uniendo los puntos medios de sus lados se forma otro
+            cuadrado; uniendo los puntos medios de los lados de éste se forma un nuevo cuadrado, y
+            así sucesivamente. <strong>Hallar el límite de la suma de las áreas de estos cuadrados.</strong>
+          </p>
+          <Math tex="\boxed{\lim_{n\to+\infty} S_n=200\ \text{cm}^2}" />
+          <Nota etiqueta="SOLUCIÓN">
+            Las áreas forman una sucesión geométrica de primer término 100 y razón
+            <Math tex="\frac{1}{2}" display={false} /> (el área se reduce a la mitad en cada paso),
+            luego <Math tex="\frac{100}{1-\frac{1}{2}}=200" display={false} /> cm².
+          </Nota>
+        </div>
+      </Split>
+
+      <Split>
+        <Figura
+          simbolo="suc-rect-tri"
+          descripcion="Rectángulo de 10 por 2 centímetros dividido sucesivamente y triángulos sombreados"
+          viewBox="0 0 300 130"
+          pie="Rectángulo 10 × 2 dividido por paralelas a la altura."
+        />
+        <div>
+          <p>
+            Se tiene un rectángulo de 10 cm de largo por 2 cm de alto. Se divide en dos partes
+            iguales por una paralela a la altura, y en una de estas partes se considera el triángulo
+            determinado por una diagonal (sombreado en la figura). La otra parte se vuelve a dividir
+            en dos de la misma manera y en una de estas partes se toma uno de los triángulos
+            determinados por la diagonal, y así sucesivamente.
+          </p>
+          <p>
+            <strong>¿Cuánto vale el límite de la suma de las áreas de estos triángulos?</strong>
+          </p>
+          <Math tex="\boxed{\lim_{n\to+\infty} S_n=10\ \text{cm}^2}" />
+          <Nota etiqueta="SOLUCIÓN">
+            El área del rectángulo es 20 cm² y cada parte tiene la mitad que la anterior. El primer
+            triángulo mide <Math tex="\frac{1}{2}\cdot 5\cdot 2=5" display={false} /> cm² (la mitad
+            de su rectángulo) y cada siguiente la mitad del anterior: son una sucesión geométrica de
+            primer término 5 y razón <Math tex="\frac{1}{2}" display={false} />:
+            <Math tex="\frac{5}{1-\frac{1}{2}}=10" display={false} /> cm².
+          </Nota>
+        </div>
+      </Split>
+    </Seccion>
+
+    <Seccion id="s7" tituloHtml="UNIENDO TEMAS — <em>SUMATORIA Y SUCESIONES</em>">
+      <p>
+        Calcular una fórmula para <Math tex="\sum_{i=0}^{i=n+2}(2i+3)" display={false} />. Es una
+        sucesión aritmética de: primer término = 3 · último término = <Math
+          tex="2(n+2)+3=2n+7"
+          display={false}
+        /> · número de términos = <Math tex="n+3" display={false} />.
+      </p>
+      <p>La fórmula para la suma de una sucesión aritmética conviene expresarla como:</p>
+      <Math tex="\text{Suma}=\frac{(\text{número de términos})\times(\text{primer término}+\text{último término})}{2}" />
+      <Math tex="\sum_{i=0}^{i=n+2}(2i+3)=\frac{(n+3)(3+2n+7)}{2}=\frac{2n^2+16n+30}{2}" />
+      <Math tex="\boxed{\sum_{i=0}^{i=n+2}(2i+3)=n^2+8n+15}" />
+
+      <div class="prob">
+        <strong>a) Calcular:</strong>
+        <Math tex="\begin{aligned} 1)\ &\sum_{i=1}^{i=2n}(3i-2) & 2)\ &\sum_{i=3}^{i=n-1}(-4i-1) & 3)\ &\sum_{i=1}^{i=n+3}(2i-5) \end{aligned}" />
+        <RevealSolucion
+          boton="Ver soluciones de a)"
+          solucion="1) aritmética de primer término 1, último 6n−2 y 2n términos: 2n(1+6n−2)/2 = 6n² − n. 2) aritmética de primer término −13, último −4n+3 y n−3 términos: (n−3)(−4n−10)/2 = −2n² + n + 15. 3) aritmética de primer término −3, último 2n+1 y n+3 términos: (n+3)(2n−2)/2 = n² + 2n − 3."
+        />
+      </div>
+
+      <div class="prob">
+        <strong>b) Usando la fórmula para la suma de una sucesión geométrica, calcular:</strong>
+        <Math tex="\begin{aligned} 4)\ &\sum_{i=1}^{i=2n}3^{\,i} & 5)\ &\sum_{i=3}^{i=n}(2^{\,i}-1) & 6)\ &\sum_{i=1}^{i=n+3}(4^{\,i}-5) \end{aligned}" />
+        <RevealSolucion
+          boton="Ver soluciones de b)"
+          solucion="4) geométrica de a₁ = 3, q = 3 y 2n términos: 3(3^{2n}−1)/(3−1) = (3^{2n+1}−3)/2. 5) ∑2^i (geométrica de 1/4 a 2^n, o sea 2^{n+1}−8) menos los (n−2) unos: 2^{n+1} − n − 6. 6) ∑4^i = (4^{n+4}−4)/3 menos 5(n+3): (4^{n+4}−4)/3 − 5n − 15."
+        />
+      </div>
+
+      <Nota etiqueta="OJO">
+        Véase sumatorias, en el próximo capítulo. Y los resultados del resto de ejercicios en la
+        página 475 del libro.
+      </Nota>
+    </Seccion>
+
+    <ChapterNav
+      posicion="bottom"
+      prev={{ href: "/capitulo-2/", titulo: "Cap 2: Aritméticas" }}
+      next={{ href: "/capitulo-4/", titulo: "Cap 4: Límite y Fibonacci" }}
+    />
+  </main>
+
+  <footer>
+    <p>
+      Material extraido del libro de GUSTAVO A. DUFFOUR — MATEMÁTICA DE QUINTO · Cap. 3 «Sucesiones
+      geométricas»
+    </p>
+  </footer>
+</BaseLayout>

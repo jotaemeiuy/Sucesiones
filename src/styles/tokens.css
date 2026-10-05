@@ -1,0 +1,51 @@
+/* ============================================================
+   tokens.css — design tokens (single source of truth)
+   @layer: tokens
+   ============================================================ */
+@layer tokens {
+  :root {
+    /* Brand — tinta magenta del PDF + papel amarillo */
+    --accent: #bf2045;
+    --accent-dark: #931638;
+    --accent-soft: #c94a68;
+
+    /* Papel / fondos */
+    --paper: #fbeea4;
+    --paper-2: #fdf5c0;
+    --paper-3: #f7e382;
+    --reader-bg: #f4f1e8;
+    --card: #ffffff;
+    --formula-bg: #fff8d0;
+
+    /* Texto y líneas */
+    --ink: #222222;
+    --muted: #5b5b5b;
+    --line: #e3ddd0;
+
+    /* Tipografías */
+    --font-mono: "Courier Prime", "Courier New", Courier, monospace;
+    --font-serif: Georgia, "Times New Roman", serif;
+
+    /* Ritmo y radios */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --radius-s: 8px;
+    --radius-m: 10px;
+    --radius-l: 14px;
+
+    /* Sombras tipo recorte de papel */
+    --shadow-hard: 6px 6px 0 var(--ink);
+    --shadow-card: 5px 5px 0 var(--accent);
+
+    --content-narrow: 60rem; /* 960px — lector */
+    --content-wide: 67.5rem; /* 1080px — fórmulas */
+
+    /* Breakpoints (documentación; los media queries usan los mismos valores) */
+    --bp-mobile: 40rem; /* 640px */
+    --bp-tablet: 48rem; /* 768px */
+    --bp-desktop: 64rem; /* 1024px */
+  }
+}

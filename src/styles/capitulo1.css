@@ -1,0 +1,207 @@
+/* ============================================================
+   capitulo1.css — tema lector PC/móvil (capitulo-1)
+   @layer: page
+   ============================================================ */
+@layer page {
+  body {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  .topbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-block: 10px 14px;
+
+    & a {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--accent);
+      background: #fff;
+      border: 1.5px solid var(--accent);
+      border-radius: 999px;
+      padding: 5px 12px;
+      text-decoration: none;
+
+      &:hover {
+        color: #fff;
+        background: var(--accent);
+      }
+    }
+
+    /* Tablet y móvil: scroll horizontal con snap */
+    @media (max-width: 48rem) {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-block-end: 6px;
+      scroll-snap-type: x proximity;
+
+      & a {
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+      }
+    }
+  }
+
+  header.hero {
+    display: grid;
+    gap: 6px;
+    background: var(--card);
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-hard);
+    padding: 26px 22px;
+
+    & .teorico {
+      text-align: end;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.3em;
+    }
+
+    & .num {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 3rem;
+      line-height: 1;
+      border-inline-start: 8px solid var(--ink);
+      padding-inline-start: 12px;
+    }
+
+    & h1 {
+      margin-block: 0.2em;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+
+      & span {
+        color: var(--accent);
+      }
+    }
+
+    & p {
+      margin: 0;
+      color: var(--muted);
+    }
+  }
+
+  nav.toc {
+    margin-block: var(--space-4);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    padding: 14px 16px;
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+
+    & strong {
+      letter-spacing: 0.15em;
+      color: var(--accent);
+    }
+
+    & ol {
+      margin: 8px 0 0;
+      padding-inline-start: 20px;
+      columns: 2;
+      column-gap: 28px;
+
+      /* Tablet portrait y móvil: una columna */
+      @media (max-width: 48rem) {
+        columns: 1;
+      }
+    }
+
+    & li {
+      margin-block: 3px;
+    }
+
+    & a {
+      color: var(--ink);
+      text-decoration: none;
+      border-block-end: 1px dotted var(--accent);
+    }
+  }
+
+  section.card {
+    margin-block: var(--space-4);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    box-shadow: 0 2px 0 rgb(0 0 0 / 0.06);
+    padding: 20px 18px;
+
+    @media (max-width: 40rem) {
+      padding: 16px 14px;
+    }
+
+    & h2 {
+      display: inline-block;
+      margin-block: 0 12px;
+      padding: 6px 12px;
+      border-radius: var(--radius-s);
+      color: #fff;
+      background: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 1.02rem;
+      letter-spacing: 0.06em;
+
+      & em {
+        font-style: normal;
+        color: #ffd9e2;
+      }
+    }
+
+    & h3 {
+      padding-block-end: 6px;
+      border-block-end: 2px dashed var(--accent);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  /* Dos figuras lado a lado a ancho completo (tras el texto).
+     Ambas cajas quedan del mismo tamaño: el svg rellena sin deformar. */
+  .figuras-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+    align-items: stretch;
+    margin-block: var(--space-3);
+
+    & figure.fig {
+      display: flex;
+      flex-direction: column;
+      block-size: 100%;
+
+      & svg {
+        flex: 1 1 auto;
+        min-block-size: 0;
+        inline-size: 100%;
+        block-size: 100%;
+      }
+    }
+
+    /* Móvil: apilar */
+    @media (max-width: 40rem) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Ajustes del tema lector sobre componentes */
+  .formula {
+    background: #fff8f0;
+  }
+  .nota {
+    background: #fffbe6;
+    border-style: dashed;
+    border-color: #a98d00;
+  }
+  footer {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+}

@@ -1,0 +1,230 @@
+/* ============================================================
+   components.css — componentes compartidos (nesting CSS)
+   @layer: components
+   .formula · .nota · .prob · .calc · .fig · .split
+   ============================================================ */
+@layer components {
+  /* ---------- Fórmula destacada ---------- */
+  .formula {
+    background: var(--formula-bg, #fff8f0);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius-m);
+    padding: 10px;
+    margin-block: 10px;
+    text-align: center;
+    overflow-x: auto;
+    font-size: 1.05rem;
+  }
+
+  /* ---------- Notas y problemas ---------- */
+  .nota {
+    border: 2px solid var(--accent);
+    border-radius: var(--radius-m);
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    background: var(--paper, #fffbe6);
+
+    & b {
+      background: var(--accent);
+      color: #fff;
+      padding-inline: 6px;
+      margin-inline-end: 6px;
+    }
+  }
+
+  .prob {
+    background: #fbf6ff;
+    border-inline-start: 6px solid var(--accent);
+    border-radius: 0 var(--radius-m) var(--radius-m) 0;
+    padding: 10px 12px;
+    margin-block: 10px;
+  }
+
+  /* ---------- Figura SVG ---------- */
+  figure.fig {
+    margin: 0;
+    background: #fffdf4;
+    border: 1.5px solid var(--ink);
+    border-radius: var(--radius-m);
+    padding: 10px;
+
+    & svg {
+      inline-size: 100%;
+    }
+
+    & img {
+      inline-size: 100%;
+      block-size: auto;
+    }
+
+    & figcaption {
+      margin-block-start: 8px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+  }
+
+  /* ---------- Layout texto + figura ---------- */
+  .split {
+    display: grid;
+    grid-template-columns: minmax(230px, 330px) 1fr;
+    gap: var(--space-4);
+    align-items: start;
+    margin-block: var(--space-3);
+
+    /* Tablet portrait y móvil: apilar */
+    @media (max-width: 48rem) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---------- Mini calculadoras ---------- */
+  .calc {
+    margin-block-start: var(--space-3);
+    padding-block-start: 10px;
+    border-block-start: 2px dotted var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+
+    & h3 {
+      margin-block: 0 8px;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    & .inputs,
+    & .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      align-items: center;
+    }
+
+    & label {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      background: #fff8d0;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-s);
+      padding: 4px 8px;
+    }
+
+    & input {
+      inline-size: 4rem;
+      border: none;
+      background: transparent;
+      color: var(--accent-dark);
+      font-weight: 700;
+      outline: none;
+    }
+
+    & button {
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      border: 2px solid var(--accent-dark);
+      border-radius: var(--radius-s);
+      padding: 6px 14px;
+      cursor: pointer;
+
+      &:hover {
+        background: var(--accent-dark);
+      }
+    }
+
+    & output {
+      display: block;
+      margin-block-start: var(--space-2);
+      min-block-size: 1.5em;
+      font-weight: 700;
+      color: #fff;
+      background: var(--ink);
+      border-radius: var(--radius-s);
+      padding: 6px 10px;
+    }
+  }
+
+  /* ---------- Chapter nav (entre capítulos: prev/next) ---------- */
+  .chapter-nav {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-block: var(--space-5);
+  }
+
+  .chapter-nav__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--paper-2);
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius-m);
+    padding: 10px 16px;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+
+    &:hover {
+      background: var(--accent);
+      color: var(--paper-2);
+      border-color: var(--accent-dark);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent-dark);
+      outline-offset: 2px;
+    }
+
+    &[rel="prev"] {
+      order: 1;
+    }
+
+    &[rel="next"] {
+      order: 2;
+      margin-inline-start: auto;
+    }
+  }
+
+  /* ---------- Chapter nav mini (breadcrumb superior) ---------- */
+  .chapter-nav--mini {
+    justify-content: center;
+    align-items: baseline;
+    gap: var(--space-2);
+    margin-block: var(--space-3) var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .chapter-nav__mini-link {
+    color: var(--muted);
+    text-decoration: none;
+    border-block-end: 1px dotted var(--accent);
+
+    &:hover {
+      color: var(--accent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+  }
+
+  .chapter-nav__actual {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chapter-nav__btn {
+      transition: none;
+    }
+  }
+}

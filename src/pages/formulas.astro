@@ -1,0 +1,190 @@
+---
+import ChapterNav from "../components/ChapterNav.astro";
+import ChipsNav from "../components/ChipsNav.astro";
+import Figura from "../components/Figura.astro";
+import Formula from "../components/Formula.astro";
+import FormulaCard from "../components/FormulaCard.astro";
+import Masthead from "../components/Masthead.astro";
+import Math from "../components/Math.astro";
+import Nota from "../components/Nota.astro";
+import CalcAritmetica from "../components/calculators/CalcAritmetica.astro";
+import CalcFibonacci from "../components/calculators/CalcFibonacci.astro";
+import CalcGeometrica from "../components/calculators/CalcGeometrica.astro";
+import CalcRecurrencia from "../components/calculators/CalcRecurrencia.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/formulas.css";
+---
+
+<BaseLayout
+  title="Resumen de Fórmulas — Sucesiones"
+  description="Resumen de fórmulas de sucesiones: aritméticas, geométricas, sumas, límites y Fibonacci, con calculadoras interactivas."
+  wide
+>
+  <main id="contenido">
+    <Masthead linea1="RESUMEN DE FORMULAS" linea2="SUCESIONES" />
+    <p class="sub">
+      Dados <Math tex="a_1" display={false} /> primer término, <Math tex="d" display={false} /> o
+      <Math tex="q" display={false} /> y <Math tex="n\in\mathbb{N}^*" display={false} />
+    </p>
+
+    <ChapterNav
+      posicion="top"
+      variante="mini"
+      prev={{ href: "/capitulo-4/", titulo: "Cap 4: Límite y Fibonacci" }}
+      actual="Fórmulas"
+    />
+
+    <ChipsNav
+      etiqueta="Navegación de fórmulas"
+      enlaces={[
+        { href: "#arit", texto: "Aritmética · término" },
+        { href: "#suma-arit", texto: "Aritmética · suma" },
+        { href: "#geom", texto: "Geométrica · término" },
+        { href: "#suma-geom", texto: "Geométrica · suma" },
+        { href: "#lim", texto: "Límite" },
+        { href: "#rec", texto: "Recurrencia" },
+        { href: "#fib", texto: "Fibonacci" },
+      ]}
+    />
+
+    <div class="grid">
+      <FormulaCard id="arit" titulo="⚑ Sucesión aritmética — término general" variante="accent">
+        <Math tex="\boxed{a_n=a_1+(n-1)d}" />
+        <div class="row2">
+          <Formula>
+            <Math tex="a_1=a_n-(n-1)d" display={false} />
+          </Formula>
+          <Formula>
+            <Math tex="d=\frac{a_n-a_1}{n-1}\quad(n\ne 1)" display={false} />
+          </Formula>
+          <Formula>
+            <Math tex="n=\frac{a_n-a_1}{d}+1\quad(d\ne 0)" display={false} />
+          </Formula>
+        </div>
+        <CalcAritmetica />
+      </FormulaCard>
+
+      <FormulaCard id="eq-arit" titulo="Dos términos cualesquiera (aritmética)">
+        <Math tex="a_k=a_h+(k-h)\,d" />
+        <Nota etiqueta="EQUIDISTANTES">
+          La suma de dos términos equidistantes de los extremos es igual a la suma de los extremos:
+          <Math tex="a_h+a_k=a_1+a_n" display={false} />
+        </Nota>
+      </FormulaCard>
+
+      <FormulaCard id="suma-arit" titulo="Σ Suma de los n primeros términos (aritmética)">
+        <Math tex="\boxed{S_n=\frac{n(a_1+a_n)}{2}}" />
+        <Math tex="S_n=\frac{n\bigl(2a_1+(n-1)d\bigr)}{2}" />
+        <Nota etiqueta="TRUCO">
+          La suma de los <Math tex="n" display={false} /> primeros números naturales es
+          <Math tex="\frac{n(n+1)}{2}" display={false} /> (la de Gauss).
+        </Nota>
+      </FormulaCard>
+
+      <FormulaCard id="geom" titulo="⚑ Sucesión geométrica — término general" variante="accent">
+        <Math tex="\boxed{a_n=a_1 q^{\,n-1}}" />
+        <div class="row2">
+          <Formula>
+            <Math tex="q=\frac{a_{n+1}}{a_n}\quad(q\ne 0,1)" display={false} />
+          </Formula>
+          <Formula>
+            <Math tex="a_k=a_h\,q^{\,k-h}" display={false} />
+          </Formula>
+        </div>
+        <CalcGeometrica />
+      </FormulaCard>
+
+      <FormulaCard id="eq-geom" titulo="Dos términos cualesquiera (geométrica)">
+        <Math tex="a_k=a_h\,q^{\,k-h}" />
+        <Nota etiqueta="EQUIDISTANTES">
+          El producto de dos términos equidistantes de los extremos es igual al producto de los
+          extremos: <Math tex="a_h\,a_k=a_1\,a_n" display={false} />
+        </Nota>
+      </FormulaCard>
+
+      <FormulaCard id="suma-geom" titulo="Σ Suma de los n primeros términos (geométrica)">
+        <Math tex="\boxed{S_n=\frac{a_1 q^{\,n}-a_1}{q-1}}" />
+        <Math tex="\lim_{n\to+\infty}S_n=\frac{a_1}{1-q}\qquad (0<q<1)" />
+        <Nota etiqueta="OJO">
+          La suma infinita sólo existe para sucesiones geométricas decrecientes
+          (<Math tex="0<q<1" display={false} />); por definición <Math tex="q\ne 1" display={false} />.
+        </Nota>
+      </FormulaCard>
+
+      <FormulaCard id="lim" titulo="Límite de una sucesión" anchoCompleto>
+        <div class="row2">
+          <Formula>
+            <b>Convergente:</b> <Math tex="\lim_{n\to+\infty}a_n=b" display={false} /> (b finito)
+          </Formula>
+          <Formula>
+            <b>Divergente:</b> <Math tex="\lim_{n\to+\infty}a_n=\pm\infty" display={false} />
+          </Formula>
+          <Formula>
+            <b>Oscilante:</b> el límite no existe (<Math tex="a_n=\operatorname{sen} n" display={false}
+            />)
+          </Formula>
+        </div>
+        <Nota etiqueta="EJEMPLOS">
+          <Math tex="2+\tfrac{1}{n}\to 2" display={false} /> (convergente) ·
+          <Math tex="2n-3\to+\infty" display={false} /> (divergente) ·
+          <Math tex="\operatorname{sen} n" display={false} /> oscila entre −1 y 1 ·
+          <Math tex="\sum_{i=1}^{\infty}\left(\tfrac12\right)^i=1" display={false} /> (Zenón).
+        </Nota>
+      </FormulaCard>
+
+      <FormulaCard id="rec" titulo="Recurrencia y gráfico" variante="accent" anchoCompleto>
+        <div class="row2" style="align-items:start">
+          <div>
+            <p>
+              Una sucesión dada por <Math tex="a_{n+1}=r\,a_n+s" display={false} /> con
+              <Math tex="a_1" display={false} /> conocido se genera término a término. Cuando
+              <Math tex="|r|<1" display={false} /> la sucesión converge (es una razón
+              <Math tex="q" display={false} /> de sucesión geométrica).
+            </p>
+            <Figura
+              simbolo="suc-rec-bn"
+              descripcion="Puntos aislados de una sucesión dada por recurrencia"
+              viewBox="0 0 300 170"
+              pie="La representación gráfica de una sucesión son puntos aislados."
+            />
+          </div>
+          <div>
+            <CalcRecurrencia />
+          </div>
+        </div>
+      </FormulaCard>
+
+      <FormulaCard id="fib" titulo="Sucesión de Fibonacci y razón áurea" variante="accent" anchoCompleto>
+        <div class="row2" style="align-items:start">
+          <div>
+            <Math tex="\begin{cases} a_1=a_2=1 \\ a_n=a_{n-1}+a_{n-2} \quad n>2 \end{cases}" />
+            <Math tex="a_1+a_2+\ldots+a_n=a_{n+2}-1" />
+            <Math tex="(a_1)^2+(a_2)^2+\ldots+(a_n)^2=a_n\,a_{n+1}" />
+            <Math tex="\frac{a_{n+1}}{a_n}\longrightarrow \frac{1+\sqrt{5}}{2}\approx 1.618" />
+          </div>
+          <div>
+            <Figura
+              simbolo="suc-fib-rect"
+              descripcion="Rectángulos de Fibonacci con su espiral"
+              viewBox="0 0 176 121"
+              pie="1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89…"
+            />
+            <CalcFibonacci />
+          </div>
+        </div>
+      </FormulaCard>
+    </div>
+
+    <ChapterNav
+      posicion="bottom"
+      prev={{ href: "/capitulo-4/", titulo: "Cap 4: Límite y Fibonacci" }}
+      next={{ href: "/", titulo: "Portada" }}
+    />
+  </main>
+
+  <footer>
+    <p>
+      Material extraido del libro de GUSTAVO A. DUFFOUR — MATEMÁTICA DE QUINTO · Resumen de fórmulas
+    </p>
+  </footer>
+</BaseLayout>

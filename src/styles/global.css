@@ -1,0 +1,8 @@
+@import "katex/dist/katex.min.css";
+@import "./tokens.css";
+@import "./base.css";
+@import "./components.css";
+
+/* Orden de cascada (primero = menor prioridad).
+   Cada fichero de tema aporta su propia @layer page. */
+@layer tokens, reset, base, components, page;

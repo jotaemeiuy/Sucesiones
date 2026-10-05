@@ -1,0 +1,42 @@
+---
+import CalculatorShell from "../CalculatorShell.astro";
+---
+
+<CalculatorShell titulo="Sucesión de Fibonacci" id="calc-fib">
+  <form data-calc="fib">
+    <div class="inputs">
+      <label>cuántos n<input type="number" name="n" value="12" min="1" max="60" /></label>
+      <button type="submit">Generar</button>
+    </div>
+    <p class="nota">
+      <b>PROPIEDADES</b> Σ de los n primeros = aₙ₊₂ − 1 · cuadrados = aₙ·aₙ₊₁ ·
+      aₙ₊₁/aₙ → razón áurea
+    </p>
+    <output data-result aria-live="polite">Términos = …</output>
+  </form>
+</CalculatorShell>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form[data-calc="fib"]');
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const out = form.querySelector<HTMLOutputElement>("[data-result]");
+    const input = form.elements.namedItem("n") as HTMLInputElement;
+    const n = Math.min(Math.max(Math.round(Number(input.value)) || 1, 1), 60);
+
+    const f: number[] = [1, 1];
+    while (f.length < n + 2) f.push(f[f.length - 1] + f[f.length - 2]);
+
+    const primeros = f.slice(0, n);
+    const suma = f[n + 1] - 1; // a₁+…+aₙ = aₙ₊₂ − 1
+    const cociente = f[n] / f[n - 1];
+    const cuadrados = primeros.reduce((acc, v) => acc + v * v, 0);
+
+    if (out)
+      out.textContent =
+        `{ ${primeros.join(", ")} } · Σ = ${suma} · Σ de cuadrados = ${cuadrados} ` +
+        `(= aₙ·aₙ₊₁ = ${f[n - 1]}·${f[n]} = ${f[n - 1] * f[n]}) · ` +
+        `aₙ₊₁/aₙ = ${Math.round(cociente * 10000) / 10000} (φ ≈ 1.6180)`;
+  });
+</script>

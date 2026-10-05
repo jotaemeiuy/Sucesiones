@@ -1,0 +1,17 @@
+---
+interface Props {
+  kicker: string;
+  numero: string;
+  tituloHtml: string;
+  subtitulo: string;
+}
+
+const { kicker, numero, tituloHtml, subtitulo } = Astro.props;
+---
+
+<header class="hero">
+  <p class="teorico">{kicker}</p>
+  <p class="num" aria-hidden="true">{numero}</p>
+  <h1 set:html={tituloHtml} />
+  <p>{subtitulo}</p>
+</header>

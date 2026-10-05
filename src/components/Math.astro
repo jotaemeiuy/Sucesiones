@@ -1,0 +1,15 @@
+---
+import katex from "katex";
+
+interface Props {
+  /** Código LaTeX sin delimitadores $ ni \( \). */
+  tex: string;
+  /** true = bloque centrado, false = inline dentro de un párrafo. */
+  display?: boolean;
+}
+
+const { tex, display = true } = Astro.props;
+const html = katex.renderToString(tex, { displayMode: display, throwOnError: false });
+---
+
+{display ? <div class="formula" set:html={html} /> : <span set:html={html} />}

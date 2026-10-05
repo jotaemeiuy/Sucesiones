@@ -1,0 +1,16 @@
+---
+interface Props {
+  simbolo: string;
+  descripcion: string;
+  viewBox?: string;
+  pie?: string;
+  clase?: string;
+}
+
+const { simbolo, descripcion, viewBox = "0 0 300 150", pie, clase = "plano" } = Astro.props;
+---
+
+<figure class="fig">
+  <svg aria-label={descripcion} class={clase} viewBox={viewBox} role="img"><use href={`/assets/sprites.svg#${simbolo}`}/></svg>
+  {pie && <figcaption>{pie}</figcaption>}
+</figure>

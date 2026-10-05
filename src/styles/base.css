@@ -1,0 +1,124 @@
+/* ============================================================
+   base.css — reset moderno, base y utilidades
+   @layers: reset, base
+   Buenas prácticas: :where() (especificidad 0), logical props,
+   focus-visible, reduced-motion, img/svg fluidos.
+   ============================================================ */
+@layer reset, base;
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  :where(body, h1, h2, h3, p, figure, output) {
+    margin: 0;
+  }
+
+  :where(svg) {
+    display: block;
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+
+  :where(input, button) {
+    font: inherit;
+  }
+
+  :where(a) {
+    text-underline-offset: 3px;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    min-block-size: 100dvh;
+    color: var(--ink);
+    background: var(--reader-bg);
+    line-height: 1.6;
+  }
+
+  /* Enlace de salto — accesibilidad con teclado */
+  .skip-link {
+    position: absolute;
+    inset-inline-start: 12px;
+    inset-block-start: -100px;
+    z-index: 100;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    padding: 8px 14px;
+    border-radius: var(--radius-s);
+    text-decoration: none;
+    transition: inset-block-start 0.15s ease;
+  }
+
+  .skip-link:focus-visible {
+    inset-block-start: 12px;
+  }
+
+  .wrap {
+    inline-size: min(100% - 28px, var(--content-narrow));
+    margin-inline: auto;
+    padding-block: var(--space-4) 70px;
+  }
+
+  /* Contenedor ancho (página de fórmulas) */
+  .wrap--wide {
+    inline-size: min(100% - 28px, var(--content-wide));
+  }
+
+  footer {
+    margin-block-start: var(--space-5);
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.9;
+  }
+
+  /* Accesibilidad */
+  :focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* KaTeX: mismo tamaño relativo que tenía MathJax + scroll horizontal */
+  .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-block: 2px;
+    font-size: 1.02em;
+  }
+
+  /* El math nunca hereda mayúsculas de .nota, .sub, títulos… (KaTeX pinta
+     cada carácter como elemento y text-transform lo capitalizaría). */
+  .katex {
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  section.card {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}

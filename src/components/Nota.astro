@@ -1,0 +1,9 @@
+---
+interface Props {
+  etiqueta: string;
+}
+
+const { etiqueta } = Astro.props;
+---
+
+<p class="nota"><b>{etiqueta}</b> <slot /></p>

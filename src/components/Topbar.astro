@@ -1,0 +1,20 @@
+---
+interface Enlace {
+  href: string;
+  texto: string;
+}
+
+interface Props {
+  enlaces: Enlace[];
+}
+
+const { enlaces } = Astro.props;
+---
+
+<nav class="topbar" aria-label="Navegación del capítulo">
+  {
+    enlaces.map((e) => (
+      <a href={e.href}>{e.texto}</a>
+    ))
+  }
+</nav>

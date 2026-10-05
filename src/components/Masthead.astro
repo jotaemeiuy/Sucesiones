@@ -1,0 +1,12 @@
+---
+interface Props {
+  linea1: string;
+  linea2: string;
+}
+
+const { linea1, linea2 } = Astro.props;
+---
+
+<header class="masthead">
+  <p><span>{linea1}</span><span>{linea2}</span></p>
+</header>

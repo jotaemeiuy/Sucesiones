@@ -1,0 +1,207 @@
+/* ============================================================
+   formulas.css — tema lector (a juego con capitulo1.css)
+   @layer: page
+   NOTA: también lo usa la portada (index.astro).
+   ============================================================ */
+@layer page {
+  body {
+    background: var(--reader-bg);
+    color: var(--ink);
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  /* Cabecera tipo hero lector */
+  .masthead {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-hard);
+    color: var(--ink);
+    text-align: center;
+    padding: 26px 22px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+
+    & p {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+
+  .sub {
+    margin: 14px 0 22px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+
+    & strong {
+      background: var(--ink);
+      color: #fff;
+      border-radius: var(--radius-s);
+      padding: 2px 10px;
+    }
+  }
+
+  /* Navegación por píldoras (igual que .topbar del lector) */
+  nav.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-block: 10px 14px;
+
+    & a {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--accent);
+      background: #fff;
+      border: 1.5px solid var(--accent);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-weight: 400;
+      text-decoration: none;
+
+      &:hover {
+        color: #fff;
+        background: var(--accent);
+      }
+    }
+
+    /* Tablet: scroll horizontal si no caben */
+    @media (max-width: 48rem) {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      overflow-x: auto;
+      padding-block-end: 6px;
+      scroll-snap-type: x proximity;
+
+      & a {
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+      }
+    }
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+    gap: 18px;
+    container-type: inline-size;
+
+    /* Desktop ancho: forzar 2 columnas */
+    @media (min-width: 64rem) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* Portada y listados: cards uniformes con el link de entrada
+     siempre a la misma altura (vale para futuros temas/prácticos) */
+  .grid--uniform .card {
+    display: flex;
+    flex-direction: column;
+
+    & > p:last-child {
+      margin-block-start: auto;
+      padding-block-start: var(--space-3);
+    }
+  }
+
+  /* Tarjeta lectora (igual que section.card) */
+  .card {
+    position: relative;
+    min-inline-size: 0; /* que .formula (overflow-x:auto) no ensanche el track */
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    box-shadow: 0 2px 0 rgb(0 0 0 / 0.06);
+    padding: 20px 18px;
+
+    @media (max-width: 40rem) {
+      padding: 16px 14px;
+    }
+
+    &.full {
+      grid-column: 1 / -1;
+    }
+
+    &.accent {
+      border: 2px solid var(--accent);
+      border-inline-start-width: 10px;
+    }
+
+    & h2 {
+      display: inline-block;
+      margin-block: 0 12px;
+      padding: 6px 12px;
+      border-radius: var(--radius-s);
+      color: #fff;
+      background: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 1.02rem;
+      letter-spacing: 0.06em;
+    }
+  }
+
+  .row2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+
+    & > * {
+      min-inline-size: 0;
+    }
+
+    /* Tablet portrait y móvil: apilar */
+    @media (max-width: 48rem) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Ajustes del tema sobre componentes compartidos */
+  .formula {
+    background: #fff8f0;
+  }
+
+  .card a.entrar {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--paper-2);
+    border: 2px solid var(--accent-dark);
+    border-radius: var(--radius-s);
+    padding: 6px 14px;
+    font-weight: 700;
+    text-decoration: none;
+
+    &:hover {
+      background: var(--accent-dark);
+    }
+  }
+
+  .nota {
+    background: #fffbe6;
+    border: 2px dashed #a98d00;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  svg.plano {
+    inline-size: 100%;
+    background: #fffdf4;
+    border: 1.5px solid var(--ink);
+    border-radius: var(--radius-m);
+  }
+
+  footer {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+}

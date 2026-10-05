@@ -1,0 +1,324 @@
+---
+import ChapterNav from "../components/ChapterNav.astro";
+import Figura from "../components/Figura.astro";
+import Hero from "../components/Hero.astro";
+import Math from "../components/Math.astro";
+import Nota from "../components/Nota.astro";
+import Seccion from "../components/Seccion.astro";
+import Split from "../components/Split.astro";
+import Toc from "../components/Toc.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/capitulo1.css";
+---
+
+<BaseLayout
+  title="Capítulo 4 — Límite, Zenón y Fibonacci | Sucesiones"
+  description="Capítulo 4 de Sucesiones (Duffour): límite de una sucesión (convergencia, divergencia, oscilación), paradoja de Zenón, problema de aplicación y sucesión de Fibonacci."
+>
+  <main id="contenido">
+    <Hero
+      kicker="TEORICO 4"
+      numero="4"
+      tituloHtml="LÍMITE, <span>ZENÓN</span> Y FIBONACCI"
+      subtitulo="Sucesiones · Capítulo 4"
+    />
+
+    <ChapterNav
+      posicion="top"
+      variante="mini"
+      prev={{ href: "/capitulo-3/", titulo: "Cap 3: Geométricas" }}
+      actual="Cap 4: Límite y Fibonacci"
+      next={{ href: "/formulas/", titulo: "Fórmulas y calculadoras" }}
+    />
+
+    <Toc
+      items={[
+        { href: "#s1", texto: "7. Nociones sobre el límite" },
+        { href: "#s2", texto: "8. Paradoja de Zenón" },
+        { href: "#s3", texto: "9. Problema de aplicación" },
+        { href: "#s4", texto: "10. Sucesión de Fibonacci" },
+      ]}
+    />
+
+    <Seccion id="s1" tituloHtml="7 — <em>NOCIONES SOBRE EL LÍMITE DE UNA SUCESIÓN</em>">
+      <p>
+        Para calcular el término 15 de una sucesión <Math tex="\{a_n\}" display={false} /> dada por
+        una fórmula explícita, basta sustituir la <Math tex="n" display={false} /> por 15 y hacer
+        las cuentas indicadas. Pero un dato muy importante que muchas veces se necesita conocer es el
+        <strong>comportamiento de los términos de una sucesión indefinida</strong>.
+      </p>
+      <p>
+        En todos los casos habrá que preguntarse: ¿qué sucede con los términos de la sucesión cuando
+        <Math tex="n" display={false} /> toma valores muy grandes
+        (<Math tex="n\to+\infty" display={false} />)?
+      </p>
+      <Math tex="\lim_{n\to+\infty} a_n = b \qquad\text{o, más brevemente,}\qquad a_n\to b" />
+      <Nota etiqueta="ES TAN IMPORTANTE EL CONCEPTO">
+        ¿Qué le pasa a <Math tex="a_n" display={false} /> cuando
+        <Math tex="n\to+\infty" display={false} />? que comúnmente no se escribe la tendencia, sino
+        solamente <Math tex="\lim a_n = b" display={false} />, e incluso suele llegar a verse tan
+        solo <Math tex="a_n\to b" display={false} />.
+      </Nota>
+
+      <Split>
+        <Figura
+          simbolo="suc-lim-conv"
+          descripcion="Puntos de la sucesión dos más uno sobre n acercándose a la recta y igual a dos"
+          viewBox="0 0 300 165"
+          pie="{aₙ} converge a 2."
+        />
+        <div>
+          <p>
+            <strong>EJEMPLO:</strong> Dada la sucesión <Math
+              tex="\{a_n\}:\ a_n=2+\frac{1}{n}"
+              display={false}
+            />, estudiar <Math tex="\lim_{n\to+\infty} a_n" display={false} />.
+          </p>
+          <Math tex="a_1=3,\ a_2=2.5,\ a_3=2.333\ldots,\ a_4=2.25,\ a_5=2.20,\ a_{10}=2.10,\ a_{100}=2.01" />
+          <p>
+            A medida que aumenta <Math tex="n" display={false} />, los términos toman valores cada vez
+            más cercanos a 2 y, a partir de un <Math tex="n" display={false} /> suficientemente
+            grande, todos los términos están tan cerca de 2 como se quiera:
+          </p>
+          <Math tex="\boxed{\lim_{n\to+\infty}\left(2+\frac{1}{n}\right)=2}" />
+          <Nota etiqueta="CONVERGENTE">
+            Una sucesión que tiene límite finito se llama <strong>convergente</strong>.
+          </Nota>
+        </div>
+      </Split>
+
+      <Split>
+        <Figura
+          simbolo="suc-lim-div"
+          descripcion="Puntos de la sucesión dos n menos tres creciendo sin cota"
+          viewBox="0 0 300 175"
+          pie="{bₙ} diverge a más infinito."
+        />
+        <div>
+          <p>
+            <strong>EJEMPLO:</strong> Dada la sucesión <Math
+              tex="\{b_n\}:\ b_n=2n-3"
+              display={false}
+            />, estudiar <Math tex="\lim_{n\to+\infty} b_n" display={false} />.
+          </p>
+          <Math tex="b_1=-1,\ b_2=1,\ b_3=3,\ b_4=5,\ b_5=7,\ b_{10}=17,\ b_{100}=197" />
+          <p>A medida que aumenta <Math tex="n" display={false} />, los términos toman valores cada vez más grandes:</p>
+          <Math tex="\boxed{\lim_{n\to+\infty}(2n-3)=+\infty}" />
+          <Nota etiqueta="DIVERGENTE">
+            Una sucesión que tiene límite infinito se llama <strong>divergente</strong>.
+          </Nota>
+        </div>
+      </Split>
+
+      <Split>
+        <Figura
+          simbolo="suc-lim-osc"
+          descripcion="Puntos de la sucesión seno de n alternándose entre menos uno y uno"
+          viewBox="0 0 300 165"
+          pie="{cₙ} oscila entre −1 y 1."
+        />
+        <div>
+          <p>
+            <strong>EJEMPLO:</strong> Dada la sucesión <Math
+              tex="\{c_n\}:\ c_n=\operatorname{sen}(n)"
+              display={false}
+            />, estudiar <Math tex="\lim_{n\to+\infty} c_n" display={false} />.
+          </p>
+          <Math tex="c_1=0.841,\ c_2=0.909,\ c_3=0.141,\ c_4=-0.757,\ c_5=-0.958,\ c_{10}=-0.544,\ c_{100}=-0.506" />
+          <p>
+            Los términos toman valores positivos o negativos entre <Math tex="-1" display={false} /> y
+            <Math tex="+1" display={false} />:
+          </p>
+          <Math tex="\boxed{\lim_{n\to+\infty}\operatorname{sen}(n)\ \text{no existe}}" />
+          <Nota etiqueta="OSCILANTE">
+            En este caso se dice que la sucesión es <strong>oscilante</strong>.
+          </Nota>
+        </div>
+      </Split>
+    </Seccion>
+
+    <Seccion id="s2" tituloHtml="8 — <em>PARADOJA DE ZENÓN</em>">
+      <Split>
+        <Figura
+          simbolo="suc-zenon"
+          descripcion="Corredor partido sucesivamente por la mitad hasta la meta"
+          viewBox="0 0 300 140"
+          pie="La paradoja del corredor."
+        />
+        <div>
+          <p>
+            <strong>EJEMPLO:</strong> Calcular la suma de la sucesión
+            <Math tex="\{a_n\}:\ a_n=\left(\frac{1}{2}\right)^n" display={false} />.
+          </p>
+          <p>
+            Es una sucesión geométrica de primer término igual a <Math
+              tex="\frac{1}{2}"
+              display={false}
+            /> y razón igual a <Math tex="\frac{1}{2}" display={false} />. Por lo tanto, es una
+            sucesión geométrica decreciente (la razón es menor que uno y mayor que cero), que según
+            el punto 6.6 tiene límite (es convergente). La suma de los términos se plantea como:
+          </p>
+          <Math tex="S_n=\frac{1}{2}+\frac{1}{4}+\frac{1}{8}+\frac{1}{16}+\ldots" />
+          <Math tex="\lim_{n\to+\infty} S_n=\frac{a_1}{1-q}=\frac{\frac{1}{2}}{1-\frac{1}{2}}=1" />
+        </div>
+      </Split>
+
+      <Nota etiqueta="UN EJEMPLO HISTÓRICO">
+        Hace unos dos mil cuatrocientos años el filósofo griego <strong>Zenón de Elea</strong>
+        (495–435 a. C.) estableció la siguiente paradoja, llamada frecuentemente la
+        <em>paradoja del corredor</em>:<br />
+        Un corredor no puede alcanzar nunca la meta porque siempre ha de recorrer la mitad de una
+        distancia antes de recorrer la distancia total. Es decir, cuando haya recorrido la primera
+        mitad, tendrá que recorrer la otra mitad; cuando haya recorrido la mitad de ésta, le quedará
+        todavía la cuarta parte, y así sucesivamente indefinidamente. Puesto que para recorrer por
+        separado cada una de estas se necesita una cantidad positiva de tiempo, parece natural
+        afirmar que el tiempo necesario para el trayecto total ha de ser la suma total de todas estas
+        cantidades de tiempo.<br />
+        La afirmación de Zenón de que un número ilimitado de cantidades positivas no puede tener una
+        suma finita fue contradicha dos mil años más tarde con la teoría de las series infinitas.
+      </Nota>
+
+      <Nota etiqueta="ANTES DE CONTINUAR">
+        Es conveniente hacer los ejercicios 115 al 116, de la página 125.
+      </Nota>
+    </Seccion>
+
+    <Seccion id="s3" tituloHtml="9 — <em>PROBLEMA DE APLICACIÓN</em>">
+      <p>
+        Muchos problemas expresan en palabras una situación que comprende cantidades conocidas y
+        desconocidas (las incógnitas) y ciertas relaciones entre ellas, que se pueden plantear como
+        ecuaciones. Los números que satisfacen dichas ecuaciones serán, en la mayoría de los casos,
+        las soluciones del problema original.
+      </p>
+      <div class="prob">
+        <strong>EJEMPLO:</strong> Un viajero sale de su ciudad natal a las 10 de la mañana y recorre
+        20 km en la primera hora, 25 km en la segunda hora, 30 km en la tercera hora, etc. Tres horas
+        más tarde otro viajero sale por el mismo camino a una velocidad constante de 65 km por hora.
+        <strong>¿A qué hora el segundo viajero encontrará al primero?</strong>
+      </div>
+
+      <h3>Primer paso</h3>
+      <p>
+        Se elige la variable cuya determinación permite responder al problema propuesto. En este caso
+        será el tiempo y lo llamaremos <Math tex="t" display={false} />:
+        <Math tex="t=\text{tiempo en horas}" display={false} />.
+      </p>
+
+      <h3>Segundo paso</h3>
+      <p>
+        Leyendo atentamente la letra del problema se plantean las ecuaciones. En este caso una igualdad
+        entre el recorrido del primer viajero y del segundo.
+      </p>
+      <p>
+        <strong>Recorrido del primer viajero:</strong> 1.ª hora 20 km · 2.ª hora 25 km · 3.ª hora
+        30 km… Es una sucesión aritmética de primer término = 20 y diferencia = 5; el número de
+        términos es el tiempo <Math tex="n=t" display={false} /> (en horas). El recorrido viene dado
+        por la suma de todos los trayectos:
+      </p>
+      <Math tex="a_t=20+(t-1)5" />
+      <Math tex="\text{recorrido primer viajero}=S_t=\frac{t\,(a_1+a_t)}{2}=\frac{t\,\bigl(20+20+(t-1)5\bigr)}{2}" />
+      <p>
+        <strong>Recorrido del segundo viajero:</strong> se aplica la fórmula
+        <Math tex="\text{espacio}=\text{velocidad}\times\text{tiempo}" display={false} />:
+        <Math tex="\text{recorrido segundo viajero}=65\,(t-3)" display={false} />.
+      </p>
+      <p>Se debe cumplir que:</p>
+      <Math tex="\frac{t\,\bigl(20+20+(t-1)5\bigr)}{2}=65(t-3)" />
+      <p>
+        Al hacer cuentas resulta una ecuación de segundo grado en <Math tex="t" display={false} />:
+      </p>
+      <Math tex="\boxed{5t^2-95t+390=0}\qquad \text{de raíces } \{6,\ 13\}" />
+      <Nota etiqueta="SOLUCIONES">
+        La solución del problema es que <strong>seis horas</strong> después de partir el primer
+        viajero se encuentran, o sea <strong>a las cuatro de la tarde</strong>. Pero el problema tiene
+        otra solución: si los viajeros siguen su recorrido se encontrarían nuevamente, trece horas
+        después de la hora diez, o sea <strong>a las once de la noche</strong>.
+      </Nota>
+      <Nota etiqueta="AHORA TE TOCA">
+        Hacer los problemas 117 al 126, de la página 127.
+      </Nota>
+    </Seccion>
+
+    <Seccion id="s4" tituloHtml="10 — <em>SUCESIÓN DE FIBONACCI</em>">
+      <Split>
+        <div>
+          <p>
+            En honor de Fibonacci, la sucesión definida por
+          </p>
+          <Math tex="\{a_n\}:\ \begin{cases} a_1=a_2=1 \\ a_n=a_{n-1}+a_{n-2} \quad \text{para } n>2 \end{cases}" />
+          <p>
+            recibe el nombre de <strong>sucesión de Fibonacci</strong> y sus términos,
+            <em>números de Fibonacci</em>. Con palabras: <em>a partir del tercero cada número se
+            obtiene sumando los dos anteriores</em>.
+          </p>
+          <Math tex="\{a_n\}=\{1,\ 1,\ 2,\ 3,\ 5,\ 8,\ 13,\ 21,\ 34,\ 55,\ 89,\ \ldots\}" />
+        </div>
+        <Figura
+          simbolo="suc-fib-rect"
+          descripcion="Rectángulos de Fibonacci con la espiral dibujada sobre ellos"
+          viewBox="0 0 176 121"
+          pie="Los rectángulos de Fibonacci y su espiral."
+        />
+      </Split>
+
+      <p>La sucesión de Fibonacci tiene muchas propiedades curiosas:</p>
+      <div class="prob">
+        • La suma de los <Math tex="n" display={false} /> primeros términos es:
+        <Math tex="a_1+a_2+\ldots+a_n=a_{n+2}-1" display={false} /><br />
+        • La suma de los términos impares es:
+        <Math tex="a_1+a_3+\ldots+a_{2n-1}=a_{2n}" display={false} /><br />
+        • La suma de los términos pares es:
+        <Math tex="a_2+a_4+\ldots+a_{2n}=a_{2n+1}-1" display={false} /><br />
+        • La suma de los cuadrados de los <Math tex="n" display={false} /> primeros términos es:
+        <Math tex="(a_1)^2+(a_2)^2+\ldots+(a_n)^2=a_n\,a_{n+1}" display={false} /><br />
+        • Los números consecutivos de Fibonacci son primos entre sí.<br />
+        • La propiedad más curiosa es que, a medida que <Math tex="n" display={false} /> aumenta, el
+        cociente de dos números consecutivos se aproxima a la <strong>razón áurea</strong>:
+      </div>
+      <Math tex="\boxed{\frac{a_{n+1}}{a_n}\ \text{tiende a}\ \frac{1+\sqrt{5}}{2}\approx 1.618}" />
+
+      <Nota etiqueta="LEONARDO PISANO FIBONACCI — Italia, 1170–1250">
+        Leonardo de Pisa (conocido como <em>Fibonacci</em>, contracción de <em>filius Bonacci</em>,
+        es decir, el hijo de Bonacci) nace en Pisa, posiblemente hacia 1170 y muere sobre 1250. Su
+        obra principal fue el <em>Liber Abaci</em> (Libro acerca del Ábaco), una extensa obra que
+        contiene casi todo el conocimiento algebraico y aritmético de la época. En ella exponía, entre
+        otras cosas, la importancia del sistema de numeración indo-arábigo. Escrito en 1202, sólo se
+        conserva la versión de 1228 (segunda versión). En él aparece (pp. 123 y 124) un problema sobre
+        el nacimiento de conejos que nada tuvo de significativo hasta que, a comienzos del siglo XX,
+        fue objeto de numerosos estudios que permitieron descubrir muchas de sus propiedades, aunque
+        anteriormente Kepler (<em>De Nive Sexangula</em>) ya había relacionado la sucesión con la
+        sección áurea y el crecimiento de plantas.
+      </Nota>
+
+      <h3>El problema de los conejos</h3>
+      <p>
+        En el <em>Liber Abaci</em>, Fibonacci propuso el siguiente problema: tenemos una pareja de
+        conejos. Si en cada parto obtenemos una nueva pareja y cada nueva pareja tarda un mes en
+        madurar sexualmente, y el embarazo dura un mes, ¿cuántas parejas tendremos en doce meses?
+      </p>
+      <p>
+        Como la primera pareja tiene descendencia en el primer mes, dobla el número y, en este mes, se
+        tienen dos parejas. De éstas, la primera también tiene descendencia en el mes siguiente, de
+        manera que en el segundo mes hay tres parejas. De ésas, dos parejas tienen descendencia en el
+        mes siguiente, de modo que en el tercer mes han nacido dos parejas adicionales y el número
+        total llega a cinco. En dicho mes tres de estas cinco parejas tienen hijos y, en el cuarto, el
+        número de parejas llega a 8. Y así sucesivamente, hasta sumar el décimo y el undécimo números
+        144 y 233: el total de parejas es <strong>377</strong>.
+      </p>
+      <Math tex="\begin{array}{c|c|c|c|c|c} \text{mes} & 1 & 2 & 3 & 4 & \ldots \\ \hline \text{parejas} & 2 & 3 & 5 & 8 & \ldots\ 13,\ 21,\ 34,\ 55,\ 89,\ 144,\ 233,\ 377 \end{array}" />
+    </Seccion>
+
+    <ChapterNav
+      posicion="bottom"
+      prev={{ href: "/capitulo-3/", titulo: "Cap 3: Geométricas" }}
+      next={{ href: "/formulas/", titulo: "Fórmulas y calculadoras" }}
+    />
+  </main>
+
+  <footer>
+    <p>
+      Material extraido del libro de GUSTAVO A. DUFFOUR — MATEMÁTICA DE QUINTO · Cap. 4 «Límite,
+      Zenón y Fibonacci»
+    </p>
+  </footer>
+</BaseLayout>

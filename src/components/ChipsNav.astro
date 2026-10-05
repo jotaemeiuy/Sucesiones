@@ -1,0 +1,24 @@
+---
+interface Enlace {
+  href: string;
+  texto: string;
+  destacado?: boolean;
+}
+
+interface Props {
+  etiqueta: string;
+  enlaces: Enlace[];
+}
+
+const { etiqueta, enlaces } = Astro.props;
+---
+
+<nav class="chips" aria-label={etiqueta}>
+  {
+    enlaces.map((e) => (
+      <a href={e.href} style={e.destacado ? "background:var(--ink);color:var(--paper-2)" : undefined}>
+        {e.texto}
+      </a>
+    ))
+  }
+</nav>

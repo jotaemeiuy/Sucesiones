@@ -1,0 +1,78 @@
+---
+import ChipsNav from "../components/ChipsNav.astro";
+import FormulaCard from "../components/FormulaCard.astro";
+import Masthead from "../components/Masthead.astro";
+import Math from "../components/Math.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/formulas.css";
+---
+
+<BaseLayout
+  title="Sucesiones — Portada"
+  description="Sucesiones (Duffour): nociones sobre sucesiones, sucesiones aritméticas y geométricas, límite, Zenón y Fibonacci, con resumen de fórmulas y calculadoras."
+  wide
+>
+  <main id="contenido">
+    <Masthead linea1="NOCIONES SOBRE SUCESIONES" linea2="GUSTAVO A. DUFFOUR" />
+    <p class="sub">Matemática de Quinto · <strong>orden de lectura</strong></p>
+
+    <ChipsNav
+      etiqueta="Navegación del sitio"
+      enlaces={[
+        { href: "/capitulo-1", texto: "1 · Nociones" },
+        { href: "/capitulo-2", texto: "2 · Aritméticas" },
+        { href: "/capitulo-3", texto: "3 · Geométricas" },
+        { href: "/capitulo-4", texto: "4 · Límite y Fibonacci" },
+        { href: "/formulas", texto: "5 · Fórmulas" },
+      ]}
+    />
+
+    <div class="grid grid--uniform">
+      <FormulaCard titulo="1 · Nociones sobre sucesiones">
+        <p>
+          Definición de sucesión, notación <Math tex="\{a_n\}" display={false} />, fórmula explícita
+          y ley de recurrencia, crecientes y decrecientes, y representación gráfica.
+        </p>
+        <p><a class="entrar" href="/capitulo-1">Entrar al capítulo 1 →</a></p>
+      </FormulaCard>
+
+      <FormulaCard titulo="2 · Sucesiones aritméticas">
+        <p>
+          Diferencia, término general <Math tex="a_n=a_1+(n-1)d" display={false} />, despejes,
+          relación entre dos términos, teorema de los equidistantes y suma de los
+          <Math tex="n" display={false} /> primeros términos.
+        </p>
+        <p><a class="entrar" href="/capitulo-2">Entrar al capítulo 2 →</a></p>
+      </FormulaCard>
+
+      <FormulaCard titulo="3 · Sucesiones geométricas">
+        <p>
+          Razón, término general <Math tex="a_n=a_1q^{n-1}" display={false} />, producto de términos
+          equidistantes, suma de <Math tex="n" display={false} /> términos, suma infinita y
+          sumatorias.
+        </p>
+        <p><a class="entrar" href="/capitulo-3">Entrar al capítulo 3 →</a></p>
+      </FormulaCard>
+
+      <FormulaCard titulo="4 · Límite, Zenón y Fibonacci">
+        <p>
+          Límite de una sucesión —convergente, divergente y oscilante—, la paradoja del corredor de
+          Zenón, un problema de aplicación y la sucesión de Fibonacci con la razón áurea.
+        </p>
+        <p><a class="entrar" href="/capitulo-4">Entrar al capítulo 4 →</a></p>
+      </FormulaCard>
+
+      <FormulaCard titulo="5 · Resumen de fórmulas" variante="accent">
+        <p>
+          Todas las fórmulas juntas —aritméticas, geométricas y límites— con calculadoras
+          interactivas para verificar resultados.
+        </p>
+        <p><a class="entrar" href="/formulas">Entrar a fórmulas →</a></p>
+      </FormulaCard>
+    </div>
+  </main>
+
+  <footer>
+    <p>Material extraido del libro de GUSTAVO A. DUFFOUR — MATEMÁTICA DE QUINTO</p>
+  </footer>
+</BaseLayout>

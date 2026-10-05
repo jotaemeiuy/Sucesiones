@@ -1,0 +1,56 @@
+---
+interface NavLink {
+  href: string;
+  titulo: string;
+}
+
+interface Props {
+  prev?: NavLink;
+  next?: NavLink;
+  posicion?: "top" | "bottom";
+  variante?: "full" | "mini";
+  actual?: string;
+}
+
+const { prev, next, posicion = "bottom", variante = "full", actual } = Astro.props;
+
+const etiqueta =
+  posicion === "top" ? "Navegación superior del capítulo" : "Navegación inferior del capítulo";
+---
+
+{
+  variante === "mini" ? (
+    <nav class="chapter-nav chapter-nav--mini" aria-label={etiqueta}>
+      {prev && (
+        <a class="chapter-nav__mini-link" rel="prev" href={prev.href}>
+          ← {prev.titulo}
+        </a>
+      )}
+      {prev && (actual || next) && <span aria-hidden="true">·</span>}
+      {actual && (
+        <span class="chapter-nav__actual" aria-current="page">
+          {actual}
+        </span>
+      )}
+      {actual && next && <span aria-hidden="true">·</span>}
+      {next && (
+        <a class="chapter-nav__mini-link" rel="next" href={next.href}>
+          {next.titulo} →
+        </a>
+      )}
+    </nav>
+  ) : (
+    <nav class="chapter-nav" aria-label={etiqueta}>
+      {prev && (
+        <a class="chapter-nav__btn" rel="prev" href={prev.href}>
+          ← {prev.titulo}
+        </a>
+      )}
+      {next && (
+        <a class="chapter-nav__btn" rel="next" href={next.href}>
+          {next.titulo} →
+        </a>
+      )}
+    </nav>
+  )
+}

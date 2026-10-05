@@ -1,0 +1,76 @@
+---
+import CalculatorShell from "../CalculatorShell.astro";
+---
+
+<CalculatorShell titulo="Sucesión geométrica: a₁, q, n, aₙ" id="calc-geom">
+  <form data-calc="geom">
+    <div class="inputs">
+      <label>a₁<input type="number" name="a1" value="3" /></label>
+      <label>q<input type="number" name="q" step="any" value="2" /></label>
+      <label>n<input type="number" name="n" value="6" /></label>
+      <label>aₙ<input type="number" name="an" /></label>
+      <button type="submit">Despejar</button>
+    </div>
+    <p class="nota"><b>CÓMO SE USA</b> Deja en blanco el valor que quieras hallar (uno solo).</p>
+    <output data-result aria-live="polite">Resultado = …</output>
+  </form>
+</CalculatorShell>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form[data-calc="geom"]');
+  const txt = (n: string) => (form?.elements.namedItem(n) as HTMLInputElement).value.trim();
+  const num = (n: string) => Number(txt(n));
+
+  const fmt = (x: number) => {
+    const r = Math.round(x * 10000) / 10000;
+    return Number.isFinite(r) ? String(r) : "no definido";
+  };
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const out = form.querySelector<HTMLOutputElement>("[data-result]");
+    const campos = ["a1", "q", "n", "an"];
+    const vacios = campos.filter((k) => txt(k) === "");
+    if (out && (vacios.length !== 1 || campos.some((k) => txt(k) !== "" && !Number.isFinite(num(k))))) {
+      out.textContent = "Deja en blanco exactamente un valor (y no dejes campos sin número).";
+      return;
+    }
+
+    let a1 = txt("a1") === "" ? NaN : num("a1");
+    let q = txt("q") === "" ? NaN : num("q");
+    let n = txt("n") === "" ? NaN : num("n");
+    let an = txt("an") === "" ? NaN : num("an");
+    const falta = vacios[0];
+    let msg = "";
+
+    switch (falta) {
+      case "a1":
+        a1 = an / Math.pow(q, n - 1);
+        msg = `a₁ = aₙ / qⁿ⁻¹ = ${fmt(an)} / ${fmt(q)}^${fmt(n - 1)} = ${fmt(a1)}`;
+        break;
+      case "q":
+        if (n === 1 || a1 === 0) { msg = "Con n = 1 o a₁ = 0 no se puede despejar q."; break; }
+        q = Math.pow(an / a1, 1 / (n - 1));
+        msg = `q = (aₙ/a₁)^(1/(n−1)) = (${fmt(an)}/${fmt(a1)})^(1/${fmt(n - 1)}) = ${fmt(q)}`;
+        break;
+      case "n":
+        if (q <= 0 || q === 1 || a1 === 0) { msg = "Se necesita q > 0, q ≠ 1 y a₁ ≠ 0."; break; }
+        n = Math.log(an / a1) / Math.log(q) + 1;
+        msg = `n = ln(aₙ/a₁)/ln q + 1 = ln(${fmt(an)}/${fmt(a1)})/ln ${fmt(q)} + 1 = ${fmt(n)}`;
+        break;
+      case "an":
+        an = a1 * Math.pow(q, n - 1);
+        msg = `aₙ = a₁·qⁿ⁻¹ = ${fmt(a1)}·${fmt(q)}^${fmt(n - 1)} = ${fmt(an)}`;
+        break;
+    }
+
+    if (!msg) { if (out) out.textContent = "No se pudo resolver."; return; }
+
+    if (q !== 1) {
+      const S = (a1 * Math.pow(q, n) - a1) / (q - 1);
+      msg += ` · Sₙ = (a₁qⁿ − a₁)/(q−1) = ${fmt(S)}`;
+      if (q > 0 && q < 1) msg += ` · suma infinita = a₁/(1−q) = ${fmt(a1 / (1 - q))}`;
+    }
+    if (out) out.textContent = msg;
+  });
+</script>

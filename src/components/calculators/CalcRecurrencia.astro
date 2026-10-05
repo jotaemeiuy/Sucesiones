@@ -1,0 +1,96 @@
+---
+import CalculatorShell from "../CalculatorShell.astro";
+---
+
+<CalculatorShell titulo="Sucesión por recurrencia: aₙ₊₁ = r·aₙ + s" id="calc-rec">
+  <form data-calc="rec">
+    <div class="inputs">
+      <label>a₁<input type="number" name="a1" value="2" /></label>
+      <label>r<input type="number" name="r" step="any" value="2" /></label>
+      <label>s<input type="number" name="s" step="any" value="-3" /></label>
+      <label>cuántos<input type="number" name="k" value="10" min="2" max="40" /></label>
+      <button type="submit">Generar</button>
+    </div>
+    <p class="nota">
+      <b>EJEMPLO</b> a₁ = 2, r = 2, s = −3 da bₙ₊₁ = 2bₙ − 3 → {"{2, 1, −1, −5, −13…"}
+    </p>
+    <output data-result aria-live="polite">Términos = …</output>
+    <div data-chart aria-hidden="true"></div>
+  </form>
+</CalculatorShell>
+
+<style>
+  :global([data-chart]) {
+    display: block;
+    margin-block-start: var(--space-2);
+    overflow-x: auto;
+  }
+  :global([data-chart] svg) {
+    display: block;
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form[data-calc="rec"]');
+  const val = (n: string) => Number((form?.elements.namedItem(n) as HTMLInputElement).value);
+
+  const fmt = (x: number) => {
+    const r = Math.round(x * 10000) / 10000;
+    return Number.isFinite(r) ? String(r) : "…";
+  };
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const out = form.querySelector<HTMLOutputElement>("[data-result]");
+    const chart = form.querySelector<HTMLElement>("[data-chart]");
+    const a1 = val("a1");
+    const r = val("r");
+    const s = val("s");
+    const k = Math.min(Math.max(Math.round(val("k")) || 10, 2), 40);
+
+    if (![a1, r, s, k].every(Number.isFinite)) {
+      if (out) out.textContent = "Revisa los valores introducidos.";
+      return;
+    }
+
+    const terminos: number[] = [a1];
+    for (let i = 1; i < k; i++) terminos.push(r * terminos[i - 1] + s);
+
+    if (out)
+      out.textContent = `a₁…a${k} = { ${terminos.map(fmt).join(", ")} } · monotonía: ${
+        terminos.every((v, i) => i === 0 || v > terminos[i - 1])
+          ? "estrictamente creciente"
+          : terminos.every((v, i) => i === 0 || v < terminos[i - 1])
+            ? "estrictamente decreciente"
+            : terminos.every((v, i) => i === 0 || v === terminos[i - 1])
+              ? "constante"
+              : "oscilante"
+      }`;
+
+    if (!chart) return;
+
+    const W = 320;
+    const H = 150;
+    const pad = 28;
+    const min = Math.min(...terminos, 0);
+    const max = Math.max(...terminos, 0);
+    const span = max - min || 1;
+    const x = (i: number) => pad + (i * (W - pad * 2)) / Math.max(terminos.length - 1, 1);
+    const y = (v: number) => H - pad - ((v - min) / span) * (H - pad * 2);
+    const cero = y(0);
+
+    const puntos = terminos
+      .map((v, i) => `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="3.5" fill="#bf2045"/>`)
+      .join("");
+
+    chart.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Puntos aislados de la sucesión generada" xmlns="http://www.w3.org/2000/svg">
+      <line x1="${pad}" y1="${cero.toFixed(1)}" x2="${W - pad / 2}" y2="${cero.toFixed(1)}" stroke="#222" stroke-width="1.4"/>
+      <line x1="${pad}" y1="${H - pad}" x2="${pad}" y2="${pad / 2}" stroke="#222" stroke-width="1.4"/>
+      <text x="${W - pad / 2}" y="${(cero - 6).toFixed(1)}" font-size="12" fill="#222">n</text>
+      <text x="${pad - 6}" y="${(pad / 2 + 4).toFixed(1)}" font-size="12" fill="#222" text-anchor="end">aₙ</text>
+      ${puntos}
+    </svg>`;
+  });
+</script>

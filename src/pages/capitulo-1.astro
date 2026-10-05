@@ -1,0 +1,236 @@
+---
+import ChapterNav from "../components/ChapterNav.astro";
+import Figura from "../components/Figura.astro";
+import Hero from "../components/Hero.astro";
+import Math from "../components/Math.astro";
+import Nota from "../components/Nota.astro";
+import Seccion from "../components/Seccion.astro";
+import Split from "../components/Split.astro";
+import Toc from "../components/Toc.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/capitulo1.css";
+---
+
+<BaseLayout
+  title="Capítulo 1 — Nociones sobre sucesiones | Sucesiones"
+  description="Capítulo 1 de Sucesiones (Duffour): definición de sucesión, notación, fórmula explícita y ley de recurrencia, monotonía y representación gráfica."
+>
+  <main id="contenido">
+    <Hero
+      kicker="TEORICO 1"
+      numero="1"
+      tituloHtml="NOCIONES <span>SOBRE</span> SUCESIONES"
+      subtitulo="Sucesiones · Capítulo 1"
+    />
+
+    <ChapterNav
+      posicion="top"
+      variante="mini"
+      prev={{ href: "/", titulo: "Portada" }}
+      actual="Cap 1: Nociones"
+      next={{ href: "/capitulo-2/", titulo: "Cap 2: Aritméticas" }}
+    />
+
+    <Toc
+      items={[
+        { href: "#s1", texto: "Definición" },
+        { href: "#s2", texto: "Formas de definir una sucesión" },
+        { href: "#s3", texto: "Crecientes o decrecientes" },
+        { href: "#s4", texto: "Representación gráfica" },
+      ]}
+    />
+
+    <Seccion id="s1" tituloHtml="1 — <em>DEFINICIÓN</em>">
+      <p>
+        Se denomina <strong>sucesión</strong> a una función <Math tex="f" display={false} /> cuyo
+        dominio es el conjunto de todos los números naturales excepto el cero.
+      </p>
+      <p>
+        Dado que la variable es un número natural, se acostumbra a usar la letra <Math
+          tex="n"
+          display={false}
+        />, en lugar de <Math tex="x" display={false} />. Generalmente, la dependencia de <Math
+          tex="n"
+          display={false}
+        /> se indica utilizando subíndices y se escribe <Math tex="a_n" display={false} />, <Math
+          tex="b_n"
+          display={false}
+        />, <Math tex="s_n" display={false} />, en vez de <Math tex="f(n)" display={false} />, <Math
+          tex="g(n)"
+          display={false}
+        />…
+      </p>
+      <p>De esta manera se obtiene la siguiente correspondencia:</p>
+      <Math tex="1\mapsto a_1,\quad 2\mapsto a_2,\quad 3\mapsto a_3,\quad \ldots\quad n\mapsto a_n" />
+      <p>
+        Se utiliza la notación <Math tex="\{a_n\}" display={false} /> para indicar la sucesión cuyo
+        término enésimo es <Math tex="a_n" display={false} />.
+      </p>
+
+      <Nota etiqueta="EL AVARO Y EL MENDIGO">
+        Un mendigo le pide hospedaje a un avaro haciéndole la siguiente proposición: «yo pagaré
+        $1000 por el primer día, $2000 por el segundo, $3000 por el tercero y así sucesivamente. A
+        cambio, usted me pagará $1 el primer día, $2 el segundo, $4 el tercero y así
+        sucesivamente». El avaro y el mendigo llegaron a un acuerdo por 30 días.
+        <br /><strong>¿Quién salió perjudicado en este contrato y por qué?</strong>
+      </Nota>
+
+      <Split>
+        <div>
+          <h3>Un número muy importante</h3>
+          <p>Trabajando con la sucesión:</p>
+          <Math tex="f(n)=\left(1+\frac{1}{n}\right)^{n}" />
+          <p>Calcular:</p>
+          <Math tex="f(100)=\;?,\qquad f(1000)=\;?,\qquad f(10000)=\;?" />
+          <p>
+            ¿Qué se observa? ¿A qué número tiende? Es el número <strong>e</strong> de Euler
+            (≈ 2.71828…).
+          </p>
+        </div>
+        <div class="prob">
+          <strong>RESPUESTAS</strong><br />
+          f(100) = 2.70481…<br />f(1000) = 2.71692…<br />f(10000) = 2.71815…
+        </div>
+      </Split>
+    </Seccion>
+
+    <Seccion id="s2" tituloHtml="2 — <em>ALGUNAS FORMAS DE DEFINIR UNA SUCESIÓN</em>">
+      <h3>2.1. Por una fórmula explícita</h3>
+      <p>
+        Por ejemplo: <Math tex="\{a_n\}:\ a_n=\frac{1}{n}" display={false} />. Esta fórmula recibe el
+        nombre de <strong>término general</strong> de la sucesión, pues a partir de ella es posible
+        encontrar cualquiera de los términos de <Math tex="\{a_n\}" display={false} />.
+      </p>
+      <div class="prob">
+        <strong>EJEMPLO:</strong> Determinar el término general de la siguiente sucesión a partir de
+        sus primeros términos: <Math tex="\{a_n\}=\{1,\ 3,\ 9,\ 27,\ 81,\ \ldots\}" />
+        <p>
+          El estudiante debe reconocer en estos números las primeras potencias de 3:
+        </p>
+        <Math tex="\{a_n\}:\ a_n=3^{\,n-1}\quad \forall\, n\ge 1" />
+      </div>
+
+      <h3>2.2. Por una ley de recurrencia</h3>
+      <p>
+        Fórmula que relaciona un término cualquiera, los anteriores y el lugar que ocupa. El
+        principal inconveniente de esta forma de expresar una sucesión está en la necesidad de
+        conocer un término para hallar el siguiente.
+      </p>
+      <div class="prob">
+        <strong>EJEMPLO:</strong> En la siguiente sucesión dada por recurrencia:
+        <Math tex="\{b_n\}:\ \begin{cases} b_1=2 \\ b_{n+1}=2b_n-3 \end{cases}\quad \forall\, n\ge 1" />
+        <p>i) Calcular los diez primeros términos. ii) Graficarlos.</p>
+        <p>
+          iii) Encontrar una fórmula explícita para <Math tex="b_n" display={false} /> en función de
+          <Math tex="n" display={false} />.
+        </p>
+        <Math tex="\{b_n\}=\{2,\ 1,\ -1,\ -5,\ -13,\ -29,\ -61,\ -125,\ -253,\ -509,\ \ldots\}" />
+      </div>
+      <Split>
+        <Figura
+          simbolo="suc-rec-bn"
+          descripcion="Puntos aislados de la sucesión b sub n: 2, 1, menos 1, menos 5, menos 13"
+          viewBox="0 0 300 170"
+          pie="ii) Los términos, como puntos aislados, se hunden rápidamente."
+        />
+        <div>
+          <p>
+            iii) En algunos casos es posible encontrar una fórmula explícita para <Math
+              tex="b_n"
+              display={false}
+            /> en función de <Math tex="n" display={false} />:
+          </p>
+          <Math tex="\{b_n\}:\ b_n=3-2^{\,n-1}\quad \forall\, n\ge 1" />
+          <Nota etiqueta="NOTA">
+            Véanse otros ejemplos de representación gráfica de sucesiones en las páginas 104 y 118
+            del libro.
+          </Nota>
+        </div>
+      </Split>
+    </Seccion>
+
+    <Seccion id="s3" tituloHtml="3 — <em>SUCESIONES CRECIENTES O DECRECIENTES</em>">
+      <p>
+        Una sucesión se dice que es <strong>estrictamente creciente</strong> si cada término es mayor
+        que el anterior:
+      </p>
+      <Math tex="\{a_n\}\ \text{es estrictamente creciente si para todo } n\in\mathbb{N}^*\ a_{n+1}>a_n" />
+      <p>
+        Una sucesión se dice que es <strong>estrictamente decreciente</strong> si cada término es
+        menor que el anterior:
+      </p>
+      <Math tex="\{a_n\}\ \text{es estrictamente decreciente si para todo } n\in\mathbb{N}^*\ a_{n+1}<a_n" />
+      <Math tex="\text{Monótona creciente: } a_{n+1}\ge a_n \qquad \text{Monótona decreciente: } a_{n+1}\le a_n" />
+      <Math tex="\text{Constante: } a_{n+1}=a_n \qquad \text{Oscilante: } a_n=\operatorname{sen} n" />
+      <p>
+        Mientras que <Math tex="\{a_n\}:\ a_n=\operatorname{sen} n" display={false} /> es
+        <strong>oscilante</strong> pues sus valores varían entre <Math tex="-1" display={false} /> y
+        <Math tex="+1" display={false} />.
+      </p>
+      <div class="prob">
+        <strong>EJEMPLO:</strong> Demostrar que <Math tex="\{a_n\}:\ a_n=\frac{1}{n}" display={false} />
+        es una sucesión estrictamente decreciente.
+        <p>Para ello se debe demostrar que, para todo <Math tex="n\in\mathbb{N}^*" display={false} />:</p>
+        <Math tex="a_{n+1}<a_n \quad\Longleftrightarrow\quad \frac{1}{n+1}<\frac{1}{n}" />
+        <Math tex="\frac{1}{n+1}-\frac{1}{n}<0 \quad\Longleftrightarrow\quad \frac{-1}{n(n+1)}<0" />
+        <p>
+          Se confirma que la sucesión es decreciente, pues la desigualdad se verifica para todos
+          los <Math tex="\mathbb{N}^*" display={false} />.
+        </p>
+      </div>
+    </Seccion>
+
+    <Seccion id="s4" tituloHtml="4 — <em>REPRESENTACIÓN GRÁFICA DE UNA SUCESIÓN</em>">
+      <p>
+        Las sucesiones también se pueden graficar en un sistema de ejes coordenados. Pero la
+        representación gráfica de una sucesión consiste en <strong>puntos aislados</strong>.
+      </p>
+      <Split>
+        <Figura
+          simbolo="suc-graf-cn"
+          descripcion="Puntos aislados de la sucesión c sub n igual a uno sobre n, decreciente hacia cero"
+          viewBox="0 0 300 165"
+          pie="{cₙ}: cₙ = 1/n — decreciente, tiende a cero."
+        />
+        <div>
+          <Math tex="\{c_n\}:\ c_n=\frac{1}{n}" />
+          <p>
+            Es posible observar que <Math tex="\{c_n\}" display={false} /> es una sucesión
+            decreciente cuyo término enésimo tiende a <strong>cero</strong>.
+          </p>
+        </div>
+      </Split>
+      <Split>
+        <Figura
+          simbolo="suc-graf-dn"
+          descripcion="Puntos aislados de la sucesión d sub n, oscilante alrededor de uno"
+          viewBox="0 0 300 165"
+          pie="{dₙ}: dₙ = 1 + (−1)ⁿ/n — oscilante, tiende a uno."
+        />
+        <div>
+          <Math tex="\{d_n\}:\ d_n=1+\frac{(-1)^n}{n}" />
+          <p>
+            Es posible observar que <Math tex="\{d_n\}" display={false} /> es una sucesión
+            oscilante cuyo término enésimo tiende a <strong>uno</strong>.
+          </p>
+          <Nota etiqueta="ANTES DE CONTINUAR">
+            Es conveniente hacer los ejercicios 97 y 98, de la página 124.
+          </Nota>
+        </div>
+      </Split>
+    </Seccion>
+
+    <ChapterNav
+      posicion="bottom"
+      prev={{ href: "/", titulo: "Portada" }}
+      next={{ href: "/capitulo-2/", titulo: "Cap 2: Aritméticas" }}
+    />
+  </main>
+
+  <footer>
+    <p>
+      Material extraido del libro de GUSTAVO A. DUFFOUR — MATEMÁTICA DE QUINTO · Cap. 1 «Nociones
+      sobre sucesiones»
+    </p>
+  </footer>
+</BaseLayout>

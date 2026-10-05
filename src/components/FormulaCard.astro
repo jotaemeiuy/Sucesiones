@@ -1,0 +1,15 @@
+---
+interface Props {
+  id?: string;
+  titulo: string;
+  variante?: "accent" | undefined;
+  anchoCompleto?: boolean;
+}
+
+const { id, titulo, variante, anchoCompleto = false } = Astro.props;
+---
+
+<article id={id} class:list={["card", variante === "accent" && "accent", anchoCompleto && "full"]}>
+  <h2>{titulo}</h2>
+  <slot />
+</article>
