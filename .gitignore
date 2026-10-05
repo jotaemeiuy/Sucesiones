@@ -9,3 +9,6 @@ AGENTS.md
 .env.local
 DS_Store
 *.tsbuildinfo
+
+# Fuente histórica: se consulta, no se versiona
+Sucesiones.pdf
