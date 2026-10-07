@@ -66,8 +66,33 @@ Detalle en `AGENTS.md`.
 
 ## Despliegue
 
-Vercel, proyecto `sucesiones`: preset **Astro**, build `pnpm build`, output
-`dist`, Node 22. Cada push a `main` se publica solo.
+Repositorio: [github.com/jotaemeiuy/Sucesiones](https://github.com/jotaemeiuy/Sucesiones)
+(público) · Demo: https://sucesiones.vercel.app
+
+1. Importar el repo en <https://vercel.com/new>: Vercel detecta el preset
+   **Astro** y el resto de ajustes vienen fijados en `vercel.json` —
+   instalación con pnpm 12.3.4, build `pnpm build`, salida `dist/`,
+   Node 24.x, caché `immutable` para `/_astro/*` y cabeceras de seguridad.
+2. Cada push a `main` se publica solo.
+
+**Por qué se fija pnpm 12.3.4:** el lockfile es `lockfileVersion: '9.0'`,
+con el que Vercel elegiría pnpm 9/10; sin la versión exacta se perderían el
+override de `@astrojs/compiler-rs` (`0.4.0`) y las claves del workspace, y
+las fórmulas KaTeX se romperían en producción.
+
+Si Vercel asigna una URL distinta de `sucesiones.vercel.app`, actualizar
+`site` en `astro.config.mjs`.
+
+Verificación:
+
+```bash
+python3 scripts/verificar.py                                   # preview local
+python3 scripts/verificar.py https://<proyecto>.vercel.app     # producción
+```
+
+A mano, tras el deploy: fórmulas sin errores ni rojo de KaTeX (los tachados
+sí son rojo accent), 33 soluciones desplegables, 4 calculadoras, retratos y
+0 scroll horizontal en 360/768/1280.
 
 ## Fuente
 

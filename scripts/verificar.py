@@ -1,7 +1,8 @@
 import asyncio, sys
 from playwright.async_api import async_playwright
 
-BASE = "http://localhost:4321"
+# Contra el preview local por defecto; contra producción: verificar.py <url>
+BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://localhost:4321"
 PAGINAS = [
     "/",
     "/capitulo-1/",
