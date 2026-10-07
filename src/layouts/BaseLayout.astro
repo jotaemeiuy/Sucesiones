@@ -8,6 +8,8 @@ interface Props {
 }
 
 const { title, description, wide = false } = Astro.props;
+// URL canónica absoluta: origen de `site` (astro.config.mjs) + la ruta actual
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.href;
 ---
 
 <!doctype html>
@@ -18,6 +20,15 @@ const { title, description, wide = false } = Astro.props;
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <title>{title}</title>
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sucesiones — Duffour" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <slot name="head" />
   </head>
   <body>
