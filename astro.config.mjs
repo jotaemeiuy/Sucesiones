@@ -4,7 +4,7 @@ import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 
 export default defineConfig({
-  site: "https://sucesiones.vercel.app",
+  site: "https://sucesiones-duffour.vercel.app",
   output: "static",
   // Astro 7 cambió el default a 'jsx' (pega palabras alrededor de elementos
   // inline). Se fija en `true` para conservar el comportamiento clásico,

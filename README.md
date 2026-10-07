@@ -4,7 +4,7 @@ Sitio estático con el teórico de **Nociones sobre sucesiones** (Gustavo A. Duf
 *Matemática de Quinto*, pp. 101‑127): definición, aritméticas, geométricas, límite,
 Zenón y Fibonacci, con resumen de fórmulas y calculadoras interactivas.
 
-🌐 **Demo:** https://sucesiones.vercel.app
+🌐 **Demo:** https://sucesiones-duffour.vercel.app
 
 ## Rutas
 
@@ -67,7 +67,7 @@ Detalle en `AGENTS.md`.
 ## Despliegue
 
 Repositorio: [github.com/jotaemeiuy/Sucesiones](https://github.com/jotaemeiuy/Sucesiones)
-(público) · Demo: https://sucesiones.vercel.app
+(público) · Demo: https://sucesiones-duffour.vercel.app
 
 1. Importar el repo en <https://vercel.com/new>: Vercel detecta el preset
    **Astro** y el resto de ajustes vienen fijados en `vercel.json` —
@@ -80,8 +80,9 @@ con el que Vercel elegiría pnpm 9/10; sin la versión exacta se perderían el
 override de `@astrojs/compiler-rs` (`0.4.0`) y las claves del workspace, y
 las fórmulas KaTeX se romperían en producción.
 
-Si Vercel asigna una URL distinta de `sucesiones.vercel.app`, actualizar
-`site` en `astro.config.mjs`.
+El `site` de `astro.config.mjs` apunta a `https://sucesiones-duffour.vercel.app`:
+si renombras el proyecto en Vercel, actualizarlo (y las dos «Demo» de este
+documento) y volver a desplegar.
 
 Verificación:
 
