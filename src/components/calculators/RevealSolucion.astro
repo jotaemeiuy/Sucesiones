@@ -1,25 +1,56 @@
 ---
+/* Solución oculta tras un botón (script propio, sin framework).
+   · modo texto → prop `solucion`: se escribe tal cual en el <output>.
+   · modo rico  → slot: KaTeX y listas en un panel bajo el <output>.
+   El botón conserva data-reveal / data-solucion (lo usa scripts/verificar.py). */
 interface Props {
   boton: string;
-  solucion: string;
+  solucion?: string;
+  /** Id base para aria-controls (los botones se repiten en toda la página). */
+  id?: string;
 }
 
-const { boton, solucion } = Astro.props;
+const { boton, solucion, id } = Astro.props;
+const idPanel = id ? `${id}-sol` : undefined;
 ---
 
 <div class="calc">
   <strong>▸ {boton}</strong>
   <div class="row">
-    <button type="button" data-reveal data-solucion={solucion}>Ver solución</button>
+    <button
+      type="button"
+      data-reveal
+      data-solucion={solucion}
+      aria-expanded={solucion ? undefined : "false"}
+      aria-controls={idPanel}
+    >
+      Ver solución
+    </button>
   </div>
   <output data-result aria-live="polite">…</output>
+  <div class="sol" data-panel-solucion id={idPanel} role="status" hidden>
+    <slot />
+  </div>
 </div>
 
 <script>
   document.querySelectorAll<HTMLButtonElement>("button[data-reveal]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const out = btn.closest(".calc")?.querySelector<HTMLOutputElement>("[data-result]");
-      if (out) out.textContent = btn.dataset.solucion ?? "";
+      const calc = btn.closest(".calc");
+      const out = calc?.querySelector<HTMLOutputElement>("[data-result]");
+      const panel = calc?.querySelector<HTMLElement>("[data-panel-solucion]");
+
+      if (btn.dataset.solucion) {
+        if (out) out.textContent = btn.dataset.solucion;
+        return;
+      }
+      if (!panel) return;
+
+      const abierto = !panel.hidden;
+      panel.hidden = abierto;
+      btn.setAttribute("aria-expanded", String(!abierto));
+      btn.textContent = abierto ? "Ver solución" : "Ocultar solución";
+      if (out) out.textContent = abierto ? "…" : "Solución desplegada";
     });
   });
 </script>

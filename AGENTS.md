@@ -62,13 +62,14 @@ GeomAnal) para no arrastrar cambios de compilador.
 
 ```
 src/
-  pages/          # index.astro (/), capitulo-1..4.astro, formulas.astro
+  pages/          # index.astro (/), capitulo-1..4.astro, formulas.astro,
+                  # practico-sucesiones.astro (/practico-sucesiones)
   layouts/        # BaseLayout.astro (head, skip-link, favicon, .wrap)
   components/     # .astro estáticos por defecto (cero JS)
     Math.astro, Formula.astro, FormulaCard.astro, Nota.astro,
     Figura.astro, Split.astro, Masthead.astro, ChipsNav.astro,
     Topbar.astro, Hero.astro, Toc.astro, Seccion.astro, ChapterNav.astro,
-    CalculatorShell.astro
+    CalculatorShell.astro, MiniGrafico.astro (SVG de la 116, generado en build)
     calculators/  # Islas: CalcAritmetica, CalcGeometrica, CalcRecurrencia,
                   #        CalcFibonacci, RevealSolucion
   styles/         # global.css importa tokens → base → components (+ KaTeX);
@@ -76,6 +77,10 @@ src/
 public/assets/sprites.svg   # 10 figuras (suc-*)
 public/assets/favicon.svg
 ```
+
+El **práctico** (`practico-sucesiones.astro`) transcribe §11 (preguntas), §12
+(ejercicios 97‑116) y §13 (problemas 117‑126). Las soluciones son propias (el PDF
+fuente no trae las páginas 475‑477) y van en el slot de `RevealSolucion`.
 
 Fuente histórica (no commitear cambios, es el original): `Sucesiones.pdf`
 (27 págs., pp. 101‑127). El PDF **no incluye** las páginas de resultados 475‑477:
@@ -87,10 +92,14 @@ toda solución del sitio está calculada por nosotros.
    en el `<script>` propio de cada componente `.astro`. Las directivas `client:*`
    son solo para componentes de framework; **nunca** en componentes `.astro`.
 2. **Sin `Astro.glob()` ni `entry.render()`** (APIs obsoletas).
-3. **Rutas finas:** las páginas ensamblan layouts + componentes.
-4. **Props tipadas** con `interface Props`. `set:html` solo para salida saneada
+3. **`RevealSolucion` tiene dos modos:** prop `solucion` (texto plano escrito en
+   el `<output>`, como en los capítulos) o **slot** (panel `hidden` con KaTeX y
+   listas, como en el práctico). El botón siempre es `button[data-reveal]` y
+   conmuta `aria-expanded`; `scripts/verificar.py` prueba los dos.
+4. **Rutas finas:** las páginas ensamblan layouts + componentes.
+5. **Props tipadas** con `interface Props`. `set:html` solo para salida saneada
    (KaTeX) o `tituloHtml` interno — nunca con input de usuario.
-5. **Figuras:** sprite vía `<Figura>`; `role="img"` + `aria-label` siempre;
+6. **Figuras:** sprite vía `<Figura>`; `role="img"` + `aria-label` siempre;
    `output[aria-live="polite"]` en calculadoras.
 
 ## Reglas de CSS
@@ -155,6 +164,18 @@ nunca `client:*` en `.astro`).
 1. `pnpm build` en verde, **cero avisos de KaTeX** y sin caracteres de control
    en `dist/` (comprobación arriba).
 2. `pnpm preview` + script de verificación (Playwright con `channel="chrome"`):
-   sin scroll horizontal a 360/768/1280 px en las 6 rutas, calculadoras
-   respondiendo por teclado y `RevealSolucion` mostrando la solución.
+   sin scroll horizontal a 360/768/1280 px en las 7 rutas, calculadoras
+   respondiendo por teclado y `RevealSolucion` mostrando la solución (modo texto
+   en los capítulos y panel con KaTeX en el práctico).
 3. Repasar en `pnpm dev` que ninguna fórmula sale en rojo.
+
+<!-- CODEGRAPH_START -->
+## CodeGraph
+
+In repositories indexed by CodeGraph (a `.codegraph/` directory exists at the repo root), reach for it BEFORE grep/find or reading files when you need to understand or locate code:
+
+- **MCP tool** (when available): `codegraph_explore` answers most code questions in one call — the relevant symbols' verbatim source plus the call paths between them, including dynamic-dispatch hops grep can't follow. Name a file or symbol in the query to read its current line-numbered source. If it's listed but deferred, load it by name via tool search.
+- **Shell** (always works): `codegraph explore "<symbol names or question>"` prints the same output.
+
+If there is no `.codegraph/` directory, skip CodeGraph entirely — indexing is the user's decision.
+<!-- CODEGRAPH_END -->

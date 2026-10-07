@@ -192,11 +192,9 @@
     letter-spacing: 0.04em;
   }
 
+  /* El marco lo pone figure.fig (components.css): aquí solo escalamos. */
   svg.plano {
     inline-size: 100%;
-    background: #fffdf4;
-    border: 1.5px solid var(--ink);
-    border-radius: var(--radius-m);
   }
 
   footer {

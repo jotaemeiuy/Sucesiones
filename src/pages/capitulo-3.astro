@@ -40,7 +40,6 @@ import "../styles/capitulo1.css";
         { href: "#s4", texto: "6.4. Teorema de los equidistantes" },
         { href: "#s5", texto: "6.5. Suma de los n primeros términos" },
         { href: "#s6", texto: "6.6. Suma infinita" },
-        { href: "#s7", texto: "Sumatoria y sucesiones" },
       ]}
     />
 
@@ -66,9 +65,9 @@ import "../styles/capitulo1.css";
           tex="\{1,\ 2,\ 4,\ 8,\ 16,\ \ldots\}"
           display={false}
         /> ¿es una sucesión geométrica?
+        <p>Sí, porque la división de dos términos sucesivos da siempre el mismo resultado:</p>
+        <Math tex="\frac{16}{8}=2 \qquad \frac{8}{4}=2 \qquad \frac{4}{2}=2 \qquad \frac{2}{1}=2" />
         <p>
-          Sí, porque la división de dos términos sucesivos da siempre el mismo resultado:
-          <Math tex="\frac{16}{8}=2,\ \frac{8}{4}=2,\ \frac{4}{2}=2,\ \frac{2}{1}=2" display={false} />.
           Los números dados forman una sucesión geométrica de <strong>primer término igual a 1</strong>
           y <strong>razón igual a 2</strong>.
         </p>
@@ -79,10 +78,11 @@ import "../styles/capitulo1.css";
           tex="\{3,\ 9,\ 81,\ 243,\ \ldots\}"
           display={false}
         /> ¿es una sucesión geométrica?
+        <p>Para ello se deben tomar dos términos sucesivos y dividirlos entre sí:</p>
+        <Math tex="\frac{243}{81}=3 \qquad \frac{81}{9}=9 \qquad \frac{9}{3}=3" />
         <p>
-          Para ello se deben tomar dos términos sucesivos y dividirlos entre sí:
-          <Math tex="\frac{243}{81}=3,\ \frac{81}{9}=9,\ \frac{9}{3}=3" display={false} />. No es una
-          sucesión geométrica, ya que la división de dos términos sucesivos no siempre da lo mismo.
+          No es una sucesión geométrica, ya que la división de dos términos sucesivos no siempre da
+          lo mismo.
         </p>
       </div>
 
@@ -126,19 +126,29 @@ import "../styles/capitulo1.css";
       <div class="prob">
         <strong>EJEMPLO:</strong> En una sucesión geométrica de 5 términos, cuyo último es
         <Math tex="-1024" display={false} /> y la razón es 4, hallar el primer término.
-        <Math tex="-1024=a_1(4)^{5-1}=a_1(256)" />
-        <Math tex="\boxed{a_1=-4}" />
+        <p>
+          Se plantea la expresión del término general, el enésimo, para calcular el valor
+          desconocido (el primer término):
+        </p>
+        <Math
+          tex="\begin{aligned} a_n &= a_1\,q^{\,n-1} \\ -1024 &= a_1(4)^{5-1} \\ -1024 &= a_1(256) && \boxed{\text{Solución: } a_1=-4} \end{aligned}"
+        />
       </div>
 
       <div class="prob">
         <strong>EJEMPLO:</strong> En una sucesión geométrica, el primer término vale 81 y razón
         <Math tex="\frac{1}{3}" display={false} />. ¿Cuánto vale el quinto término?
-        <Math tex="a_5=81\left(\frac{1}{3}\right)^{5-1}=81\left(\frac{1}{81}\right)" />
-        <Math tex="\boxed{a_5=1}" />
+        <p>
+          Se plantea la expresión del término general, el enésimo, para calcular el valor
+          desconocido (el quinto término):
+        </p>
+        <Math
+          tex="\begin{aligned} a_n &= a_1\,q^{\,n-1} \\ a_5 &= 81\left(\frac{1}{3}\right)^{5-1} \\ a_5 &= 81\left(\frac{1}{81}\right) && \boxed{\text{Solución: } a_5=1} \end{aligned}"
+        />
       </div>
 
       <Nota etiqueta="ANTES DE CONTINUAR">
-        Es conveniente hacer los ejercicios 108 al 114, de la página 125.
+        Es conveniente hacer <a href="/practico-sucesiones/#e108">los ejercicios 108 al 114</a>.
       </Nota>
     </Seccion>
 
@@ -149,7 +159,7 @@ import "../styles/capitulo1.css";
       </p>
       <Math tex="a_h=a_1\,q^{\,h-1} \qquad a_k=a_1\,q^{\,k-1}" />
       <p>Dividiendo miembro a miembro ambas igualdades se obtiene que:</p>
-      <Math tex="\frac{a_k}{a_h}=\frac{a_1 q^{\,k-1}}{a_1 q^{\,h-1}}=q^{\,k-h}" />
+      <Math tex="\frac{a_k}{a_h}=\frac{\cancel{a_1} q^{\,k-1}}{\cancel{a_1} q^{\,h-1}}=q^{\,k-h}" />
       <Math tex="\boxed{a_k=a_h\,q^{\,k-h}}" />
     </Seccion>
 
@@ -172,7 +182,7 @@ import "../styles/capitulo1.css";
       </p>
       <Math tex="a_h=a_1 q^{\,m-1} \qquad a_n=a_k q^{\,m-1}" />
       <p>Si se dividen miembro a miembro estas dos expresiones:</p>
-      <Math tex="\frac{a_h}{a_n}=\frac{a_1 q^{\,m-1}}{a_k q^{\,m-1}}=\frac{a_1}{a_k}" />
+      <Math tex="\frac{a_h}{a_n}=\frac{a_1 \cancel{q^{\,m-1}}}{a_k \cancel{q^{\,m-1}}}=\frac{a_1}{a_k}" />
       <p>
         Al simplificar y reordenar resulta <Math tex="a_h a_k=a_1 a_n" display={false} />, como se
         quería demostrar.
@@ -193,7 +203,7 @@ import "../styles/capitulo1.css";
       </p>
       <Math tex="S_n q=a_1 q+a_1 q^2+a_1 q^3+\ldots+a_1 q^{\,n}" />
       <p>Se efectúa la resta <Math tex="(S_n q-S_n)" display={false} />:</p>
-      <Math tex="\begin{aligned} S_n q &= \phantom{-}a_1 q + a_1 q^2 + a_1 q^3 + \ldots + a_1 q^{\,n} \\ -\,S_n &= -a_1 - a_1 q - a_1 q^2 - \ldots - a_1 q^{\,n-1} \\ \hline S_n q-S_n &= -a_1+a_1 q^{\,n} \end{aligned}" />
+      <Math tex="\begin{aligned} S_n q &= \phantom{-a_1-}\cancel{a_1 q} + \cancel{a_1 q^2} + \cancel{a_1 q^3} + \cancel{\ldots} + a_1 q^{\,n} \\ -\,S_n &= -a_1 - \cancel{a_1 q} - \cancel{a_1 q^2} - \cancel{\ldots} - \cancel{a_1 q^{\,n-1}} \\ \hline S_n q-S_n &= -a_1+a_1 q^{\,n} \end{aligned}" />
       <p>
         Se saca <Math tex="S_n" display={false} /> de factor común en el primer término y se reordena
         el segundo:
@@ -207,8 +217,13 @@ import "../styles/capitulo1.css";
       <div class="prob">
         <strong>EJEMPLO:</strong> Hallar la suma de una sucesión geométrica de seis términos que
         comienza en 3 y cuya razón es igual a 2.
+        <p>
+          Para calcular la suma de estos seis primeros términos se aplica la fórmula ya deducida
+          para la suma de <Math tex="n" display={false} /> términos:
+        </p>
+        <Math tex="S_n=\frac{a_1 q^{\,n}-a_1}{q-1}" />
         <Math tex="S_6=\frac{3(2)^6-3}{2-1}=\frac{192-3}{1}=189" />
-        <Math tex="\boxed{S_6=189}" />
+        <Math tex="\boxed{\text{Solución: } S_6=189}" />
       </div>
 
       <div class="prob">
@@ -290,43 +305,6 @@ import "../styles/capitulo1.css";
           </Nota>
         </div>
       </Split>
-    </Seccion>
-
-    <Seccion id="s7" tituloHtml="UNIENDO TEMAS — <em>SUMATORIA Y SUCESIONES</em>">
-      <p>
-        Calcular una fórmula para <Math tex="\sum_{i=0}^{i=n+2}(2i+3)" display={false} />. Es una
-        sucesión aritmética de: primer término = 3 · último término = <Math
-          tex="2(n+2)+3=2n+7"
-          display={false}
-        /> · número de términos = <Math tex="n+3" display={false} />.
-      </p>
-      <p>La fórmula para la suma de una sucesión aritmética conviene expresarla como:</p>
-      <Math tex="\text{Suma}=\frac{(\text{número de términos})\times(\text{primer término}+\text{último término})}{2}" />
-      <Math tex="\sum_{i=0}^{i=n+2}(2i+3)=\frac{(n+3)(3+2n+7)}{2}=\frac{2n^2+16n+30}{2}" />
-      <Math tex="\boxed{\sum_{i=0}^{i=n+2}(2i+3)=n^2+8n+15}" />
-
-      <div class="prob">
-        <strong>a) Calcular:</strong>
-        <Math tex="\begin{aligned} 1)\ &\sum_{i=1}^{i=2n}(3i-2) & 2)\ &\sum_{i=3}^{i=n-1}(-4i-1) & 3)\ &\sum_{i=1}^{i=n+3}(2i-5) \end{aligned}" />
-        <RevealSolucion
-          boton="Ver soluciones de a)"
-          solucion="1) aritmética de primer término 1, último 6n−2 y 2n términos: 2n(1+6n−2)/2 = 6n² − n. 2) aritmética de primer término −13, último −4n+3 y n−3 términos: (n−3)(−4n−10)/2 = −2n² + n + 15. 3) aritmética de primer término −3, último 2n+1 y n+3 términos: (n+3)(2n−2)/2 = n² + 2n − 3."
-        />
-      </div>
-
-      <div class="prob">
-        <strong>b) Usando la fórmula para la suma de una sucesión geométrica, calcular:</strong>
-        <Math tex="\begin{aligned} 4)\ &\sum_{i=1}^{i=2n}3^{\,i} & 5)\ &\sum_{i=3}^{i=n}(2^{\,i}-1) & 6)\ &\sum_{i=1}^{i=n+3}(4^{\,i}-5) \end{aligned}" />
-        <RevealSolucion
-          boton="Ver soluciones de b)"
-          solucion="4) geométrica de a₁ = 3, q = 3 y 2n términos: 3(3^{2n}−1)/(3−1) = (3^{2n+1}−3)/2. 5) ∑2^i (geométrica de 1/4 a 2^n, o sea 2^{n+1}−8) menos los (n−2) unos: 2^{n+1} − n − 6. 6) ∑4^i = (4^{n+4}−4)/3 menos 5(n+3): (4^{n+4}−4)/3 − 5n − 15."
-        />
-      </div>
-
-      <Nota etiqueta="OJO">
-        Véase sumatorias, en el próximo capítulo. Y los resultados del resto de ejercicios en la
-        página 475 del libro.
-      </Nota>
     </Seccion>
 
     <ChapterNav

@@ -13,13 +13,13 @@ Zenón y Fibonacci, con resumen de fórmulas y calculadoras interactivas.
 | `/` | Portada (orden de lectura) |
 | `/capitulo-1/` | §§1‑4 Definición, formas de definir, monotonía y gráfica |
 | `/capitulo-2/` | §5 Sucesiones aritméticas |
-| `/capitulo-3/` | §6 Sucesiones geométricas + sumatorias |
+| `/capitulo-3/` | §6 Sucesiones geométricas |
 | `/capitulo-4/` | §§7‑10 Límite, paradoja de Zenón, problema de aplicación y Fibonacci |
 | `/formulas/` | Resumen de fórmulas + 4 calculadoras |
+| `/practico-sucesiones/` | §11 preguntas del teórico, ejercicios 97‑116 y problemas 117‑126, con solución desplegable |
 
-> Pendiente (2.ª iteración): `/practico-sucesiones/` con las preguntas del teórico
-> (§11), los ejercicios 97‑116 y los problemas 117‑126, con solución propia
-> oculta tras `RevealSolucion` (el PDF no trae las páginas 475‑477).
+Las soluciones del práctico son propias: el PDF fuente no incluye las páginas de
+resultados (475‑477), así que están calculadas para el sitio.
 
 ## Stack
 

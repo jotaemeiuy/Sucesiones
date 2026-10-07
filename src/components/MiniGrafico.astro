@@ -1,0 +1,193 @@
+---
+/* Gráfico de puntos de los primeros términos de una sucesión.
+   Estilo «papel cuadriculado»: la cuadrícula se ancla en el cruce de los ejes
+   (línea fina cada 15 px, gruesa cada 5.ª) y las etiquetas van en mono, igual
+   que las figuras del sprite. SVG generado en build (sin JS cliente):
+   role="img" + aria-label siempre. */
+interface Props {
+  valores: number[];
+  titulo: string;
+  /** Letra de la sucesión (a, b, c…): se rotula como subíndice n en el eje y. */
+  etiqueta?: string;
+  /** Límite de la sucesión: línea discontinua con pegatina a la derecha. */
+  limite?: number;
+}
+
+const { valores, titulo, etiqueta, limite } = Astro.props;
+
+const W = 360;
+const H = 160;
+const PL = 40; // margen izquierdo (rótulos del eje y)
+const PT = 30; // margen superior
+const PB = 28; // margen inferior (rótulos del eje x)
+const PR = limite === undefined ? 40 : 78; // margen derecho (pegatina del límite)
+const FIN = W - PR; // hasta dónde llegan los datos
+const EJE = W - 10; // punta del eje x
+
+/* La escala incluye el límite para que la línea siempre caiga dentro del gráfico */
+const escala = limite === undefined ? [...valores] : [...valores, limite];
+const max = Math.max(...escala);
+const min = Math.min(...escala);
+const rango = max - min || 1;
+const holgura = rango * 0.12; // aire arriba y abajo
+const tope = max + holgura;
+const base = min - holgura;
+const ultimo = Math.max(valores.length - 1, 1);
+const maxDato = Math.max(...valores);
+const minDato = Math.min(...valores);
+
+const px = (i: number) => PL + (i * (FIN - PL)) / ultimo;
+const py = (v: number) => H - PB - ((v - base) / (tope - base)) * (H - PB - PT);
+const f = (n: number) => Number(n.toFixed(2));
+
+/* Rejilla anclada en los ejes: fina cada 15 px y gruesa cada 5.ª (como en Python) */
+const PASO = 15;
+const rejilla = (ancla: number, largo: number, horizontal: boolean) => {
+  const menor: number[] = [];
+  const mayor: number[] = [];
+  for (let k = -Math.ceil(ancla / PASO); ancla + k * PASO <= largo; k++) {
+    const d = f(ancla + k * PASO);
+    if (d < -0.01 || d > largo) continue;
+    (k % 5 === 0 ? mayor : menor).push(d);
+  }
+  return horizontal ? { menor, mayor, vertical: false } : { menor, mayor, vertical: true };
+};
+
+const vG = rejilla(PL, W, false);
+const hG = rejilla(H - PB, H, true);
+const menor = [
+  ...vG.menor.map((d) => ({ d, v: true })),
+  ...hG.menor.map((d) => ({ d, v: false })),
+];
+const mayor = [
+  ...vG.mayor.map((d) => ({ d, v: true })),
+  ...hG.mayor.map((d) => ({ d, v: false })),
+];
+
+/* Pegatina del límite: fondo blanco para que nunca se lea sobre la cuadrícula */
+const chipTxt = limite === undefined ? "" : `L = ${f(limite)}`;
+const chipAncho = limite === undefined ? 0 : Math.max(chipTxt.length * 6.6 + 16, 30);
+const chipAlto = 17;
+const chipX = limite === undefined ? 0 : FIN + 16;
+const chipY = limite === undefined ? 0 : py(limite);
+---
+
+<svg class="mini-grafico" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={titulo}>
+  <g class="rejilla">
+    {menor.map((l) => (l.v ? <line x1={l.d} y1={0} x2={l.d} y2={H} /> : <line x1={0} y1={l.d} x2={W} y2={l.d} />))}
+  </g>
+  <g class="rejilla-mayor">
+    {mayor.map((l) => (l.v ? <line x1={l.d} y1={0} x2={l.d} y2={H} /> : <line x1={0} y1={l.d} x2={W} y2={l.d} />))}
+  </g>
+
+  {
+    limite !== undefined && (
+      <line class="limite" x1={PL} y1={f(chipY)} x2={FIN} y2={f(chipY)} />
+    )
+  }
+
+  <line class="eje" x1={PL} y1={H - PB} x2={PL} y2={17} />
+  <polygon class="punta" points={`${PL},16 ${PL - 4.5},25 ${PL + 4.5},25`} />
+  <line class="eje" x1={PL} y1={H - PB} x2={EJE} y2={H - PB} />
+  <polygon
+    class="punta"
+    points={`${EJE},${H - PB} ${EJE - 9},${H - PB - 4.5} ${EJE - 9},${H - PB + 4.5}`}
+  />
+
+  {valores.map((v, i) => <circle class="punto" cx={f(px(i))} cy={f(py(v))} r="4" />)}
+
+  {
+    limite !== undefined && (
+      <>
+        <rect
+          class="limite-peg"
+          x={f(chipX)}
+          y={f(chipY - chipAlto / 2)}
+          width={f(chipAncho)}
+          height={chipAlto}
+          rx={chipAlto / 2}
+        />
+        <text class="limite-txt" x={f(chipX + chipAncho / 2)} y={f(chipY + 4)}>
+          {chipTxt}
+        </text>
+      </>
+    )
+  }
+
+  {
+    etiqueta && (
+      <text class="rotulo" x={PL - 6} y={15} text-anchor="end">
+        {etiqueta}
+        <tspan dy="3.5" font-size="7.5">n</tspan>
+      </text>
+    )
+  }
+  <text class="rotulo" x={PL - 6} y={f(py(maxDato))} text-anchor="end">{f(maxDato)}</text>
+  {
+    minDato !== maxDato && (
+      <text class="rotulo" x={PL - 6} y={f(py(minDato))} text-anchor="end">{f(minDato)}</text>
+    )
+  }
+  <text x={f(px(0))} y={H - 9} text-anchor="middle">1</text>
+  <text x={f(px(ultimo))} y={H - 9} text-anchor="middle">{valores.length}</text>
+  <text x={EJE - 4} y={H - 9} text-anchor="end">n</text>
+</svg>
+
+<style>
+  .mini-grafico {
+    inline-size: 100%;
+    max-inline-size: 360px;
+    block-size: auto;
+    overflow: visible;
+
+    & .rejilla line {
+      stroke: var(--grid);
+      stroke-width: 1;
+    }
+
+    & .rejilla-mayor line {
+      stroke: var(--grid-major);
+      stroke-width: 1.2;
+    }
+
+    & .eje {
+      stroke: var(--ink);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+    }
+
+    & .punta {
+      fill: var(--ink);
+    }
+
+    & .punto {
+      fill: var(--accent);
+      stroke: var(--card);
+      stroke-width: 1.5;
+    }
+
+    & .limite {
+      stroke: var(--accent);
+      stroke-width: 1.4;
+      stroke-dasharray: 7 5;
+    }
+
+    & .limite-peg {
+      fill: var(--card);
+      stroke: var(--accent);
+      stroke-width: 1.2;
+    }
+
+    & text {
+      fill: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 10px;
+    }
+
+    & .rotulo,
+    & .limite-txt {
+      fill: var(--accent-dark);
+      font-size: 11px;
+    }
+  }
+</style>

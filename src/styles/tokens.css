@@ -22,6 +22,10 @@
     --muted: #5b5b5b;
     --line: #e3ddd0;
 
+    /* Cuadrícula de papel (grafías: SVG y gráficos) */
+    --grid: #ece5d5;
+    --grid-major: #ddd5c1;
+
     /* Tipografías */
     --font-mono: "Courier Prime", "Courier New", Courier, monospace;
     --font-serif: Georgia, "Times New Roman", serif;

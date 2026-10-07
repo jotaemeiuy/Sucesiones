@@ -1,5 +1,6 @@
 ---
 import ChapterNav from "../components/ChapterNav.astro";
+import Figura from "../components/Figura.astro";
 import Hero from "../components/Hero.astro";
 import Math from "../components/Math.astro";
 import Nota from "../components/Nota.astro";
@@ -40,18 +41,21 @@ import "../styles/capitulo1.css";
 
     <Seccion id="s1" tituloHtml="5.1 — <em>DEFINICIÓN</em>">
       <p>
-        Una sucesión de números tales que cada uno, a partir del segundo, es igual al anterior
-        sumado algebraicamente con un número dado (no nulo), se llama una <strong>sucesión
-        aritmética</strong>.
+        Una sucesión de números tales que cada uno, a partir del segundo, es
+        igual al anterior sumado algebraicamente con un número dado (no nulo),
+        se llama una <strong>sucesión aritmética</strong>.
       </p>
       <p>
-        Los números referidos son los <strong>términos</strong> de la sucesión aritmética y el número
-        dado a sumar se llama <strong>diferencia</strong> <Math tex="d" display={false} /> de la
-        sucesión.
+        Los números referidos son los <strong>términos</strong> de la sucesión aritmética
+        y el número dado a sumar se llama <strong>diferencia</strong>
+        <Math tex="d" display={false} /> de la sucesión.
       </p>
       <Nota etiqueta="NOTA">
-        Como consecuencia de la definición dada, la diferencia <Math tex="d" display={false} /> se
-        puede obtener restando dos términos consecutivos cualesquiera de la sucesión aritmética:
+        Como consecuencia de la definición dada, la diferencia <Math
+          tex="d"
+          display={false}
+        /> se puede obtener restando dos términos consecutivos cualesquiera de la
+        sucesión aritmética:
         <Math tex="d=a_{n+1}-a_n\qquad n\in\mathbb{N}^*" display={false} />
       </Nota>
 
@@ -60,10 +64,12 @@ import "../styles/capitulo1.css";
           tex="\{1,\ 3,\ 5,\ 7,\ \ldots\}"
           display={false}
         /> ¿es una sucesión aritmética?
+        <p>Sí, porque la resta de dos términos sucesivos da siempre el mismo resultado:</p>
+        <Math tex="7-5=2 \qquad 5-3=2 \qquad 3-1=2" />
         <p>
-          Sí, porque la resta de dos términos sucesivos da siempre el mismo resultado:
-          <Math tex="7-5=2,\quad 5-3=2,\quad 3-1=2" display={false} />. Los números impares forman
-          una sucesión aritmética de <strong>primer término = 1</strong> y <strong>diferencia = 2</strong>.
+          Los números impares forman una sucesión aritmética de <strong
+            >primer término = 1</strong
+          > y <strong>diferencia = 2</strong>.
         </p>
       </div>
 
@@ -72,19 +78,22 @@ import "../styles/capitulo1.css";
           tex="\{2,\ 5,\ 9,\ 13,\ 18,\ \ldots\}"
           display={false}
         /> ¿es una sucesión aritmética?
+        <p>Para ello se deben tomar dos términos sucesivos y restarlos:</p>
+        <Math tex="18-13=5 \qquad 13-9=4 \qquad 9-5=4 \qquad 5-2=3" />
         <p>
-          Para ello se deben tomar dos términos sucesivos y restarlos:
-          <Math tex="18-13=5,\quad 13-9=4,\quad 9-5=4,\quad 5-2=3" display={false} />. No es una
-          sucesión aritmética, ya que la resta de dos términos sucesivos no siempre da el mismo
-          resultado.
+          No es una sucesión aritmética, ya que la resta de dos términos sucesivos no siempre da
+          el mismo resultado.
         </p>
       </div>
 
       <Nota etiqueta="NOTA">
         En una sucesión aritmética se tiene que:<br />
-        si <Math tex="d>0" display={false} />, es una sucesión aritmética estrictamente creciente.<br />
-        si <Math tex="d<0" display={false} />, es una sucesión aritmética estrictamente decreciente.<br />
-        si <Math tex="d=0" display={false} />, es una sucesión constante (no se tendrán en cuenta).
+        si <Math tex="d>0" display={false} />, es una sucesión aritmética
+        estrictamente creciente.<br />
+        si <Math tex="d<0" display={false} />, es una sucesión aritmética
+        estrictamente decreciente.<br />
+        si <Math tex="d=0" display={false} />, es una sucesión constante (no se
+        tendrán en cuenta).
       </Nota>
     </Seccion>
 
@@ -93,66 +102,92 @@ import "../styles/capitulo1.css";
         Llamando <Math tex="a_1" display={false} /> al primer término, <Math
           tex="d"
           display={false}
-        /> a la diferencia y <Math tex="a_n" display={false} /> al término enésimo de una sucesión
-        aritmética, se cumple que:
+        /> a la diferencia y <Math tex="a_n" display={false} /> al término enésimo
+        de una sucesión aritmética, se cumple que:
       </p>
-      <Math tex="\begin{aligned} a_1 &= a_1 & \text{Primer término} \\ a_2 &= a_1+d & \text{Segundo término} \\ a_3 &= a_1+2d & \text{Tercer término} \\ a_4 &= a_1+3d & \text{Cuarto término} \\ \ldots && \ldots \\ a_n &= a_1+(n-1)d & \text{Enésimo término} \end{aligned}" />
+      <Math
+        tex="\begin{aligned} a_1 &= a_1 & \text{Primer término} \\ a_2 &= a_1+d & \text{Segundo término} \\ a_3 &= a_1+2d & \text{Tercer término} \\ a_4 &= a_1+3d & \text{Cuarto término} \\ \ldots && \ldots \\ a_n &= a_1+(n-1)d & \text{Enésimo término} \end{aligned}"
+      />
       <p>
-        Es posible observar que la diferencia <Math tex="d" display={false} /> está multiplicada por
-        el número de términos <Math tex="n" display={false} />, menos 1.
+        Es posible observar que la diferencia <Math tex="d" display={false} /> está
+        multiplicada por el número de términos <Math tex="n" display={false} />,
+        menos 1.
       </p>
       <Nota etiqueta="NOTA">
-        El enésimo término (término general) define a la sucesión, pues conociendo esta expresión es
-        posible hallar cualquier término de la sucesión aritmética.
+        El enésimo término (término general) define a la sucesión, pues
+        conociendo esta expresión es posible hallar cualquier término de la
+        sucesión aritmética.
       </Nota>
-      <Math tex="\boxed{a_n=a_1+(n-1)d}\qquad \text{Término general} \qquad n\in\mathbb{N}^*" />
+      <Math
+        tex="\boxed{a_n=a_1+(n-1)d}\qquad \text{Término general} \qquad n\in\mathbb{N}^*"
+      />
       <p>
-        De esta última fórmula, que relaciona los valores de <Math tex="a_1" display={false} />, <Math
-          tex="a_n"
+        De esta última fórmula, que relaciona los valores de <Math
+          tex="a_1"
           display={false}
-        />, <Math tex="n" display={false} /> y <Math tex="d" display={false} />, conociendo tres
-        valores cualesquiera se puede hallar el cuarto:
+        />, <Math tex="a_n" display={false} />, <Math tex="n" display={false} /> y
+        <Math tex="d" display={false} />, conociendo tres valores cualesquiera
+        se puede hallar el cuarto:
       </p>
-      <Math tex="a_1=a_n-(n-1)d\qquad d=\frac{a_n-a_1}{n-1}\ (n\ne 1)\qquad n=\frac{a_n-a_1}{d}+1\ (d\ne 0)" />
+      <Math
+        tex="a_1=a_n-(n-1)d\qquad d=\frac{a_n-a_1}{n-1}\ (n\ne 1)\qquad n=\frac{a_n-a_1}{d}+1\ (d\ne 0)"
+      />
 
       <div class="prob">
-        <strong>EJEMPLO:</strong> Hallar el primer término de una sucesión aritmética de 7 términos
-        cuya diferencia es 4, sabiendo que el último término vale 39.
+        <strong>EJEMPLO:</strong> Hallar el primer término de una sucesión aritmética
+        de 7 términos cuya diferencia es 4, sabiendo que el último término vale 39.
         <p>
-          Se plantea la expresión del término general, el enésimo, para despejar el valor desconocido
-          (el primer término):
+          Se plantea la expresión del término general, el enésimo, para despejar
+          el valor desconocido (el primer término):
         </p>
-        <Math tex="39=a_1+(7-1)4 \quad\Longrightarrow\quad a_1=39-(7-1)4" />
-        <Math tex="\boxed{a_1=15}" />
+        <Math tex="\begin{array}{cccccc} a_n & = & a_1 & + & (n-1) & d \\ \downarrow & & \downarrow & & \downarrow & \downarrow \\ 39 & = & a_1 & + & (7-1) & 4 \end{array}" />
+        <Math tex="39-(7-1)4=a_1 \qquad \boxed{\text{Solución: } a_1=15}" />
       </div>
 
       <div class="prob">
-        <strong>EJEMPLO:</strong> En una sucesión aritmética, el primer término vale 3, el último
-        vale 58 y la diferencia 5. Hallar el número de términos.
-        <Math tex="58=3+(n-1)5 \quad\Longrightarrow\quad n=\frac{58-3}{5}+1" />
-        <Math tex="\boxed{n=12}" />
+        <strong>EJEMPLO:</strong> En una sucesión aritmética, el primer término vale
+        3, el último vale 58 y la diferencia 5. Hallar el número de términos.
+        <Math tex="\begin{array}{cccccc} a_n & = & a_1 & + & (n-1) & d \\ \downarrow & & \downarrow & & & \downarrow \\ 58 & = & 3 & + & (n-1) & 5 \end{array}" />
+        <Math tex="n=\frac{58-3}{5}+1 \qquad \boxed{\text{Solución: } n=12}" />
       </div>
 
       <div class="prob">
-        <strong>EJEMPLO:</strong> Hallar una sucesión aritmética cuyo primer término sea la unidad
-        positiva, y que la suma de sus primeros cinco términos sea la cuarta parte de la suma de los
-        cinco términos siguientes.
+        <strong>EJEMPLO:</strong> Hallar una sucesión aritmética cuyo primer término
+        sea la unidad positiva, y que la suma de sus primeros cinco términos sea la
+        cuarta parte de la suma de los cinco términos siguientes.
         <p>
-          En algunos problemas, en lugar de aplicar fórmulas es necesario escribir los términos uno
-          por uno, de acuerdo con la definición de sucesión aritmética. Los cinco primeros términos
-          son: <Math tex="a_1,\ a_1+d,\ a_1+2d,\ a_1+3d,\ a_1+4d" display={false} />. La letra del
-          problema indica que el primer término vale 1, por lo cual:
+          En algunos problemas, en lugar de aplicar fórmulas es necesario
+          escribir los términos uno por uno, de acuerdo con la definición de
+          sucesión aritmética.
         </p>
-        <Math tex="1+(1+d)+(1+2d)+(1+3d)+(1+4d)=\frac{1}{4}\left[(1+5d)+(1+6d)+(1+7d)+(1+8d)+(1+9d)\right]" />
-        <Math tex="20+40d=5+35d\quad\Longrightarrow\quad \boxed{d=-3}" />
-        <p>La sucesión aritmética es: <Math tex="1,\ -2,\ -5,\ -8,\ -11,\ \ldots" display={false} />.</p>
+        <p>
+          Los cinco primeros términos son: <Math
+            tex="a_1,\ a_1+d,\ a_1+2d,\ a_1+3d,\ a_1+4d"
+            display={false}
+          />
+        </p>
+        <p>
+          La letra del problema indica que el primer término vale 1, por lo cual:
+        </p>
+        <Math
+          clase="formula--compacta"
+          tex="1+(1+d)+(1+2d)+(1+3d)+(1+4d)=\frac{1}{4}\left[(1+5d)+(1+6d)+(1+7d)+(1+8d)+(1+9d)\right]"
+        />
+        <p>Resolviendo la ecuación resultante:</p>
+        <Math
+          tex="20+40d=5+35d \quad\Longrightarrow\quad \boxed{\text{Solución: } d=-3}"
+        />
+        <Math tex="\text{La sucesión aritmética es: } 1,\ -2,\ -5,\ -8,\ -11,\ \ldots" />
       </div>
 
       <Nota etiqueta="ANTES DE CONTINUAR">
-        Es conveniente hacer los ejercicios 99 al 102, de la página 124.
+        Es conveniente hacer <a href="/practico-sucesiones/#e99"
+          >los ejercicios 99 al 102</a
+        >.
       </Nota>
       <Nota etiqueta="PROBLEMA">
-        ¿Cuántas veces en 24 horas sonará la campana de un reloj que solo tocae las horas?
+        ¿Cuántas veces en 24 horas sonará la campana de un reloj que toca la
+        cantidad de veces que marca las horas?
         <br /><strong>Respuesta: 156</strong> (78 toques por vuelta de 12 horas: <Math
           tex="1+2+\ldots+12=78"
           display={false}
@@ -162,62 +197,109 @@ import "../styles/capitulo1.css";
 
     <Seccion id="s3" tituloHtml="5.3 — <em>RELACIÓN ENTRE DOS TÉRMINOS</em>">
       <p>
-        Sean <Math tex="a_h" display={false} /> y <Math tex="a_k" display={false} /> dos términos
-        cualesquiera de una sucesión aritmética (con <Math tex="k>h" display={false} />), se cumple
-        que:
+        Sean <Math tex="a_h" display={false} /> y <Math
+          tex="a_k"
+          display={false}
+        /> dos términos cualesquiera de una sucesión aritmética (con <Math
+          tex="k>h"
+          display={false}
+        />), se cumple que:
       </p>
       <Math tex="a_k=a_1+(k-1)d \qquad a_h=a_1+(h-1)d" />
       <p>Restando miembro a miembro ambas igualdades se obtiene que:</p>
       <Math tex="\boxed{a_k=a_h+(k-h)\,d}" />
     </Seccion>
 
-    <Seccion id="s4" tituloHtml="5.4 — <em>SUMA DE LOS n PRIMEROS TÉRMINOS</em>">
+    <Seccion
+      id="s4"
+      tituloHtml="5.4 — <em>SUMA DE LOS n PRIMEROS TÉRMINOS</em>"
+    >
       <h3>5.4.1. Teorema previo</h3>
       <p>
-        En una sucesión aritmética finita, la <strong>suma de dos términos equidistantes de los
-        extremos es igual a la suma de los extremos</strong>:
+        En una sucesión aritmética finita, la <strong
+          >suma de dos términos equidistantes de los extremos es igual a la suma
+          de los extremos</strong
+        >:
       </p>
-      <Math tex="\boxed{a_h+a_k=a_1+a_n}" />
+      <Figura
+        simbolo="suc-equidistantes"
+        descripcion="Términos a uno, a dos, a h, a j, a k y a n: hay m términos entre a uno y a h, y otros m entre a k y a n"
+        viewBox="0 0 600 122"
+      />
       <p>
-        Sean <Math tex="a_h" display={false} /> y <Math tex="a_k" display={false} /> equidistantes
-        de los extremos, es decir, que el número de términos que hay entre <Math
-          tex="a_1"
-          display={false}
-        /> y <Math tex="a_h" display={false} /> es igual al existente entre <Math
+        Sean <Math tex="a_h" display={false} /> y <Math
           tex="a_k"
           display={false}
-        /> y <Math tex="a_n" display={false} />. Aplicando la expresión del último término a cada una
-        de las dos sucesiones de <Math tex="m" display={false} /> términos consideradas:
+        /> equidistantes de los extremos, es decir, que el número de términos que
+        hay entre <Math tex="a_1" display={false} /> y <Math
+          tex="a_h"
+          display={false}
+        /> es igual al existente entre <Math tex="a_k" display={false} /> y <Math
+          tex="a_n"
+          display={false}
+        />.
+      </p>
+      <p>
+        Se considera una sucesión aritmética de <Math
+          tex="m"
+          display={false}
+        /> términos que empiece con <Math tex="a_1" display={false} /> y termine
+        con <Math tex="a_h" display={false} />, y otra sucesión también de <Math
+          tex="m"
+          display={false}
+        /> términos que empiece con <Math tex="a_k" display={false} /> y termine
+        con <Math tex="a_n" display={false} />.
+      </p>
+      <p>
+        Al aplicar la expresión para el último término, para cada una de estas
+        sucesiones aritméticas se obtiene:
       </p>
       <Math tex="a_h=a_1+(m-1)d \qquad a_n=a_k+(m-1)d" />
       <p>
-        Restando miembro a miembro estas dos expresiones se obtiene una relación que se reordena:
-        <Math tex="a_h-a_n=a_1-a_k" display={false} />, de donde resulta
-        <Math tex="a_h+a_k=a_1+a_n" display={false} />.
+        Restando miembro a miembro estas dos expresiones se obtiene una relación
+        que se reordena:
+      </p>
+      <Math tex="\begin{array}{rc} & a_h = a_1+\cancel{(m-1)d} \\ \raisebox{4pt}{-} & a_n = a_k+\cancel{(m-1)d} \\ \hline & a_h-a_n = a_1-a_k \end{array}" />
+      <Math tex="\boxed{a_h+a_k=a_1+a_n}" />
+      <p>
+        <em
+          >Esto significa que: en una sucesión aritmética finita, la suma de dos
+          términos equidistantes de los extremos es igual a la suma de los
+          extremos.</em
+        >
       </p>
 
       <h3>5.4.2. Suma de los n primeros términos</h3>
       <p>
-        Sea la sucesión aritmética <Math tex="\{a_1,\ a_2,\ a_3,\ \ldots,\ a_n\}" display={false} />.
-        Al llamar <Math tex="S_n" display={false} /> a la suma de los primeros <Math
-          tex="n"
+        Sea la sucesión aritmética <Math
+          tex="\{a_1,\ a_2,\ a_3,\ \ldots,\ a_n\}"
           display={false}
-        /> términos consecutivos, se tendrá:
+        />. Al llamar <Math tex="S_n" display={false} /> a la suma de los primeros
+        <Math tex="n" display={false} /> términos consecutivos, se tendrá:
       </p>
       <Math tex="S_n=a_1+a_2+\ldots+a_{n-1}+a_n" />
       <p>Se suma dos veces <Math tex="S_n" display={false} />:</p>
-      <Math tex="\begin{aligned} S_n &= a_1 + a_2 + \ldots + a_{n-1} + a_n \\ +\ S_n &= a_n + a_{n-1} + \ldots + a_2 + a_1 \\ \hline 2S_n &= (a_1+a_n)+(a_2+a_{n-1})+\ldots+(a_{n-1}+a_2)+(a_n+a_1) \end{aligned}" />
+      <Math
+        tex="\begin{aligned} S_n &= a_1 + a_2 + \ldots + a_{n-1} + a_n \\ +\ S_n &= a_n + a_{n-1} + \ldots + a_2 + a_1 \\ \hline 2S_n &= (a_1+a_n)+(a_2+a_{n-1})+\ldots+(a_{n-1}+a_2)+(a_n+a_1) \end{aligned}"
+      />
       <p>Se puede observar que:</p>
       <div class="prob">
-        – Cada sumando está formado por términos equidistantes de los extremos.<br />
-        – Cada sumando entre paréntesis es igual a <Math tex="(a_1+a_n)" display={false} />.<br />
-        – Siendo <Math tex="n" display={false} /> el número de términos, se cumple que:
+        – Cada sumando está formado por términos equidistantes de los extremos.<br
+        />
+        – Cada sumando entre paréntesis es igual a <Math
+          tex="(a_1+a_n)"
+          display={false}
+        />.<br />
+        – Siendo <Math tex="n" display={false} /> el número de términos, se cumple
+        que:
       </div>
-      <Math tex="2S_n=n(a_1+a_n)\quad\Longrightarrow\quad \boxed{S_n=\frac{n(a_1+a_n)}{2}}" />
+      <Math
+        tex="2S_n=n(a_1+a_n)\quad\Longrightarrow\quad \boxed{S_n=\frac{n(a_1+a_n)}{2}}"
+      />
 
       <div class="prob">
-        <strong>EJEMPLO:</strong> Hallar la suma de 10 términos de una sucesión aritmética que
-        empieza en <Math tex="-4" display={false} /> y cuya diferencia es 4.
+        <strong>EJEMPLO:</strong> Hallar la suma de 10 términos de una sucesión aritmética
+        que empieza en <Math tex="-4" display={false} /> y cuya diferencia es 4.
         <p>
           Para hallar la suma de los diez primeros términos se debe calcular <Math
             tex="a_{10}"
@@ -227,45 +309,82 @@ import "../styles/capitulo1.css";
         <Math tex="a_{10}=-4+(10-1)4=32" />
         <p>Luego se aplica la fórmula hallada y se calcula la suma:</p>
         <Math tex="S_{10}=\frac{10(-4+32)}{2}=140" />
-        <Math tex="\boxed{S_{10}=140}" />
+        <Math tex="\boxed{\text{Solución: } S_{10}=140}" />
       </div>
 
       <Nota etiqueta="SUMANDO NÚMEROS">
-        La suma de los <Math tex="n" display={false} /> primeros números naturales es:<br />
-        i) <Math tex="n" display={false} /> · ii) <Math tex="n^2" display={false} /> · iii)
-        <Math tex="\frac{n(n+1)}{2}" display={false} /> · iv) <Math tex="2n" display={false} />
-        <br /><strong>Respuesta: iii)</strong> <Math
-          tex="\frac{n(n+1)}{2}"
+        La suma de los <Math tex="n" display={false} /> primeros números naturales
+        es:<br />
+        i) <Math tex="n" display={false} /> · ii) <Math
+          tex="n^2"
+          display={false}
+        /> · iii)
+        <Math tex="\frac{n(n+1)}{2}" display={false} /> · iv) <Math
+          tex="2n"
           display={false}
         />
+        <br /><strong>Respuesta: iii)</strong>
+        <Math tex="\frac{n(n+1)}{2}" display={false} />
       </Nota>
 
       <div class="prob">
-        <strong>EJEMPLO:</strong> Hallar la suma de 13 términos de una sucesión aritmética de la
-        cual se sabe que el primero es 5 y el sexto es <Math tex="-5" display={false} />.
+        <strong>EJEMPLO:</strong> Hallar la suma de 13 términos de una sucesión aritmética
+        de la cual se sabe que el primero es 5 y el sexto es <Math
+          tex="-5"
+          display={false}
+        />.
         <p>
-          Para calcular la suma de los trece primeros se debe conocer el término decimotercero. Y
-          para ello se debe calcular la diferencia <Math tex="d" display={false} />, que se deduce del
-          término sexto:
+          Se conocen el primer término y el sexto. Para calcular la suma de los trece
+          primeros se debe conocer el término decimotercero. Y para ello se debe calcular
+          la diferencia <Math tex="d" display={false} />, que se deduce del término sexto:
         </p>
-        <Math tex="a_6=a_1+(6-1)d \ \Longrightarrow\ -5=5+(6-1)d \ \Longrightarrow\ \boxed{d=-2}" />
-        <Math tex="a_{13}=5+(13-1)(-2) \ \Longrightarrow\ \boxed{a_{13}=-19}" />
-        <Math tex="S_{13}=\frac{13\,(5+(-19))}{2} \ \Longrightarrow\ \boxed{S_{13}=-91}" />
+        <div class="paso">
+          <p class="paso__rotulo">Cálculo de d</p>
+          <Math
+            tex="\begin{array}{cccccccc} a_n &=& a_1 &+& (n-1) & d & & \\ \downarrow && \downarrow && \downarrow & \downarrow & & \\ a_6 &=& a_1 &+& (6-1) & d & & \\ \downarrow && \downarrow && \downarrow & \downarrow & & \\ -5 &=& 5 &+& (6-1) & d && \boxed{d=-2} \end{array}"
+          />
+        </div>
+        <p>
+          Luego se calcula, usando la expresión del término general, el término
+          decimotercero.
+        </p>
+        <div class="paso">
+          <p class="paso__rotulo">Cálculo de <Math tex="a_{13}" display={false} /></p>
+          <Math tex="a_{13}=5+(13-1)(-2) \qquad \boxed{a_{13}=-19}" />
+        </div>
+        <p>Y se halla la suma de los trece primeros términos.</p>
+        <div class="paso">
+          <p class="paso__rotulo">Cálculo de <Math tex="S_{13}" display={false} /></p>
+          <Math tex="S_{13}=\frac{13\,(5+(-19))}{2} \qquad \boxed{S_{13}=-91}" />
+        </div>
       </div>
 
       <Nota etiqueta="LA HISTORIA DEL PEQUEÑO GAUSS">
-        Carl Friedrich Gauss nació en Gotinga, Alemania, el 30 de abril de 1777 y murió el 28 de
-        febrero de 1855. Fue un niño prodigio: aprendió a leer y a trabajar en la aritmética a la
-        edad de tres años.<br />
-        Se cuenta que, siendo niño, una vez el maestro mandó a su clase hallar la suma de los cien
-        primeros números naturales. Quería tranquilidad por un rato largo, pero Gauss escribió
-        inmediatamente:
+        <img
+          class="retrato"
+          src="/assets/gauss.jpg"
+          alt="Retrato grabado de Carl Friedrich Gauss"
+          width="232"
+          height="329"
+          loading="lazy"
+        />
+        Carl Friedrich Gauss nació en Gotinga, Alemania, el 30 de abril de 1777
+        y murió el 28 de febrero de 1855. Fue un niño prodigio: aprendió a leer
+        y a trabajar en la aritmética a la edad de tres años. Su presencia dominó
+        la comunidad matemática durante y después de su muerte.<br /><br />
+        Se cuenta que, siendo niño, una vez el maestro mandó a su clase hallar la
+        suma de los cien primeros números naturales. Quería tranquilidad por un rato
+        largo, pero Gauss escribió inmediatamente:
       </Nota>
-      <Math tex="\begin{aligned} S &= 1+2+3+\ldots+98+99+100 \\ S &= 100+99+98+\ldots+3+2+1 \\ \hline 2S &= 101+101+101+\ldots+101+101+101 \end{aligned}" />
-      <Math tex="2S=100\cdot 101=10100 \quad\Longrightarrow\quad \boxed{S=5050}" />
+      <Math
+        tex="\begin{aligned} S &= 1+2+3+\ldots+98+99+100 \\ S &= 100+99+98+\ldots+3+2+1 \\ \hline 2S &= 101+101+101+\ldots+101+101+101 \end{aligned}"
+      />
+      <Math tex="2S=100\cdot 101=10100 \qquad \boxed{\text{La suma}=5050}" />
 
       <Nota etiqueta="ANTES DE CONTINUAR">
-        Es conveniente hacer los ejercicios 103 al 107, de la página 124.
+        Es conveniente hacer <a href="/practico-sucesiones/#e103"
+          >los ejercicios 103 al 107</a
+        >.
       </Nota>
     </Seccion>
 
@@ -278,8 +397,8 @@ import "../styles/capitulo1.css";
 
   <footer>
     <p>
-      Material extraido del libro de GUSTAVO A. DUFFOUR — MATEMÁTICA DE QUINTO · Cap. 2 «Sucesiones
-      aritméticas»
+      Material extraido del libro de GUSTAVO A. DUFFOUR — MATEMÁTICA DE QUINTO ·
+      Cap. 2 «Sucesiones aritméticas»
     </p>
   </footer>
 </BaseLayout>

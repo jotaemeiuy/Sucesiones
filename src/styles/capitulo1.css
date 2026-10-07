@@ -204,4 +204,12 @@
     font-size: 0.78rem;
     color: var(--muted);
   }
+
+  /* Enlaces dentro de las notas: puente al práctico (sobresale el azul
+     por defecto del navegador sobre el papel amarillo) */
+  .nota a {
+    color: var(--accent-dark);
+    font-weight: 700;
+    text-decoration: underline;
+  }
 }

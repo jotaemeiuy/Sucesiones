@@ -15,7 +15,7 @@ import CalculatorShell from "../CalculatorShell.astro";
       <b>EJEMPLO</b> a₁ = 2, r = 2, s = −3 da bₙ₊₁ = 2bₙ − 3 → {"{2, 1, −1, −5, −13…"}
     </p>
     <output data-result aria-live="polite">Términos = …</output>
-    <div data-chart aria-hidden="true"></div>
+    <div data-chart></div>
   </form>
 </CalculatorShell>
 
@@ -29,6 +29,37 @@ import CalculatorShell from "../CalculatorShell.astro";
     display: block;
     max-inline-size: 100%;
     block-size: auto;
+    overflow: visible;
+  }
+  :global([data-chart] .rejilla line) {
+    stroke: var(--grid);
+    stroke-width: 1;
+  }
+  :global([data-chart] .rejilla-mayor line) {
+    stroke: var(--grid-major);
+    stroke-width: 1.2;
+  }
+  :global([data-chart] .eje) {
+    stroke: var(--ink);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+  }
+  :global([data-chart] .punta) {
+    fill: var(--ink);
+  }
+  :global([data-chart] .punto) {
+    fill: var(--accent);
+    stroke: var(--card);
+    stroke-width: 1.5;
+  }
+  :global([data-chart] text) {
+    fill: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
+  :global([data-chart] .rotulo) {
+    fill: var(--accent-dark);
+    font-size: 11px;
   }
 </style>
 
@@ -71,26 +102,69 @@ import CalculatorShell from "../CalculatorShell.astro";
 
     if (!chart) return;
 
-    const W = 320;
-    const H = 150;
-    const pad = 28;
+    /* Papel cuadriculado: la rejilla se ancla en el cruce de los ejes y las
+       etiquetas van en monoespaciada, igual que las figuras del sprite. */
+    const W = 340;
+    const H = 160;
+    const PL = 40; // margen izquierdo (rótulos del eje y)
+    const PT = 30; // margen superior
+    const PB = 26; // margen inferior (rótulos del eje x)
+    const EJE = W - 10; // punta del eje x
+    const DATOS = EJE - 16; // hasta dónde llegan los puntos
+    const f = (n: number) => Number(n.toFixed(2));
+
     const min = Math.min(...terminos, 0);
     const max = Math.max(...terminos, 0);
     const span = max - min || 1;
-    const x = (i: number) => pad + (i * (W - pad * 2)) / Math.max(terminos.length - 1, 1);
-    const y = (v: number) => H - pad - ((v - min) / span) * (H - pad * 2);
+    const holgura = span * 0.12; // aire arriba y abajo
+    const ultimo = Math.max(terminos.length - 1, 1);
+    const x = (i: number) => PL + (i * (DATOS - PL)) / ultimo;
+    const y = (v: number) =>
+      H - PB - ((v - (min - holgura)) / (span + 2 * holgura)) * (H - PB - PT);
     const cero = y(0);
+    const ejeY = Math.min(cero + 14, H - 20); // por dónde baja el eje vertical
+
+    const rejilla = (ancla: number, largo: number, vertical: boolean) => {
+      const menor: string[] = [];
+      const mayor: string[] = [];
+      for (let k = -Math.ceil(ancla / 15); ancla + k * 15 <= largo; k++) {
+        const d = ancla + k * 15;
+        if (d < -0.01) continue;
+        const linea = vertical
+          ? `<line x1="${f(d)}" y1="0" x2="${f(d)}" y2="${H}"/>`
+          : `<line x1="0" y1="${f(d)}" x2="${W}" y2="${f(d)}"/>`;
+        (k % 5 === 0 ? mayor : menor).push(linea);
+      }
+      return { menor, mayor };
+    };
+
+    const vG = rejilla(PL, W, true);
+    const hG = rejilla(cero, H, false);
+    const rejillaMenor = `<g class="rejilla">${[...vG.menor, ...hG.menor].join("")}</g>`;
+    const rejillaMayor = `<g class="rejilla-mayor">${[...vG.mayor, ...hG.mayor].join("")}</g>`;
 
     const puntos = terminos
-      .map((v, i) => `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="3.5" fill="#bf2045"/>`)
+      .map((v, i) => `<circle class="punto" cx="${f(x(i))}" cy="${f(y(v))}" r="4"/>`)
       .join("");
 
+    const rotY = (v: number) =>
+      `<text class="rotulo" x="${PL - 6}" y="${f(y(v))}" text-anchor="end">${fmt(v)}</text>`;
+    const maxD = Math.max(...terminos);
+    const minD = Math.min(...terminos);
+    const rotulos = maxD === minD ? rotY(maxD) : rotY(maxD) + rotY(minD);
+
     chart.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Puntos aislados de la sucesión generada" xmlns="http://www.w3.org/2000/svg">
-      <line x1="${pad}" y1="${cero.toFixed(1)}" x2="${W - pad / 2}" y2="${cero.toFixed(1)}" stroke="#222" stroke-width="1.4"/>
-      <line x1="${pad}" y1="${H - pad}" x2="${pad}" y2="${pad / 2}" stroke="#222" stroke-width="1.4"/>
-      <text x="${W - pad / 2}" y="${(cero - 6).toFixed(1)}" font-size="12" fill="#222">n</text>
-      <text x="${pad - 6}" y="${(pad / 2 + 4).toFixed(1)}" font-size="12" fill="#222" text-anchor="end">aₙ</text>
+      ${rejillaMenor}${rejillaMayor}
+      <line class="eje" x1="${PL}" y1="${f(ejeY)}" x2="${PL}" y2="15"/>
+      <polygon class="punta" points="${PL},15 ${PL - 4.5},24 ${PL + 4.5},24"/>
+      <line class="eje" x1="${PL}" y1="${f(cero)}" x2="${EJE}" y2="${f(cero)}"/>
+      <polygon class="punta" points="${EJE},${f(cero)} ${EJE - 9},${f(cero - 4.5)} ${EJE - 9},${f(cero + 4.5)}"/>
       ${puntos}
+      <text class="rotulo" x="${PL - 6}" y="15" text-anchor="end">a<tspan dy="3.5" font-size="7.5">n</tspan></text>
+      ${rotulos}
+      <text x="${f(x(0))}" y="${H - 8}" text-anchor="middle">1</text>
+      <text x="${f(x(ultimo))}" y="${H - 8}" text-anchor="middle">${terminos.length}</text>
+      <text x="${EJE - 4}" y="${f(cero - 7)}" text-anchor="end">n</text>
     </svg>`;
   });
 </script>

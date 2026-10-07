@@ -2,7 +2,15 @@ import asyncio, sys
 from playwright.async_api import async_playwright
 
 BASE = "http://localhost:4321"
-PAGINAS = ["/", "/capitulo-1/", "/capitulo-2/", "/capitulo-3/", "/capitulo-4/", "/formulas/"]
+PAGINAS = [
+    "/",
+    "/capitulo-1/",
+    "/capitulo-2/",
+    "/capitulo-3/",
+    "/capitulo-4/",
+    "/formulas/",
+    "/practico-sucesiones/",
+]
 VIEWPORTS = [(360, 800), (768, 1024), (1280, 900)]
 
 
@@ -62,6 +70,25 @@ async def main():
         print(f"{'OK ' if ok else 'FAIL'} RevealSolucion → {sol[:80]}")
         if not ok:
             fallos.append("RevealSolucion sin texto")
+
+        # reveal enriquecido del práctico (panel con KaTeX + aria-expanded)
+        await page.goto(BASE + "/practico-sucesiones/", wait_until="networkidle")
+        btn = page.locator("#e116 button[data-reveal]")
+        await btn.click()
+        oculto = await page.locator("#e116-sol").is_hidden()
+        katex = await page.locator("#e116-sol .katex").count()
+        expandido = await btn.get_attribute("aria-expanded")
+        ok = (not oculto) and katex > 0 and expandido == "true"
+        print(f"{'OK ' if ok else 'FAIL'} reveal práctico: panel visible, {katex} fórmulas, aria={expandido}")
+        if not ok:
+            fallos.append(f"reveal práctico: oculto={oculto} katex={katex} aria={expandido}")
+
+        # soluciones del práctico: todos los botones existen (97-126 + 3 preguntas)
+        total = await page.locator("button[data-reveal]").count()
+        ok = total >= 33
+        print(f"{'OK ' if ok else 'FAIL'} práctico: {total} botones de solución (esperados 33)")
+        if not ok:
+            fallos.append(f"práctico: solo {total} botones de solución")
 
         if errores:
             fallos.extend("CONSOLA: " + e for e in errores)

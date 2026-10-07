@@ -1,7 +1,7 @@
 /* ============================================================
    components.css — componentes compartidos (nesting CSS)
    @layer: components
-   .formula · .nota · .prob · .calc · .fig · .split
+   .formula · .nota · .prob · .calc · .fig · .split · .duo
    ============================================================ */
 @layer components {
   /* ---------- Fórmula destacada ---------- */
@@ -16,6 +16,60 @@
     font-size: 1.05rem;
   }
 
+  /* Fórmula ancha: achica la letra para que quepa en un solo renglón y no
+     aparezca la barra de scroll horizontal en escritorio. Por debajo de
+     60rem hace falta achicar más; en móvil el renglón (830px) no cabe nunca
+     y la caja sigue haciendo su scroll — la fórmula nunca se recorta. */
+  .formula--compacta {
+    font-size: 0.95rem;
+
+    @media (max-width: 60rem) {
+      font-size: 0.72rem;
+    }
+  }
+
+  /* Tachado de los términos que se anulan (KaTeX \cancel): la línea toma el
+     color accent y el término queda entinta. Va apuntado al <line> del svg de
+     KaTeX y no a la clase, porque \cancel{\ldots} no lleva .cancel-lap. */
+  .formula .katex svg line {
+    stroke: var(--accent);
+  }
+
+  /* Panel «Un número muy importante» (cap. 1): la e gigante de la lámina del
+     libro con la paleta del sitio (papel, borde accent, sombra dura de
+     recorte). En pantallas chicas la e pasa a su propio renglón. */
+  .e-numero {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: center;
+    padding: var(--space-4);
+    background: var(--paper-2);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius-l);
+    box-shadow: var(--shadow-hard);
+
+    @media (max-width: 48rem) {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: start;
+    }
+
+    & .e-numero__glifo {
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: clamp(6rem, 11vw, 9.5rem);
+      line-height: 0.78;
+      color: var(--accent);
+      /* la segunda e desfasada, como la superposición de la lámina */
+      text-shadow: 0.07em 0.09em 0 rgb(34 34 34 / 0.85);
+      user-select: none;
+    }
+
+    & .e-numero__texto {
+      min-inline-size: 0;
+    }
+  }
+
   /* ---------- Notas y problemas ---------- */
   .nota {
     border: 2px solid var(--accent);
@@ -23,12 +77,26 @@
     padding: 10px 12px;
     font-size: 0.9rem;
     background: var(--paper, #fffbe6);
+    display: flow-root; /* contiene el retrato flotado */
 
     & b {
       background: var(--accent);
       color: #fff;
       padding-inline: 6px;
       margin-inline-end: 6px;
+    }
+
+    /* Retrato recortado que acompaña a una nota (p. ej. el pequeño Gauss) */
+    & img.retrato {
+      float: inline-start;
+      inline-size: clamp(88px, 13%, 116px);
+      block-size: auto;
+      margin-block: 4px var(--space-2);
+      margin-inline-end: var(--space-3);
+      border: 1.5px solid var(--ink);
+      border-radius: var(--radius-s);
+      background: var(--card);
+      box-shadow: var(--shadow-hard);
     }
   }
 
@@ -38,6 +106,33 @@
     border-radius: 0 var(--radius-m) var(--radius-m) 0;
     padding: 10px 12px;
     margin-block: 10px;
+  }
+
+  /* Paso de un ejemplo: rótulo ("Cálculo de d") a la izquierda de su fórmula,
+     como en el libro. El rótulo usa el mismo lenguaje que las etiquetas de las
+     notas (fondo accent + texto blanco); en móvil se apila sobre la caja. */
+  .paso {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: center;
+    margin-block: var(--space-2);
+
+    & .paso__rotulo {
+      margin: 0;
+      justify-self: start;
+      background: var(--accent);
+      color: #fff;
+      border-radius: var(--radius-m);
+      padding: 8px 12px;
+      font-weight: 700;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 48rem) {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 
   /* ---------- Figura SVG ---------- */
@@ -72,9 +167,27 @@
     align-items: start;
     margin-block: var(--space-3);
 
-    /* Tablet portrait y móvil: apilar */
+    /* Nada ensancha la pista: un bloque ancho (.formula) hace su propio
+       scroll en vez de empujar la columna fuera del recorte. */
+    & > * {
+      min-inline-size: 0;
+    }
+
+    /* Tablet portrait y móvil: apilar. minmax(0,…) para que la pista no se
+       ensanche con fórmulas anchas (si no, .formula sale del recorte y no
+       se puede desplazar). */
     @media (max-width: 48rem) {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* Variante inversa: contenido principal ancho + barra lateral estrecha.
+     Regla aparte (no anidada con &--): el selector nativo &--mod es inválido. */
+  .split--inversa {
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+
+    @media (max-width: 48rem) {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 
@@ -143,6 +256,81 @@
       background: var(--ink);
       border-radius: var(--radius-s);
       padding: 6px 10px;
+    }
+
+    /* Panel de la solución enriquecida (slot del RevealSolucion): KaTeX y
+       listas en papel, ajenos al font-mono de las calculadoras. */
+    & .sol {
+      margin-block-start: var(--space-2);
+      padding: 10px 12px;
+      background: #fff;
+      border: 2px solid var(--accent);
+      border-radius: var(--radius-s);
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      font-weight: 400;
+      line-height: 1.6;
+
+      &[hidden] {
+        display: none;
+      }
+
+      & > :first-child {
+        margin-block-start: 0;
+      }
+
+      & > :last-child {
+        margin-block-end: 0;
+      }
+
+      & p {
+        margin-block: 6px;
+      }
+
+      & ul,
+      & ol {
+        margin-block: 6px;
+        padding-inline-start: 1.3em;
+      }
+
+      & li + li {
+        margin-block-start: 5px;
+      }
+
+      & h4 {
+        margin-block: 12px 4px;
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      & .formula {
+        margin-block: 8px;
+        font-size: 1rem;
+      }
+
+      /* Gráfico de la 116 dentro de la solución */
+      & .mini-grafico {
+        margin-block: 8px;
+        color: var(--ink);
+      }
+    }
+  }
+
+  /* Fórmulas cortas lado a lado: en pantallas estrechas se apilan, nunca
+     ensanchan la pista (min-inline-size: 0 + minmax con min() ). */
+  .duo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+    gap: var(--space-2);
+    align-items: start;
+    margin-block: var(--space-2);
+
+    & > * {
+      min-inline-size: 0;
+      margin-block: 0;
     }
   }
 

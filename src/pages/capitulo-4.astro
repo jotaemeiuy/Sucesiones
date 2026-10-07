@@ -74,11 +74,14 @@ import "../styles/capitulo1.css";
               display={false}
             />, estudiar <Math tex="\lim_{n\to+\infty} a_n" display={false} />.
           </p>
-          <Math tex="a_1=3,\ a_2=2.5,\ a_3=2.333\ldots,\ a_4=2.25,\ a_5=2.20,\ a_{10}=2.10,\ a_{100}=2.01" />
+          <Math
+            tex="\begin{aligned} a_1 &= 2+\tfrac{1}{1}=3 \\ a_2 &= 2+\tfrac{1}{2}=2.5 \\ a_3 &= 2+\tfrac{1}{3}=2.333\ldots \\ a_4 &= 2+\tfrac{1}{4}=2.25 \\ a_5 &= 2+\tfrac{1}{5}=2.20 \\ \vdots \\ a_{10} &= 2+\tfrac{1}{10}=2.10 \\ \vdots \\ a_{100} &= 2+\tfrac{1}{100}=2.01 \end{aligned}"
+          />
           <p>
-            A medida que aumenta <Math tex="n" display={false} />, los términos toman valores cada vez
-            más cercanos a 2 y, a partir de un <Math tex="n" display={false} /> suficientemente
-            grande, todos los términos están tan cerca de 2 como se quiera:
+            Puede verse que, a medida que aumenta <Math tex="n" display={false} />, los términos de
+            la sucesión toman valores cada vez más cercanos a 2 y, a partir de un
+            <Math tex="n" display={false} /> suficientemente grande, todos los términos de la
+            sucesión están tan cerca de 2 como se quiera. Entonces, se puede afirmar que:
           </p>
           <Math tex="\boxed{\lim_{n\to+\infty}\left(2+\frac{1}{n}\right)=2}" />
           <Nota etiqueta="CONVERGENTE">
@@ -101,8 +104,13 @@ import "../styles/capitulo1.css";
               display={false}
             />, estudiar <Math tex="\lim_{n\to+\infty} b_n" display={false} />.
           </p>
-          <Math tex="b_1=-1,\ b_2=1,\ b_3=3,\ b_4=5,\ b_5=7,\ b_{10}=17,\ b_{100}=197" />
-          <p>A medida que aumenta <Math tex="n" display={false} />, los términos toman valores cada vez más grandes:</p>
+          <Math
+            tex="\begin{aligned} b_1 &= 2(1)-3=-1 \\ b_2 &= 2(2)-3=1 \\ b_3 &= 2(3)-3=3 \\ b_4 &= 2(4)-3=5 \\ b_5 &= 2(5)-3=7 \\ \vdots \\ b_{10} &= 2(10)-3=17 \\ \vdots \\ b_{100} &= 2(100)-3=197 \end{aligned}"
+          />
+          <p>
+            Puede verse que, a medida que aumenta <Math tex="n" display={false} />, los términos de
+            la sucesión toman valores cada vez más grandes. Entonces, se puede afirmar que:
+          </p>
           <Math tex="\boxed{\lim_{n\to+\infty}(2n-3)=+\infty}" />
           <Nota etiqueta="DIVERGENTE">
             Una sucesión que tiene límite infinito se llama <strong>divergente</strong>.
@@ -124,10 +132,15 @@ import "../styles/capitulo1.css";
               display={false}
             />, estudiar <Math tex="\lim_{n\to+\infty} c_n" display={false} />.
           </p>
-          <Math tex="c_1=0.841,\ c_2=0.909,\ c_3=0.141,\ c_4=-0.757,\ c_5=-0.958,\ c_{10}=-0.544,\ c_{100}=-0.506" />
+          <Math
+            tex="\begin{aligned} c_1 &= \operatorname{sen}(1)=0.841 \\ c_2 &= \operatorname{sen}(2)=0.909 \\ c_3 &= \operatorname{sen}(3)=0.141 \\ c_4 &= \operatorname{sen}(4)=-0.757 \\ c_5 &= \operatorname{sen}(5)=-0.958 \\ \vdots \\ c_{10} &= \operatorname{sen}(10)=-0.544 \\ \vdots \\ c_{100} &= \operatorname{sen}(100)=-0.506 \end{aligned}"
+          />
           <p>
-            Los términos toman valores positivos o negativos entre <Math tex="-1" display={false} /> y
-            <Math tex="+1" display={false} />:
+            Puede verse que, a medida que aumenta <Math tex="n" display={false} />, los términos de
+            la sucesión toman valores positivos o negativos entre <Math
+              tex="-1"
+              display={false}
+            /> y <Math tex="+1" display={false} />. Entonces, se puede afirmar que:
           </p>
           <Math tex="\boxed{\lim_{n\to+\infty}\operatorname{sen}(n)\ \text{no existe}}" />
           <Nota etiqueta="OSCILANTE">
@@ -155,8 +168,9 @@ import "../styles/capitulo1.css";
               tex="\frac{1}{2}"
               display={false}
             /> y razón igual a <Math tex="\frac{1}{2}" display={false} />. Por lo tanto, es una
-            sucesión geométrica decreciente (la razón es menor que uno y mayor que cero), que según
-            el punto 6.6 tiene límite (es convergente). La suma de los términos se plantea como:
+            sucesión geométrica decreciente (la razón es menor que uno y mayor que cero), que
+            según <a href="/capitulo-3/#s6">el punto 6.6</a> tiene límite (es convergente). La suma
+            de los términos se plantea como:
           </p>
           <Math tex="S_n=\frac{1}{2}+\frac{1}{4}+\frac{1}{8}+\frac{1}{16}+\ldots" />
           <Math tex="\lim_{n\to+\infty} S_n=\frac{a_1}{1-q}=\frac{\frac{1}{2}}{1-\frac{1}{2}}=1" />
@@ -179,7 +193,7 @@ import "../styles/capitulo1.css";
       </Nota>
 
       <Nota etiqueta="ANTES DE CONTINUAR">
-        Es conveniente hacer los ejercicios 115 al 116, de la página 125.
+        Es conveniente hacer <a href="/practico-sucesiones/#e115">los ejercicios 115 al 116</a>.
       </Nota>
     </Seccion>
 
@@ -235,12 +249,12 @@ import "../styles/capitulo1.css";
         después de la hora diez, o sea <strong>a las once de la noche</strong>.
       </Nota>
       <Nota etiqueta="AHORA TE TOCA">
-        Hacer los problemas 117 al 126, de la página 127.
+        <a href="/practico-sucesiones/#p117">Hacer los problemas 117 al 126</a>.
       </Nota>
     </Seccion>
 
     <Seccion id="s4" tituloHtml="10 — <em>SUCESIÓN DE FIBONACCI</em>">
-      <Split>
+      <Split variante="inversa">
         <div>
           <p>
             En honor de Fibonacci, la sucesión definida por
@@ -278,6 +292,14 @@ import "../styles/capitulo1.css";
       <Math tex="\boxed{\frac{a_{n+1}}{a_n}\ \text{tiende a}\ \frac{1+\sqrt{5}}{2}\approx 1.618}" />
 
       <Nota etiqueta="LEONARDO PISANO FIBONACCI — Italia, 1170–1250">
+        <img
+          class="retrato"
+          src="/assets/fibonacci.jpg"
+          alt="Retrato de Leonardo Pisano Fibonacci"
+          width="232"
+          height="280"
+          loading="lazy"
+        />
         Leonardo de Pisa (conocido como <em>Fibonacci</em>, contracción de <em>filius Bonacci</em>,
         es decir, el hijo de Bonacci) nace en Pisa, posiblemente hacia 1170 y muere sobre 1250. Su
         obra principal fue el <em>Liber Abaci</em> (Libro acerca del Ábaco), una extensa obra que
@@ -290,22 +312,6 @@ import "../styles/capitulo1.css";
         sección áurea y el crecimiento de plantas.
       </Nota>
 
-      <h3>El problema de los conejos</h3>
-      <p>
-        En el <em>Liber Abaci</em>, Fibonacci propuso el siguiente problema: tenemos una pareja de
-        conejos. Si en cada parto obtenemos una nueva pareja y cada nueva pareja tarda un mes en
-        madurar sexualmente, y el embarazo dura un mes, ¿cuántas parejas tendremos en doce meses?
-      </p>
-      <p>
-        Como la primera pareja tiene descendencia en el primer mes, dobla el número y, en este mes, se
-        tienen dos parejas. De éstas, la primera también tiene descendencia en el mes siguiente, de
-        manera que en el segundo mes hay tres parejas. De ésas, dos parejas tienen descendencia en el
-        mes siguiente, de modo que en el tercer mes han nacido dos parejas adicionales y el número
-        total llega a cinco. En dicho mes tres de estas cinco parejas tienen hijos y, en el cuarto, el
-        número de parejas llega a 8. Y así sucesivamente, hasta sumar el décimo y el undécimo números
-        144 y 233: el total de parejas es <strong>377</strong>.
-      </p>
-      <Math tex="\begin{array}{c|c|c|c|c|c} \text{mes} & 1 & 2 & 3 & 4 & \ldots \\ \hline \text{parejas} & 2 & 3 & 5 & 8 & \ldots\ 13,\ 21,\ 34,\ 55,\ 89,\ 144,\ 233,\ 377 \end{array}" />
     </Seccion>
 
     <ChapterNav

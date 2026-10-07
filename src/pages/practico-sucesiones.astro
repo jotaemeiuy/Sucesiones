@@ -1,0 +1,998 @@
+---
+import ChapterNav from "../components/ChapterNav.astro";
+import ChipsNav from "../components/ChipsNav.astro";
+import Hero from "../components/Hero.astro";
+import Math from "../components/Math.astro";
+import MiniGrafico from "../components/MiniGrafico.astro";
+import Nota from "../components/Nota.astro";
+import Seccion from "../components/Seccion.astro";
+import Toc from "../components/Toc.astro";
+import RevealSolucion from "../components/calculators/RevealSolucion.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/capitulo1.css";
+
+/* Diez primeros términos de las recurrencias del 116 (para los gráficos). */
+const diez = (f: (n: number) => number) => Array.from({ length: 10 }, (_, i) => f(i + 1));
+const r116 = {
+  a: diez((n) => 1 / n),
+  b: diez((n) => 1 / (n * n)),
+  c: diez((n) => 1 / 2 ** (n - 1)),
+  d: diez(() => 1),
+  e: diez((n) => 2 ** (n - 1) - 1),
+  f: diez((n) => 3 / 3 ** (n - 1)),
+};
+---
+
+<BaseLayout
+  title="Práctico — Preguntas, ejercicios y problemas | Sucesiones"
+  description="Práctico de Sucesiones (Duffour): preguntas sobre el teórico, ejercicios 97 al 116 y problemas 117 al 126, con solución propia oculta tras cada enunciado."
+>
+  <main id="contenido">
+    <Hero
+      kicker="PRÁCTICO"
+      numero="11-13"
+      tituloHtml="PREGUNTAS, EJERCICIOS <span>Y PROBLEMAS</span>"
+      subtitulo="Sucesiones · Práctico"
+    />
+
+    <ChapterNav
+      posicion="top"
+      variante="mini"
+      prev={{ href: "/capitulo-4/", titulo: "Cap 4: Límite y Fibonacci" }}
+      actual="Práctico"
+      next={{ href: "/formulas/", titulo: "Fórmulas y calculadoras" }}
+    />
+
+    <Toc
+      items={[
+        { href: "#s1", texto: "11. Algunas preguntas sobre el teórico" },
+        { href: "#s2", texto: "12. Ejercicios propuestos (97-116)" },
+        { href: "#s3", texto: "13. Problemas propuestos (117-126)" },
+      ]}
+    />
+
+    <ChipsNav
+      etiqueta="Saltar a un bloque"
+      enlaces={[
+        { href: "#q1", texto: "Preguntas 1-3" },
+        { href: "#e99", texto: "Aritméticas 99-107" },
+        { href: "#e108", texto: "Geométricas 108-114" },
+        { href: "#e115", texto: "Límites 115-116" },
+        { href: "#p117", texto: "Problemas 117-126" },
+      ]}
+    />
+
+    <Nota etiqueta="CÓMO USAR ESTA PÁGINA">
+      Cada enunciado trae su solución, oculta tras el botón <b>Ver solución</b> (se despliega en la
+      misma página y se puede volver a ocultar). Las soluciones son propias: el libro las da en las
+      páginas 475 a 477, que no forman parte del material fuente.
+    </Nota>
+
+    {/* ============================ §11 ============================ */}
+    <Seccion id="s1" tituloHtml="11 — <em>ALGUNAS PREGUNTAS SOBRE EL TEÓRICO</em>">
+      <div class="prob" id="q1">
+        <h3>1) Sucesión aritmética: definición, deducción y suma</h3>
+        <ol type="a">
+          <li>Definir sucesión aritmética.</li>
+          <li>
+            Deducir <Math tex="a_n=a_1+d(n-1)" display={false} />, siendo <Math
+              tex="a_1"
+              display={false}
+            /> y <Math tex="a_n" display={false} /> respectivamente el primer y el enésimo término
+            de una sucesión aritmética, y <Math tex="d" display={false} /> su diferencia.
+          </li>
+          <li>
+            Calcular la diferencia de una sucesión aritmética en la que <Math
+              tex="a_1=2"
+              display={false}
+            /> y <Math tex="a_{10}=-16" display={false} />.
+          </li>
+          <li>Deducir la fórmula de la suma de los <Math tex="n" display={false} /> primeros términos.</li>
+        </ol>
+        <RevealSolucion boton="Solución de la pregunta 1" id="q1">
+          <p>
+            <b>a)</b> Es aritmética toda sucesión en la que la diferencia entre dos términos
+            consecutivos es una constante, llamada <em>diferencia</em>:
+          </p>
+          <Math tex="a_{n+1}-a_n=d \quad \forall\, n" />
+          <p><b>b)</b> Cada paso de la recurrencia suma lo mismo, así que la diferencia se acumula:</p>
+          <Math tex="\begin{aligned} a_2 &= a_1+d \\ a_3 &= a_2+d = a_1+2d \\ a_4 &= a_3+d = a_1+3d \\ \ldots && \\ a_n &= a_1+(n-1)d \end{aligned}" />
+          <p><b>c)</b> Despejamos la diferencia entre dos términos cualesquiera:</p>
+          <Math tex="\boxed{d=\frac{a_{10}-a_1}{10-1}=\frac{-16-2}{9}=-2}" />
+          <p>
+            <b>d)</b> Sumamos la serie escrita al revés: cada par de sumandos da siempre lo mismo
+            (<Math tex="a_1+a_n" display={false} />) y hay <Math tex="n/2" display={false} /> de
+            esos pares:
+          </p>
+          <Math tex="\boxed{S_n=\frac{n\,(a_1+a_n)}{2}}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="q2">
+        <h3>2) ¿Es aritmética la sucesión 7n + 4?</h3>
+        <p>
+          Una sucesión cuyo enésimo término es <Math tex="7n+4" display={false} />. ¿Constituye una
+          sucesión aritmética? Justificar la respuesta.
+        </p>
+        <RevealSolucion boton="Solución de la pregunta 2" id="q2">
+          <p>
+            Sí: su diferencia es constante, no depende de <Math tex="n" display={false} />:
+          </p>
+          <Math tex="a_{n+1}-a_n=\bigl[7(n+1)+4\bigr]-(7n+4)=7" />
+          <p>
+            Es la aritmética con <Math tex="a_1=11" display={false} /> y{" "}
+            <Math tex="d=7" display={false} />, ya que{" "}
+            <Math tex="7n+4=11+(n-1)\cdot 7" display={false} />. Toda sucesión de la forma
+            <Math tex="an+b" display={false} /> es aritmética (con diferencia <Math
+              tex="a"
+              display={false}
+            />).
+          </p>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="q3">
+        <h3>3) Sucesión geométrica: definición, deducción y cálculos</h3>
+        <ol type="a">
+          <li>Definir sucesión geométrica.</li>
+          <li>Deducir las fórmulas del término general y de la suma, en una sucesión geométrica.</li>
+          <li>
+            Sean <Math tex="a_1=-2" display={false} /> y <Math tex="a_2=\frac14" display={false} />{" "}
+            términos de una sucesión geométrica. Hallar la razón <Math tex="q" display={false} /> y{" "}
+            <Math tex="a_3" display={false} />.
+          </li>
+          <li>
+            Sean <Math tex="a_3=\frac15" display={false} /> y <Math tex="a_1=5" display={false} />{" "}
+            términos de una sucesión geométrica. Calcular <Math tex="q>0" display={false} />,{" "}
+            <Math tex="a_7" display={false} /> y <Math tex="S_7" display={false} />.
+          </li>
+        </ol>
+        <RevealSolucion boton="Solución de la pregunta 3" id="q3">
+          <p>
+            <b>a)</b> Es geométrica toda sucesión en la que el cociente entre dos términos
+            consecutivos es una constante, llamada <em>razón</em> (diferente de cero):
+          </p>
+          <Math tex="\frac{a_{n+1}}{a_n}=q \quad \forall\, n \quad (q\ne 0)" />
+          <p><b>b)</b> Término general: cada paso multiplica por <Math tex="q" display={false} />:</p>
+          <Math tex="\begin{aligned} a_2 &= a_1q \\ a_3 &= a_2q = a_1q^2 \\ \ldots && \\ a_n &= a_1q^{\,n-1} \end{aligned}" />
+          <p>
+            Para la suma, multiplicamos <Math tex="S_n" display={false} /> por <Math
+              tex="q"
+              display={false}
+            /> y restamos término a término (todo se cancela menos los extremos):
+          </p>
+          <Math tex="\begin{aligned} qS_n &= \phantom{-a_1-}\cancel{a_1q}+\cancel{a_1q^2}+\cancel{\ldots}+a_1q^{\,n} \\ -\,S_n &= -a_1-\cancel{a_1q}-\cancel{a_1q^2}-\cancel{\ldots}-\cancel{a_1q^{\,n-1}} \\ \hline (q-1)S_n &= a_1q^{\,n}-a_1 \end{aligned}" />
+          <Math tex="\boxed{S_n=a_1\,\frac{q^{\,n}-1}{q-1}\quad(q\ne 1)}\qquad S_n=n\,a_1\ \text{ si } q=1" />
+          <p><b>c)</b> La razón es el cociente de dos términos consecutivos:</p>
+          <Math tex="q=\frac{a_2}{a_1}=\frac{1/4}{-2}=-\frac18 \qquad a_3=a_2q=\frac14\cdot\left(-\frac18\right)=-\frac{1}{32}" />
+          <p>
+            <b>d)</b> De <Math tex="a_3=a_1q^2" display={false} />,{" "}
+            <Math tex="q^2=\frac{a_3}{a_1}=\frac{1/5}{5}=\frac{1}{25}" display={false} /> y como{" "}
+            <Math tex="q>0" display={false} />, entonces <Math tex="q=\frac15" display={false} />. Luego:
+          </p>
+          <Math tex="a_7=a_1q^6=5\left(\frac15\right)^6=\frac{1}{625}" />
+          <Math tex="\boxed{S_7=5\,\frac{(1/5)^7-1}{(1/5)-1}=\frac{19531}{3125}\approx 6{,}24992}" />
+        </RevealSolucion>
+      </div>
+    </Seccion>
+
+    {/* ============================ §12 ============================ */}
+    <Seccion id="s2" tituloHtml="12 — <em>EJERCICIOS PROPUESTOS</em>">
+      <div class="prob" id="e97">
+        <h3>97) Término general y monotonía</h3>
+        <p>
+          Determinar el término general de las siguientes sucesiones a partir de sus primeros
+          términos y estudiar su monotonía.
+        </p>
+        <div class="duo">
+          <Math tex="\{a_n\}=\{2,\,4,\,6,\,8,\dots\}" />
+          <Math tex="\{b_n\}=\{1,\,3,\,5,\,7,\dots\}" />
+          <Math tex="\{c_n\}=\{-2,\,4,\,-8,\dots\}" />
+          <Math
+            tex="\{d_n\}=\left\{\tfrac{1}{10},\,\tfrac{4}{100},\,\tfrac{9}{1000},\,\tfrac{16}{10000},\dots\right\}"
+          />
+          <Math tex="\{e_n\}=\left\{\tfrac12,\,\tfrac14,\,\tfrac18,\dots\right\}" />
+          <Math tex="\{f_n\}=\{-1,\,1,\,-1,\,1,\dots\}" />
+          <Math tex="\{g_n\}=\{1,\,-1,\,1,\,-1,\,1,\dots\}" />
+        </div>
+        <RevealSolucion boton="Solución del 97" id="e97">
+          <ul>
+            <li>
+              <Math tex="\{a_n\}=\{2,4,6,8,\dots\}\ \Rightarrow\ a_n=2n" display={false} /> ·
+              creciente.
+            </li>
+            <li>
+              <Math tex="\{b_n\}=\{1,3,5,7,\dots\}\ \Rightarrow\ b_n=2n-1" display={false} /> ·
+              creciente.
+            </li>
+            <li>
+              <Math tex="\{c_n\}=\{-2,4,-8,\dots\}\ \Rightarrow\ c_n=(-2)^n" display={false} /> ·
+              cambia de signo en cada término: <b>oscilante</b> (además{" "}
+              <Math tex="|c_n|" display={false} /> crece sin límite).
+            </li>
+            <li>
+              En <Math tex="\{d_n\}" display={false} /> el numerador es <Math
+                tex="n^2"
+                display={false}
+              /> y el denominador <Math tex="10^n" display={false} />, o sea{" "}
+              <Math tex="d_n=\frac{n^2}{10^n}" display={false} />. Como{" "}
+              <Math tex="\frac{d_{n+1}}{d_n}=\frac{(1+1/n)^2}{10}\le\frac{4}{10}" display={false} />
+              , siempre decrece: <b>decreciente</b>.
+            </li>
+            <li>
+              <Math tex="\{e_n\}=\{\tfrac12,\tfrac14,\tfrac18,\dots\}\ \Rightarrow\ e_n=\left(\tfrac12\right)^n"
+                display={false}
+              /> · decreciente (y positiva: tiende a cero).
+            </li>
+            <li>
+              <Math tex="\{f_n\}=\{-1,1,-1,1,\dots\}\ \Rightarrow\ f_n=(-1)^n" display={false} /> ·
+              oscilante.
+            </li>
+            <li>
+              <Math tex="\{g_n\}=\{1,-1,1,-1,1,\dots\}\ \Rightarrow\ g_n=(-1)^{n+1}" display={false} />
+              · oscilante.
+            </li>
+          </ul>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e98">
+        <h3>98) Cinco primeros términos por recurrencia</h3>
+        <p>Encontrar los cinco primeros términos de las siguientes sucesiones dadas por recurrencia.</p>
+        <div class="duo">
+          <Math tex="\{a_n\}\colon \begin{cases} a_1=2 \\ a_n=a_{n-1}-3 \quad \forall\, n>1 \end{cases}" />
+          <Math tex="\{b_n\}\colon \begin{cases} b_1=3 \\ b_n=b_{n-1}-2n \quad \forall\, n>1 \end{cases}" />
+          <Math tex="\{c_n\}\colon \begin{cases} c_1=1 \\ c_{n+1}=\tfrac14\,c_n \quad \forall\, n\ge 1 \end{cases}" />
+          <Math tex="\{d_n\}\colon \begin{cases} d_1=1 \\ d_{n+1}=\tfrac{n}{n+1}\,d_n \quad \forall\, n\ge 1 \end{cases}" />
+        </div>
+        <RevealSolucion boton="Solución del 98" id="e98">
+          <ul>
+            <li>
+              Resta 3 en cada paso: <Math tex="2,\ -1,\ -4,\ -7,\ -10" display={false} /> (es{" "}
+              <Math tex="a_n=5-3n" display={false} />).
+            </li>
+            <li>
+              Resta <Math tex="2n" display={false} /> en cada paso: <Math
+                tex="3,\ -1,\ -7,\ -15,\ -25"
+                display={false}
+              />. En general <Math tex="b_n=3-2(2+3+\ldots+n)=5-n(n+1)" display={false} />.
+            </li>
+            <li>
+              Divide entre 4 en cada paso: <Math
+                tex="1,\ \tfrac14,\ \tfrac{1}{16},\ \tfrac{1}{64},\ \tfrac{1}{256}"
+                display={false}
+              /> (<Math tex="c_n=4^{-(n-1)}" display={false} />).
+            </li>
+            <li>
+              Multiplica por <Math tex="\tfrac{n}{n+1}" display={false} /> en cada paso: <Math
+                tex="1,\ \tfrac12,\ \tfrac13,\ \tfrac14,\ \tfrac15"
+                display={false}
+              />. Efectivamente{" "}
+              <Math tex="d_{n+1}=\tfrac{n}{n+1}d_n \Rightarrow d_n=\tfrac1n" display={false} />
+              , porque se cancelan todos los factores intermedios.
+            </li>
+          </ul>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e99">
+        <h3>99) Primer término de una aritmética</h3>
+        <p>
+          Hallar el primer término de una sucesión aritmética de 15 términos, cuya diferencia es{" "}
+          <Math tex="-2" display={false} />, sabiendo que el último término vale 50.
+        </p>
+        <RevealSolucion boton="Solución del 99" id="e99">
+          <Math tex="a_{15}=a_1+14d \ \Rightarrow\ 50=a_1+14(-2)" />
+          <Math tex="\boxed{a_1=50+28=78}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e100">
+        <h3>100) Primer término con 13 términos</h3>
+        <p>
+          Una sucesión aritmética se compone de 13 términos, su diferencia es{" "}
+          <Math tex="\tfrac32" display={false} /> y el último término vale 10. ¿Cuánto vale el
+          primero?
+        </p>
+        <RevealSolucion boton="Solución del 100" id="e100">
+          <Math tex="a_{13}=a_1+12d \ \Rightarrow\ 10=a_1+12\cdot\tfrac32=a_1+18" />
+          <Math tex="\boxed{a_1=10-18=-8}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e101">
+        <h3>101) Número de términos</h3>
+        <p>
+          Hallar el número de términos de una sucesión aritmética que comienza por 30 y termina en{" "}
+          <Math tex="-10" display={false} />, sabiendo que su diferencia es <Math
+            tex="-5"
+            display={false}
+          />.
+        </p>
+        <RevealSolucion boton="Solución del 101" id="e101">
+          <Math tex="n=\frac{a_n-a_1}{d}+1=\frac{-10-30}{-5}+1=\frac{-40}{-5}+1" />
+          <Math tex="\boxed{n=9}" />
+          <p>Comprobación: <Math tex="30,\,25,\,20,\,15,\,10,\,5,\,0,\,-5,\,-10" display={false} /></p>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e102">
+        <h3>102) Diferencia y sucesión</h3>
+        <p>
+          Una sucesión aritmética se compone de 5 términos. El primero es 7 y el último es 9. Hallar
+          la diferencia y construir la sucesión.
+        </p>
+        <RevealSolucion boton="Solución del 102" id="e102">
+          <Math tex="d=\frac{a_5-a_1}{5-1}=\frac{9-7}{4}=\frac12" />
+          <Math tex="\boxed{\{a_n\}=\left\{7,\ \tfrac{15}{2},\ 8,\ \tfrac{17}{2},\ 9\right\}}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e103">
+        <h3>103) Suma de los 10 primeros términos</h3>
+        <p>
+          En las sucesiones aritméticas siguientes calcular, en cada caso, la suma de los 10 primeros
+          términos.
+        </p>
+        <ol type="i">
+          <li>
+            Primer término <Math tex="=1" display={false} /> · quinto término{" "}
+            <Math tex="=13" display={false} />
+          </li>
+          <li>
+            Primer término <Math tex="=2" display={false} /> · sexto término{" "}
+            <Math tex="=22" display={false} />
+          </li>
+          <li>
+            Diferencia <Math tex="=\tfrac12" display={false} /> · quinto término{" "}
+            <Math tex="=\tfrac52" display={false} />
+          </li>
+          <li>La suma de los tres primeros es 9 y el tercero vale 5.</li>
+        </ol>
+        <RevealSolucion boton="Solución del 103" id="e103">
+          <p>
+            Usamos <Math tex="S_{10}=\tfrac{10(2a_1+9d)}{2}=5(2a_1+9d)" display={false} /> en todos
+            los casos:
+          </p>
+          <ul>
+            <li>
+              <Math tex="d=\tfrac{13-1}{4}=3" display={false} /> →{" "}
+              <Math tex="S_{10}=5(2+27)=\boxed{145}" display={false} />
+            </li>
+            <li>
+              <Math tex="d=\tfrac{22-2}{5}=4" display={false} /> →{" "}
+              <Math tex="S_{10}=5(4+36)=\boxed{200}" display={false} />
+            </li>
+            <li>
+              <Math tex="a_1=a_5-4d=\tfrac52-2=\tfrac12" display={false} /> →{" "}
+              <Math tex="S_{10}=5(1+\tfrac92)=\boxed{\tfrac{55}{2}}" display={false} />
+            </li>
+            <li>
+              <Math tex="3a_2=9 \Rightarrow a_2=3" display={false} />, luego{" "}
+              <Math tex="d=a_3-a_2=5-3=2" display={false} /> y{" "}
+              <Math tex="a_1=1" display={false} /> →{" "}
+              <Math tex="S_{10}=5(2+18)=\boxed{100}" display={false} />
+            </li>
+          </ul>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e104">
+        <h3>104) Número de términos y último término</h3>
+        <p>
+          De una sucesión aritmética se conoce que la suma de <Math tex="n" display={false} />{" "}
+          términos es 430, el primero vale <Math tex="-7" display={false} /> y la diferencia 3.
+          Calcular el número de términos y el último término.
+        </p>
+        <RevealSolucion boton="Solución del 104" id="e104">
+          <Math tex="S_n=\frac{n\,[2a_1+(n-1)d]}{2}\ \Rightarrow\ n(-14+3n-3)=860" />
+          <Math tex="3n^2-17n-860=0\ \Rightarrow\ n=\frac{17\pm\sqrt{289+10320}}{6}=\frac{17\pm 103}{6}" />
+          <Math tex="\boxed{n=20}\qquad a_{20}=-7+19\cdot 3=\boxed{50}" />
+          <p>Comprobación: <Math tex="S_{20}=\tfrac{20(-7+50)}{2}=430" display={false} />.</p>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e105">
+        <h3>105) Número de términos (suma 22)</h3>
+        <p>
+          El primer término de una sucesión aritmética es 1, la diferencia es 3 y la suma de los
+          términos es 22. ¿Cuál es el número de términos?
+        </p>
+        <RevealSolucion boton="Solución del 105" id="e105">
+          <Math tex="S_n=\frac{n\,[2+(n-1)3]}{2}=\frac{n(3n-1)}{2}=22\ \Rightarrow\ 3n^2-n-44=0" />
+          <Math tex="n=\frac{1\pm\sqrt{1+528}}{6}=\frac{1\pm 23}{6}" />
+          <Math tex="\boxed{n=4}" />
+          <p>Comprobación: <Math tex="1+4+7+10=22" display={false} />.</p>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e106">
+        <h3>106) Primer término y número de términos</h3>
+        <p>
+          La suma de los términos de una sucesión aritmética es 4408, el último término es 227 y la
+          diferencia es 6. Hallar el primer término y el número de términos de la sucesión.
+        </p>
+        <RevealSolucion boton="Solución del 106" id="e106">
+          <p>
+            Como <Math tex="a_1=a_n-(n-1)d=227-6(n-1)" display={false} />:
+          </p>
+          <Math tex="S_n=\frac{n(a_1+a_n)}{2}=\frac{n\,[460-6n]}{2}=4408\ \Rightarrow\ 3n^2-230n+4408=0" />
+          <Math tex="n=\frac{230\pm\sqrt{52900-52896}}{6}=\frac{230\pm 2}{6}" />
+          <Math tex="\boxed{n=38}\qquad a_1=227-6\cdot 37=\boxed{5}" />
+          <p>Comprobación: <Math tex="S_{38}=\tfrac{38(5+227)}{2}=4408" display={false} />.</p>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e107">
+        <h3>107) Tres términos consecutivos</h3>
+        <p>
+          La suma de tres términos consecutivos de una sucesión aritmética es 15 y la suma de sus
+          cuadrados es 93. Hallar dichos términos.
+        </p>
+        <RevealSolucion boton="Solución del 107" id="e107">
+          <p>
+            Por el teorema de los equidistantes, los tres términos son{" "}
+            <Math tex="5-d,\ 5,\ 5+d" display={false} /> (su suma da{" "}
+            <Math tex="3\cdot 5=15" display={false} />).
+          </p>
+          <Math tex="(5-d)^2+25+(5+d)^2=93\ \Rightarrow\ 50+2d^2=93\ \Rightarrow\ d^2=9" />
+          <Math tex="\boxed{\{2,\ 5,\ 8\}}" />
+          <p>
+            Con <Math tex="d=-3" display={false} /> se obtiene la misma sucesión vista al revés:{" "}
+            <Math tex="\{8,\ 5,\ 2\}" display={false} />.
+          </p>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e108">
+        <h3>108) Número de términos de una geométrica</h3>
+        <p>
+          Hallar el número de términos de una sucesión geométrica que comienza por 7 y termina en
+          448, sabiendo que su razón es 2.
+        </p>
+        <RevealSolucion boton="Solución del 108" id="e108">
+          <Math tex="a_n=a_1q^{\,n-1}\ \Rightarrow\ 7\cdot 2^{\,n-1}=448\ \Rightarrow\ 2^{\,n-1}=64=2^6" />
+          <Math tex="\boxed{n=7}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e109">
+        <h3>109) Razón de una geométrica</h3>
+        <p>
+          Una sucesión geométrica se compone de 5 términos. El primero es 9 y el último es 144.
+          Hallar la razón.
+        </p>
+        <RevealSolucion boton="Solución del 109" id="e109">
+          <Math tex="a_5=a_1q^4\ \Rightarrow\ 9q^4=144\ \Rightarrow\ q^4=16" />
+          <Math tex="\boxed{q=2\ \ \text{ o }\ \ q=-2}" />
+          <p>
+            Las dos sucesiones posibles son <Math tex="\{9,\,18,\,36,\,72,\,144\}" display={false} />
+            y <Math tex="\{9,\,-18,\,36,\,-72,\,144\}" display={false} />.
+          </p>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e110">
+        <h3>110) Primer término (razón 3)</h3>
+        <p>
+          Calcular el primer término de una sucesión geométrica de razón 3, siendo el séptimo 4374.
+        </p>
+        <RevealSolucion boton="Solución del 110" id="e110">
+          <Math tex="a_7=a_1 3^6=729\,a_1=4374" />
+          <Math tex="\boxed{a_1=\frac{4374}{729}=6}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e111">
+        <h3>111) Razón y primer término</h3>
+        <p>
+          El tercer y el octavo término de una sucesión geométrica son respectivamente 1 y{" "}
+          <Math tex="\tfrac{1}{32}" display={false} />. Calcular la razón y el primer término.
+        </p>
+        <RevealSolucion boton="Solución del 111" id="e111">
+          <Math tex="\frac{a_8}{a_3}=q^5=\frac{1/32}{1}=\frac{1}{32}=2^{-5}\ \Rightarrow\ q=\frac12" />
+          <Math tex="\boxed{q=\tfrac12}\qquad a_1=\frac{a_3}{q^2}=\frac{1}{1/4}=\boxed{4}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e112">
+        <h3>112) Tres números en progresión geométrica</h3>
+        <p>
+          Hallar tres números en sucesión geométrica sabiendo que su suma es 21 y que el mayor excede
+          en tres unidades a la suma de los otros dos.
+        </p>
+        <RevealSolucion boton="Solución del 112" id="e112">
+          <p>
+            Si el mayor es <Math tex="M" display={false} />, entonces{" "}
+            <Math tex="M=(21-M)+3" display={false} />, o sea <Math tex="M=12" display={false} />; los
+            otros dos suman 9.
+          </p>
+          <p>
+            Sean los tres términos <Math tex="\tfrac{a}{q},\,a,\,aq" display={false} />. Suponiendo
+            que el mayor es el tercero (<Math tex="aq=12" display={false} />) y que los otros dos
+            suman 9:
+          </p>
+          <Math tex="\frac{a}{q}+a=9,\ \ aq=12\ \Rightarrow\ \frac{12}{q^2}(1+q)=9\ \Rightarrow\ 3q^2-4q-4=0" />
+          <Math tex="\boxed{\{3,\ 6,\ 12\}\ (q=2)\qquad \{27,\ -18,\ 12\}\ \left(q=-\tfrac23\right)}" />
+          <p>
+            Si el mayor fuera el término del medio se llegaría a{" "}
+            <Math tex="4q^2-3q+4=0" display={false} />, sin soluciones reales (el discriminante es
+            negativo). Las otras disposiciones repiten las mismas dos sucesiones con los signos
+            cambiados de orden.
+          </p>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e113">
+        <h3>113) Cuarto término de cada sucesión</h3>
+        <p>
+          Dos sucesiones, una aritmética y otra geométrica, empiezan ambas por 4. El segundo término
+          de la sucesión aritmética excede en 2 unidades al segundo término de la sucesión geométrica,
+          pero los terceros términos son iguales. Hallar el cuarto término de cada sucesión.
+        </p>
+        <RevealSolucion boton="Solución del 113" id="e113">
+          <p>
+            Aritmética: <Math tex="4,\ 4+d,\ 4+2d,\dots" display={false} /> · geométrica:{" "}
+            <Math tex="4,\ 4q,\ 4q^2,\dots" display={false} />.
+          </p>
+          <Math tex="4+d=4q+2\ \Rightarrow\ d=4q-2" />
+          <Math tex="4+2d=4q^2\ \Rightarrow\ 4+8q-4=4q^2\ \Rightarrow\ q^2=2q" />
+          <p>
+            <Math tex="q=0" display={false} /> se descarta porque la razón no puede ser cero, así que{" "}
+            <Math tex="q=2" display={false} /> y <Math tex="d=6" display={false} />:
+          </p>
+          <Math tex="\boxed{a_4=4+3d=22}\qquad \boxed{b_4=4q^3=32}" />
+          <p>
+            Comprobación: aritmética <Math tex="\{4,\,10,\,16,\,22\}" display={false} /> · geométrica{" "}
+            <Math tex="\{4,\,8,\,16,\,32\}" display={false} />: los segundos difieren en 2 y los
+            terceros son iguales (16).
+          </p>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e114">
+        <h3>114) Geométrica a partir de una aritmética</h3>
+        <p>
+          La suma de tres números en sucesión geométrica es 130. Si se suma 20 al término medio y los
+          extremos no se alteran, resulta una sucesión aritmética. Hallar dicha sucesión geométrica.
+        </p>
+        <RevealSolucion boton="Solución del 114" id="e114">
+          <p>
+            Sean los términos <Math tex="x,\ y,\ z" display={false} />. De la suma,{" "}
+            <Math tex="x+z=130-y" display={false} />. Que <Math tex="x,\ y+20,\ z" display={false} />{" "}
+            sea aritmética da <Math tex="2(y+20)=x+z" display={false} />, así que:
+          </p>
+          <Math tex="2y+40=130-y\ \Rightarrow\ 3y=90\ \Rightarrow\ y=30" />
+          <p>
+            El término medio de una geométrica es la media geométrica de los extremos:{" "}
+            <Math tex="x=\tfrac{30}{q}" display={false} /> y <Math tex="z=30q" display={false} />. Entonces:
+          </p>
+          <Math tex="\frac{30}{q}+30+30q=130\ \Rightarrow\ 3q^2-10q+3=0\ \Rightarrow\ q=3\ \left(\text{o }\tfrac13\right)" />
+          <Math tex="\boxed{\{10,\ 30,\ 90\}}" />
+          <p>
+            (Con <Math tex="q=\tfrac13" display={false} /> sale la misma sucesión en orden inverso:
+            <Math tex="\{90,\ 30,\ 10\}" display={false} />.) Comprobación: al sumar 20 al término
+            medio quedan <Math tex="10,\ 50,\ 90" display={false} />, que es aritmética de diferencia
+            40.
+          </p>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e115">
+        <h3>115) Convergencia o divergencia</h3>
+        <p>
+          Estudiar la convergencia o divergencia de las siguientes sucesiones. En caso de que
+          converjan, calcular su suma.
+        </p>
+        <Math tex="\begin{aligned} 1)\ \ & a_n=\frac{5}{7^{\,n-1}} & \ \ 2)\ \ & a_n=\frac{2}{3^{\,n-1}} \\ 3)\ \ & a_n=\frac{2^{\,n+1}}{3^{\,n}} & \ \ 4)\ \ & a_n=\frac{2^{\,n}+3^{\,n}}{6^{\,n}} \\ 5)\ \ & a_n=5^{-n}2^{2n} & \ \ 6)\ \ & a_n=\left(\frac{3}{2}\right)^{\,n} \\ 7)\ \ & a_n=\frac{7^{\,n+3}}{2^{3n}} & \ \ 8)\ \ & a_n=\frac{1}{2\times 3^{\,n}} \end{aligned}" />
+        <RevealSolucion boton="Solución del 115" id="e115">
+          <p>
+            Todas (menos la 6) son geométricas de razón <Math tex="|q|\lt 1" display={false} /> y
+            por lo tanto convergentes; la suma es <Math tex="S=\tfrac{a_1}{1-q}" display={false} />.
+          </p>
+          <ul>
+            <li>
+              <b>1)</b> <Math tex="a_1=5,\ q=\tfrac17" display={false} /> → converge:{" "}
+              <Math tex="S=\frac{5}{1-\frac17}=\boxed{\tfrac{35}{6}}" display={false} />
+            </li>
+            <li>
+              <b>2)</b> <Math tex="a_1=2,\ q=\tfrac13" display={false} /> → converge:{" "}
+              <Math tex="S=\frac{2}{1-\frac13}=\boxed{3}" display={false} />
+            </li>
+            <li>
+              <b>3)</b> <Math tex="a_n=2\left(\tfrac23\right)^n" display={false} /> →{" "}
+              <Math tex="a_1=\tfrac43,\ q=\tfrac23" display={false} /> → converge:{" "}
+              <Math tex="S=\frac{4/3}{1-\frac23}=\boxed{4}" display={false} />
+            </li>
+            <li>
+              <b>4)</b> <Math tex="a_n=\left(\tfrac13\right)^n+\left(\tfrac12\right)^n" display={false} />
+              , dos geométricas: <Math tex="S=\tfrac{1/3}{1-\frac13}+\tfrac{1/2}{1-\frac12}=\boxed{\tfrac32}" display={false} />
+            </li>
+            <li>
+              <b>5)</b> <Math tex="a_n=\left(\tfrac45\right)^n" display={false} /> →{" "}
+              <Math tex="a_1=\tfrac45,\ q=\tfrac45" display={false} /> → converge:{" "}
+              <Math tex="S=\frac{4/5}{1-\frac45}=\boxed{4}" display={false} />
+            </li>
+            <li>
+              <b>6)</b> <Math tex="q=\tfrac32\gt 1" display={false} /> →{" "}
+              <Math tex="a_n\to\infty" display={false} />: <b>divergente</b>.
+            </li>
+            <li>
+              <b>7)</b> <Math tex="a_n=343\left(\tfrac78\right)^n" display={false} /> →{" "}
+              <Math tex="a_1=\tfrac{2401}{8},\ q=\tfrac78" display={false} /> → converge:{" "}
+              <Math tex="S=\frac{2401/8}{1-\frac78}=\boxed{2401}" display={false} />
+            </li>
+            <li>
+              <b>8)</b> <Math tex="a_1=\tfrac16,\ q=\tfrac13" display={false} /> → converge:{" "}
+              <Math tex="S=\frac{1/6}{1-\frac13}=\boxed{\tfrac14}" display={false} />
+            </li>
+          </ul>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="e116">
+        <h3>116) Recurrencias: términos, gráfico, fórmula y límite</h3>
+        <p>En las siguientes sucesiones dadas por recurrencia:</p>
+        <ol type="i">
+          <li>Calcular los diez primeros términos.</li>
+          <li>Graficarlos.</li>
+          <li>Encontrar una fórmula explícita para la sucesión en función de <Math tex="n" display={false} />.</li>
+          <li>Estudiar su monotonía.</li>
+          <li>Calcular el límite de la sucesión.</li>
+        </ol>
+        <div class="duo">
+          <Math tex="\{a_n\}\colon \begin{cases} a_1=1 \\ a_{n+1}=\dfrac{a_n}{1+a_n} \quad \forall\, n\ge 1 \end{cases}" />
+          <Math tex="\{b_n\}\colon \begin{cases} b_1=1 \\ b_{n+1}=\dfrac{b_n}{\left(1+\sqrt{b_n}\right)^2} \quad \forall\, n\ge 1 \end{cases}" />
+          <Math tex="\{c_n\}\colon \begin{cases} c_1=1 \\ c_{n+1}=\dfrac{c_n}{2} \quad \forall\, n\ge 1 \end{cases}" />
+          <Math tex="\{d_n\}\colon \begin{cases} d_1=1 \\ d_{n+1}=3-2d_n \quad \forall\, n\ge 1 \end{cases}" />
+          <Math tex="\{e_n\}\colon \begin{cases} e_1=0 \\ e_{n+1}=2e_n+1 \quad \forall\, n\ge 1 \end{cases}" />
+          <Math tex="\{f_n\}\colon \begin{cases} f_1=3 \\ f_{n+1}-f_n=-\tfrac23 f_n \quad \forall\, n\ge 1 \end{cases}" />
+        </div>
+        <RevealSolucion boton="Solución del 116" id="e116">
+          <h4>1) {'{a_n}'} — invertir la recurrencia</h4>
+          <p>
+            Si <Math tex="a_{n+1}=\tfrac{a_n}{1+a_n}" display={false} /> entonces{" "}
+            <Math tex="\tfrac{1}{a_{n+1}}=\tfrac{1+a_n}{a_n}=\tfrac{1}{a_n}+1" display={false} />
+            : los inversos forman una aritmética de primer término 1 y diferencia 1, o sea{" "}
+            <Math tex="\tfrac{1}{a_n}=1+(n-1)=n" display={false} />.
+          </p>
+          <Math tex="\boxed{a_n=\frac1n}" />
+          <p>
+            Diez primeros términos:{" "}
+            <Math tex="1,\ \tfrac12,\ \tfrac13,\ \tfrac14,\ \tfrac15,\ \tfrac16,\ \tfrac17,\ \tfrac18,\ \tfrac19,\ \tfrac1{10}"
+              display={false}
+            />. Monotonía: <b>decreciente</b>. Límite: <Math tex="\lim_{n\to\infty}a_n=0" display={false} />
+            .
+          </p>
+          <MiniGrafico
+            valores={r116.a}
+            etiqueta="a"
+            limite={0}
+            titulo="Diez primeros términos de a_n = 1/n: sucesión decreciente que tiende a cero"
+          />
+
+          <h4>2) {'{b_n}'} — la misma idea con los inversos de la raíz</h4>
+          <p>
+            Sea <Math tex="u_n=\tfrac{1}{\sqrt{b_n}}" display={false} />. De la recurrencia,{" "}
+            <Math tex="\sqrt{b_{n+1}}=\tfrac{\sqrt{b_n}}{1+\sqrt{b_n}}" display={false} />, y al
+            invertir: <Math tex="u_{n+1}=\tfrac{1+\sqrt{b_n}}{\sqrt{b_n}}=u_n+1" display={false} />.
+            Nuevamente una aritmética, ahora con <Math tex="u_n=n" display={false} />.
+          </p>
+          <Math tex="\boxed{b_n=\frac{1}{n^2}}" />
+          <p>
+            Términos: <Math tex="1,\ \tfrac14,\ \tfrac19,\ \tfrac1{16},\ \tfrac1{25},\ \ldots,\ \tfrac1{100}" display={false} /> ·
+            <b>decreciente</b> · <Math tex="\lim b_n=0" display={false} />.
+          </p>
+          <MiniGrafico
+            valores={r116.b}
+            etiqueta="b"
+            limite={0}
+            titulo="Diez primeros términos de b_n = 1 sobre n al cuadrado: decreciente hasta cero"
+          />
+
+          <h4>3) {'{c_n}'} — geométrica de razón 1/2</h4>
+          <p>
+            Cada término es la mitad del anterior: es la geométrica{" "}
+            <Math tex="c_1=1,\ q=\tfrac12" display={false} />, o sea{" "}
+            <Math tex="c_n=\left(\tfrac12\right)^{n-1}" display={false} />.
+          </p>
+          <Math tex="\boxed{c_n=\frac{1}{2^{\,n-1}}}" />
+          <p>
+            Términos: <Math tex="1,\ \tfrac12,\ \tfrac14,\ \tfrac18,\ \ldots,\ \tfrac1{512}" display={false} /> ·
+            <b>decreciente</b> · <Math tex="\lim c_n=0" display={false} />.
+          </p>
+          <MiniGrafico
+            valores={r116.c}
+            etiqueta="c"
+            limite={0}
+            titulo="Diez primeros términos de c_n = 1 sobre 2 elevado a n menos 1: decreciente hasta cero"
+          />
+
+          <h4>4) {'{d_n}'} — punto fijo de la recurrencia</h4>
+          <p>
+            Si la sucesión tuviera límite <Math tex="L" display={false} />, de{" "}
+            <Math tex="d_{n+1}=3-2d_n" display={false} /> saldría <Math tex="L=3-2L" display={false} />
+            , o sea <Math tex="L=1" display={false} />. Y efectivamente:{" "}
+            <Math tex="d_2=3-2(1)=1" display={false} />, así que todos los términos valen 1.
+          </p>
+          <Math tex="\boxed{d_n=1 \quad \forall\, n}" />
+          <p>
+            (En general <Math tex="d_n=1+(d_1-1)(-2)^{n-1}" display={false} />; si{" "}
+            <Math tex="d_1\ne 1" display={false} /> la sucesión oscila en torno a 1.) Monotonía:
+            <b>constante</b> · límite: <Math tex="\lim d_n=1" display={false} />.
+          </p>
+          <MiniGrafico
+            valores={r116.d}
+            etiqueta="d"
+            limite={1}
+            titulo="Diez primeros términos de d_n: sucesión constante igual a 1"
+          />
+
+          <h4>5) {'{e_n}'} — desplazamiento del término</h4>
+          <p>
+            De <Math tex="e_{n+1}=2e_n+1" display={false} /> se sigue{" "}
+            <Math tex="e_{n+1}+1=2(e_n+1)" display={false} />, así que{" "}
+            <Math tex="e_n+1" display={false} /> es geométrica de razón 2 y primer término{" "}
+            <Math tex="e_1+1=1" display={false} />.
+          </p>
+          <Math tex="\boxed{e_n=2^{\,n-1}-1}" />
+          <p>
+            Términos: <Math tex="0,\ 1,\ 3,\ 7,\ 15,\ 31,\ 63,\ 127,\ 255,\ 511" display={false} /> ·
+            <b>creciente</b> · <Math tex="\lim e_n=\infty" display={false} />:{" "}
+            <b>divergente</b>.
+          </p>
+          <MiniGrafico
+            valores={r116.e}
+            etiqueta="e"
+            titulo="Diez primeros términos de e_n: sucesión creciente divergente"
+          />
+
+          <h4>6) {'{f_n}'} — de vuelta a una geométrica</h4>
+          <p>
+            La recurrencia es <Math tex="f_{n+1}=f_n-\tfrac23f_n=\tfrac13f_n" display={false} />:
+            geométrica de razón <Math tex="\tfrac13" display={false} /> y primer término 3.
+          </p>
+          <Math tex="\boxed{f_n=3\left(\tfrac13\right)^{n-1}=\left(\tfrac13\right)^{n-2}}" />
+          <p>
+            Términos: <Math tex="3,\ 1,\ \tfrac13,\ \tfrac19,\ \tfrac1{27},\ \ldots,\ \tfrac1{6561}" display={false} /> ·
+            <b>decreciente</b> · <Math tex="\lim f_n=0" display={false} />.
+          </p>
+          <MiniGrafico
+            valores={r116.f}
+            etiqueta="f"
+            limite={0}
+            titulo="Diez primeros términos de f_n: sucesión decreciente que tiende a cero"
+          />
+        </RevealSolucion>
+      </div>
+    </Seccion>
+
+    {/* ============================ §13 ============================ */}
+    <Seccion id="s3" tituloHtml="13 — <em>PROBLEMAS PROPUESTOS</em>">
+      <div class="prob" id="p117">
+        <h3>117) Pila de troncos</h3>
+        <p>
+          Una pila de troncos de madera se forma colocando 16 troncos debajo, 15 troncos sobre estos,
+          14 sobre estos últimos y así sucesivamente, hasta poner un solo tronco arriba. ¿Cuántos
+          troncos hay en la pila?
+        </p>
+        <RevealSolucion boton="Solución del 117" id="p117">
+          <Math tex="S=16+15+14+\ldots+1=\frac{16(16+1)}{2}" />
+          <Math tex="\boxed{S=136\ \text{troncos}}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="p118">
+        <h3>118) Cesto y piedras</h3>
+        <p>
+          En línea recta en el suelo hay un cesto y varias piedras. El cesto está a 5 metros de la
+          primera piedra y las piedras están a 1.5 metros unas de otras. Un niño parte del cesto,
+          recoge la primera piedra y regresa a ponerla en el cesto; después hace la misma operación
+          con la segunda piedra y así sucesivamente.
+        </p>
+        <ol type="i">
+          <li>¿Qué distancia recorre para colocar en el cesto la octava piedra?</li>
+          <li>¿Qué distancia total ha recorrido hasta ese momento?</li>
+        </ol>
+        <RevealSolucion boton="Solución del 118" id="p118">
+          <p>
+            La piedra <Math tex="i" display={false} /> está a{" "}
+            <Math tex="5+1,5\,i" display={false} /> metros del cesto y hay que ir y volver:
+          </p>
+          <Math tex="d_i=2(5+1{,}5\,i)=10+3i" />
+          <p><b>i)</b> Para la octava piedra (<Math tex="i=8" display={false} />):</p>
+          <Math tex="\boxed{d_8=10+3\cdot 8=34\ \text{metros}}" />
+          <p><b>ii)</b> Distancia total hasta ese momento (8 piedras):</p>
+          <Math tex="\sum_{i=1}^{8}(10+3i)=10\cdot 8+3\cdot\frac{8\cdot 9}{2}=80+108" />
+          <Math tex="\boxed{188\ \text{metros}}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="p119">
+        <h3>119) Dosis de una medicina</h3>
+        <p>
+          Se debe tomar una medicina empezando el primer día con 8 gotas y aumentando la dosis en 3
+          gotas cada día hasta llegar a 38 gotas diarias; luego se disminuye la dosis en 2 gotas
+          diarias hasta llegar a 8. ¿Cuántos días durará el tratamiento y cuántas gotas se habrán
+          tomado en total?
+        </p>
+        <RevealSolucion boton="Solución del 119" id="p119">
+          <p>
+            <b>Sube</b> (aritmética de 8 a 38 con <Math tex="d=3" display={false} />):{" "}
+            <Math tex="n_1=\frac{38-8}{3}+1=11" display={false} /> días y{" "}
+            <Math tex="S_1=\tfrac{11(8+38)}{2}=253" display={false} /> gotas.
+          </p>
+          <p>
+            <b>Baja</b> (de 36 a 8 con <Math tex="d=-2" display={false} />; el día con 38 gotas ya se
+            contó): <Math tex="n_2=\frac{36-8}{2}+1=15" display={false} /> días y{" "}
+            <Math tex="S_2=\tfrac{15(36+8)}{2}=330" display={false} /> gotas.
+          </p>
+          <Math tex="\boxed{11+15=26\ \text{días}\qquad 253+330=583\ \text{gotas}}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="p120">
+        <h3>120) Vagón desprendido</h3>
+        <p>
+          Un vagón se desprende de un tren que sube por una pendiente. Recorre durante el primer
+          segundo 1.3 metros, durante el segundo 3.3 metros, durante el tercer segundo 5.3 metros,
+          durante el cuarto segundo 7.3 metros. ¿Cuánto recorre en un minuto que dura su descenso?
+        </p>
+        <RevealSolucion boton="Solución del 120" id="p120">
+          <p>
+            Es una aritmética con <Math tex="a_1=1{,}3" display={false} /> y{" "}
+            <Math tex="d=2" display={false} /> metros por segundo; un minuto son{" "}
+            <Math tex="n=60" display={false} /> segundos:
+          </p>
+          <Math tex="S_{60}=\frac{60\,[2(1{,}3)+59\cdot 2]}{2}=30(2{,}6+118)=30\cdot 120{,}6" />
+          <Math tex="\boxed{S_{60}=3618\ \text{metros}}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="p121">
+        <h3>121) Crecimiento de bacterias</h3>
+        <p>
+          El número de bacterias en un cultivo está aumentando un 20% cada hora. Si al principio
+          había 400000 bacterias en el cultivo, ¿cuántas habrá al cabo de 4 horas?
+        </p>
+        <RevealSolucion boton="Solución del 121" id="p121">
+          <p>
+            Es una geométrica con <Math tex="a_1=400000" display={false} /> y{" "}
+            <Math tex="q=1{,}2" display={false} />; a las 4 horas (5.º término):
+          </p>
+          <Math tex="a_5=400000\cdot(1{,}2)^4=400000\cdot 2{,}0736" />
+          <Math tex="\boxed{829440\ \text{bacterias}}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="p122">
+        <h3>122) Alcohol y agua</h3>
+        <p>
+          De un recipiente que contiene 10 litros de alcohol se saca un litro y se lo reemplaza con
+          agua. Después se saca un litro de la mezcla y se lo reemplaza con agua. Se efectúa la
+          operación 7 veces en total. ¿Qué cantidad de alcohol queda entonces en el recipiente?
+        </p>
+        <RevealSolucion boton="Solución del 122" id="p122">
+          <p>
+            Cada operación deja el <Math tex="\tfrac{9}{10}" display={false} /> del alcohol anterior
+            (se extrae 1 litro de 10 y se devuelve mezcla sin alcohol). Tras 7 veces:
+          </p>
+          <Math tex="A_7=10\left(\frac9{10}\right)^{7}=\frac{9^7}{10^6}=\frac{4782969}{1000000}" />
+          <Math tex="\boxed{A_7=4{,}782969\ \text{litros}\approx 4{,}78\ \text{l}}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="p123">
+        <h3>123) Aumentos de salario</h3>
+        <p>
+          Andrea recibe 15% de aumento de salario al final de cada año. Si empezó con un salario de
+          $ 8000. ¿Cuánto recibió en total, durante los últimos 10 años?
+        </p>
+        <RevealSolucion boton="Solución del 123" id="p123">
+          <p>
+            Los sueldos anuales forman una geométrica con <Math tex="a_1=8000" display={false} />,{" "}
+            <Math tex="q=1{,}15" display={false} /> y <Math tex="n=10" display={false} />:
+          </p>
+          <Math tex="S_{10}=8000\,\frac{1{,}15^{10}-1}{1{,}15-1}\approx 8000\cdot 20{,}0537" />
+          <Math tex="\boxed{S_{10}\approx \$\,162\,429{,}75}" />
+          <p>
+            (Se usa <Math tex="1{,}15^{10}\approx 4{,}0456" display={false} />; es la suma de los
+            10 sueldos cobrados, o sea lo percibido en total.)
+          </p>
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="p124">
+        <h3>124) Círculos y cuadrados infinitos</h3>
+        <p>
+          En un círculo de radio R se inscribe un cuadrado, en este cuadrado un círculo, en este
+          círculo otro cuadrado, y así sucesivamente. Hallar el límite de la suma de las áreas de este
+          número infinito de círculos.
+        </p>
+        <RevealSolucion boton="Solución del 124" id="p124">
+          <p>
+            El cuadrado inscrito en un círculo de radio <Math tex="R" display={false} /> tiene
+            diagonal <Math tex="2R" display={false} /> y lado <Math tex="R\sqrt2" display={false} />
+            , de modo que el círculo inscrito en ese cuadrado tiene radio{" "}
+            <Math tex="\tfrac{R\sqrt2}{2}=\tfrac{R}{\sqrt2}" display={false} />: cada radio se divide
+            entre <Math tex="\sqrt2" display={false} /> y cada área se divide entre 2.
+          </p>
+          <Math tex="S=\pi R^2+\frac{\pi R^2}{2}+\frac{\pi R^2}{4}+\ldots=\pi R^2\left(1+\tfrac12+\tfrac14+\ldots\right)" />
+          <p>
+            El paréntesis es una infinita de razón <Math tex="\tfrac12" display={false} />:
+          </p>
+          <Math tex="\boxed{S=\frac{\pi R^2}{1-\frac12}=2\pi R^2}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="p125">
+        <h3>125) Caída en el vacío</h3>
+        <p>
+          Un cuerpo al caer en el vacío recorre en el primer segundo 4.90 m y cada segundo siguiente
+          recorre 9.8 m más que el anterior. Si el cuerpo ha necesitado 15 segundos para llegar al
+          suelo, ¿cuántos metros ha recorrido en el último segundo y desde qué altura ha caído?
+        </p>
+        <RevealSolucion boton="Solución del 125" id="p125">
+          <p>
+            Aritmética con <Math tex="a_1=4{,}9" display={false} />, <Math tex="d=9{,}8" display={false} /> y{" "}
+            <Math tex="n=15" display={false} />. En el último segundo:
+          </p>
+          <Math tex="a_{15}=4{,}9+14\cdot 9{,}8=4{,}9+137{,}2" />
+          <Math tex="\boxed{a_{15}=142{,}1\ \text{metros}}" />
+          <p>La altura total es la suma de los 15 segundos:</p>
+          <Math tex="H=S_{15}=\frac{15(4{,}9+142{,}1)}{2}=\frac{15\cdot 147}{2}" />
+          <Math tex="\boxed{H=1102{,}5\ \text{metros}}" />
+        </RevealSolucion>
+      </div>
+
+      <div class="prob" id="p126">
+        <h3>126) Olimpíada 1999: sucesiones con S₃₇ = 1998</h3>
+        <p>
+          <small>XIV Olimpíada Matemática del Uruguay · Tercera instancia 1999 · Nivel 4</small
+          ><br />
+          Determinar la cantidad de sucesiones aritméticas cuyos términos sean números enteros no
+          negativos que tienen la siguiente propiedad: la suma de sus primeros 37 términos es 1998.
+        </p>
+        <RevealSolucion boton="Solución del 126" id="p126">
+          <p>
+            37 es impar, así que la suma depende solo del término central:{" "}
+            <Math tex="S_{37}=37\,a_{19}" display={false} />.
+          </p>
+          <Math tex="37\,a_{19}=1998\ \Rightarrow\ a_{19}=\frac{1998}{37}=54" />
+          <p>
+            El término central queda fijado en 54, y el primero es{" "}
+            <Math tex="a_1=54-18d" display={false} />. Como todos los términos deben ser enteros
+            no negativos, <Math tex="d" display={false} /> tiene que ser entero y la sucesión no
+            puede bajarse indefinidamente, luego <Math tex="d\ge 0" display={false} />; además{" "}
+            <Math tex="54-18d\ge 0 \Rightarrow d\le 3" display={false} />.
+          </p>
+          <Math tex="d\in\{0,\,1,\,2,\,3\}" />
+          <Math tex="\boxed{4\ \text{sucesiones}}" />
+          <p>
+            Corresponden a <Math tex="a_1=54,\ 36,\ 18,\ 0" display={false} />; por ejemplo con{" "}
+            <Math tex="d=3" display={false} /> la sucesión arranca en 0 y todos sus términos son
+            enteros no negativos.
+          </p>
+        </RevealSolucion>
+      </div>
+
+      <Nota etiqueta="OJO">
+        Las soluciones de esta página están calculadas para el sitio: el libro remite a las páginas
+        475 a 477, que no están incluidas en el material fuente.
+      </Nota>
+    </Seccion>
+
+    <ChapterNav
+      posicion="bottom"
+      prev={{ href: "/capitulo-4/", titulo: "Cap 4: Límite y Fibonacci" }}
+      next={{ href: "/formulas/", titulo: "Fórmulas y calculadoras" }}
+    />
+  </main>
+
+  <footer>
+    <p>
+      Material extraido del libro de GUSTAVO A. DUFFOUR — MATEMÁTICA DE QUINTO · Práctico «Nociones
+      sobre sucesiones» (pp. 123-127)
+    </p>
+  </footer>
+</BaseLayout>

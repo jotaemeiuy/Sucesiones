@@ -6,10 +6,16 @@ interface Props {
   tex: string;
   /** true = bloque centrado, false = inline dentro de un párrafo. */
   display?: boolean;
+  /** Clase extra del contenedor, p. ej. `formula--compacta`. */
+  clase?: string;
 }
 
-const { tex, display = true } = Astro.props;
+const { tex, display = true, clase } = Astro.props;
 const html = katex.renderToString(tex, { displayMode: display, throwOnError: false });
 ---
 
-{display ? <div class="formula" set:html={html} /> : <span set:html={html} />}
+{display ? (
+  <div class:list={["formula", clase]} set:html={html} />
+) : (
+  <span class={clase} set:html={html} />
+)}

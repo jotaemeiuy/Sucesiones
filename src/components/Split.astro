@@ -1,8 +1,16 @@
 ---
 /* Layout de dos columnas texto + figura. Sin estilos propios:
-   usa la clase global .split para no duplicar CSS. */
+   usa la clase global .split para no duplicar CSS.
+   variante "inversa": columna principal ancha + barra lateral estrecha
+   (para cuando el contenido largo va en la primera columna). */
+
+interface Props {
+  variante?: "inversa";
+}
+
+const { variante } = Astro.props;
 ---
 
-<div class="split">
+<div class:list={["split", variante === "inversa" && "split--inversa"]}>
   <slot />
 </div>

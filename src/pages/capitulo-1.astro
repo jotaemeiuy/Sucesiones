@@ -75,17 +75,20 @@ import "../styles/capitulo1.css";
         <br /><strong>¿Quién salió perjudicado en este contrato y por qué?</strong>
       </Nota>
 
-      <Split>
-        <div>
-          <h3>Un número muy importante</h3>
-          <p>Trabajando con la sucesión:</p>
-          <Math tex="f(n)=\left(1+\frac{1}{n}\right)^{n}" />
-          <p>Calcular:</p>
-          <Math tex="f(100)=\;?,\qquad f(1000)=\;?,\qquad f(10000)=\;?" />
-          <p>
-            ¿Qué se observa? ¿A qué número tiende? Es el número <strong>e</strong> de Euler
-            (≈ 2.71828…).
-          </p>
+      <Split variante="inversa">
+        <div class="e-numero">
+          <span class="e-numero__glifo" aria-hidden="true">e</span>
+          <div class="e-numero__texto">
+            <h3>Un número muy importante</h3>
+            <p>Trabajando con la sucesión:</p>
+            <Math tex="f(n)=\left(1+\frac{1}{n}\right)^{n}" />
+            <p>Calcular:</p>
+            <Math tex="f(100)=\;?,\qquad f(1000)=\;?,\qquad f(10000)=\;?" />
+            <p>
+              ¿Qué se observa? ¿A qué número tiende? Es el número <strong>e</strong> de Euler
+              (≈ 2.71828…).
+            </p>
+          </div>
         </div>
         <div class="prob">
           <strong>RESPUESTAS</strong><br />
@@ -141,12 +144,13 @@ import "../styles/capitulo1.css";
             /> en función de <Math tex="n" display={false} />:
           </p>
           <Math tex="\{b_n\}:\ b_n=3-2^{\,n-1}\quad \forall\, n\ge 1" />
-          <Nota etiqueta="NOTA">
-            Véanse otros ejemplos de representación gráfica de sucesiones en las páginas 104 y 118
-            del libro.
-          </Nota>
         </div>
       </Split>
+      <Nota etiqueta="VER TAMBIÉN">
+        Otros ejemplos de representación gráfica de sucesiones: <a href="#s4"
+          >§ 4 de este capítulo</a
+        > y <a href="/capitulo-4/#s1">§ 7 del capítulo 4</a>.
+      </Nota>
     </Seccion>
 
     <Seccion id="s3" tituloHtml="3 — <em>SUCESIONES CRECIENTES O DECRECIENTES</em>">
@@ -160,8 +164,25 @@ import "../styles/capitulo1.css";
         menor que el anterior:
       </p>
       <Math tex="\{a_n\}\ \text{es estrictamente decreciente si para todo } n\in\mathbb{N}^*\ a_{n+1}<a_n" />
-      <Math tex="\text{Monótona creciente: } a_{n+1}\ge a_n \qquad \text{Monótona decreciente: } a_{n+1}\le a_n" />
-      <Math tex="\text{Constante: } a_{n+1}=a_n \qquad \text{Oscilante: } a_n=\operatorname{sen} n" />
+      <p>
+        Una sucesión se dice que es <strong>monótona creciente</strong> si cada término es mayor o
+        igual que el anterior:
+      </p>
+      <Math
+        tex="\{a_n\}\ \text{es monótona creciente si para todo } n\in\mathbb{N}^*\ a_{n+1}\ge a_n"
+      />
+      <p>
+        Una sucesión se dice que es <strong>monótona decreciente</strong> si cada término es menor o
+        igual que el anterior:
+      </p>
+      <Math
+        tex="\{a_n\}\ \text{es monótona decreciente si para todo } n\in\mathbb{N}^*\ a_{n+1}\le a_n"
+      />
+      <p>
+        Una sucesión se dice que es <strong>constante</strong> si cada término es igual que el
+        anterior:
+      </p>
+      <Math tex="\{a_n\}\ \text{es constante si para todo } n\in\mathbb{N}^*\ a_{n+1}=a_n" />
       <p>
         Mientras que <Math tex="\{a_n\}:\ a_n=\operatorname{sen} n" display={false} /> es
         <strong>oscilante</strong> pues sus valores varían entre <Math tex="-1" display={false} /> y
@@ -170,13 +191,26 @@ import "../styles/capitulo1.css";
       <div class="prob">
         <strong>EJEMPLO:</strong> Demostrar que <Math tex="\{a_n\}:\ a_n=\frac{1}{n}" display={false} />
         es una sucesión estrictamente decreciente.
-        <p>Para ello se debe demostrar que, para todo <Math tex="n\in\mathbb{N}^*" display={false} />:</p>
-        <Math tex="a_{n+1}<a_n \quad\Longleftrightarrow\quad \frac{1}{n+1}<\frac{1}{n}" />
-        <Math tex="\frac{1}{n+1}-\frac{1}{n}<0 \quad\Longleftrightarrow\quad \frac{-1}{n(n+1)}<0" />
-        <p>
-          Se confirma que la sucesión es decreciente, pues la desigualdad se verifica para todos
-          los <Math tex="\mathbb{N}^*" display={false} />.
-        </p>
+        <Split>
+          <Figura
+            simbolo="suc-graf-an"
+            descripcion="Puntos aislados de a sub n igual a uno sobre n, decreciendo hacia cero"
+            viewBox="0 0 300 165"
+            pie="{aₙ} decrece hacia cero."
+          />
+          <div>
+            <p>
+              Para ello se debe demostrar que, para todo
+              <Math tex="n\in\mathbb{N}^*" display={false} />:
+            </p>
+            <Math tex="a_{n+1}<a_n \quad\Longleftrightarrow\quad \frac{1}{n+1}<\frac{1}{n}" />
+            <Math tex="\frac{1}{n+1}-\frac{1}{n}<0 \quad\Longleftrightarrow\quad \frac{-1}{n(n+1)}<0" />
+            <p>
+              Se confirma que la sucesión es decreciente, pues la desigualdad se verifica para
+              todos los <Math tex="\mathbb{N}^*" display={false} />.
+            </p>
+          </div>
+        </Split>
       </div>
     </Seccion>
 
@@ -214,7 +248,7 @@ import "../styles/capitulo1.css";
             oscilante cuyo término enésimo tiende a <strong>uno</strong>.
           </p>
           <Nota etiqueta="ANTES DE CONTINUAR">
-            Es conveniente hacer los ejercicios 97 y 98, de la página 124.
+            Es conveniente hacer <a href="/practico-sucesiones/#e97">los ejercicios 97 y 98</a>.
           </Nota>
         </div>
       </Split>
