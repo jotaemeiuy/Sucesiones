@@ -12,3 +12,8 @@ DS_Store
 
 # Fuente histórica: se consulta, no se versiona
 Sucesiones.pdf
+
+# Editor y herramientas de agente: no se versionan
+.codegraph/
+.vscode/
+opencode.jsonc
